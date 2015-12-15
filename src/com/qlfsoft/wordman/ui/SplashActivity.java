@@ -1,19 +1,63 @@
 package com.qlfsoft.wordman.ui;
 
+import com.qlfsoft.wordman.MainActivity;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.R.layout;
 import com.qlfsoft.wordman.R.menu;
+import com.qlfsoft.wordman.utils.DictionaryDBHelper;
+import com.qlfsoft.wordman.utils.TaskUtils;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class SplashActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_splash);
+		
+		TaskUtils.executeAsyncTask(new AsyncTask<Object,Object,Object>(){
+
+			boolean dbExist = true;
+			@Override
+			protected Object doInBackground(Object... params) {
+				// TODO Auto-generated method stub
+				DictionaryDBHelper dbHelper = new DictionaryDBHelper();
+				dbExist = dbHelper.CopyDataBase();
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(Object o)
+			{
+				super.onPostExecute(o);
+				if(dbExist)
+				{
+					new Handler().postDelayed(new Runnable(){
+	
+						@Override
+						public void run() {
+							Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+							SplashActivity.this.startActivity(intent);
+							SplashActivity.this.finish();
+						}
+						
+					}, 1000);
+				}else
+				{
+					System.exit(0);
+				}
+			}
+		});
 		 
 	}
 
