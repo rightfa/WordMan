@@ -1,4 +1,8 @@
-package com.qlfsoft.wordman;
+package com.qlfsoft.wordman.ui;
+
+import com.qlfsoft.wordman.R;
+import com.qlfsoft.wordman.R.layout;
+import com.qlfsoft.wordman.R.menu;
 
 import android.os.Bundle;
 import android.app.Activity;

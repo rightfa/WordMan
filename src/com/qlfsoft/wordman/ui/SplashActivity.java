@@ -1,6 +1,5 @@
 package com.qlfsoft.wordman.ui;
 
-import com.qlfsoft.wordman.MainActivity;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.R.layout;
 import com.qlfsoft.wordman.R.menu;
