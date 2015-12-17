@@ -3,10 +3,15 @@ package com.qlfsoft.wordman.utils;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.qlfsoft.wordman.BaseApplication;
+import com.qlfsoft.wordman.model.BookCategory;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Environment;
 
 public class DictionaryDBHelper {
@@ -17,6 +22,10 @@ public class DictionaryDBHelper {
 		this.mContext = BaseApplication.getContext();
 	}
 	
+	/**
+	 * 从assert文件夹中复制数据库到程序的Data目录下
+	 * @return
+	 */
 	public boolean CopyDataBase()
 	{	
 		String basePath = "";
@@ -63,6 +72,46 @@ public class DictionaryDBHelper {
 		}
 		is.close();
 		fos.close();
+	}
+	
+	private SQLiteDatabase getbookDB()
+	{	
+		SQLiteDatabase db = mContext.openOrCreateDatabase(BaseApplication.book_db_Path, Context.MODE_PRIVATE,null);
+		return db;
+	}
+	
+	private SQLiteDatabase getdicDB()
+	{
+		SQLiteDatabase db = mContext.openOrCreateDatabase(BaseApplication.dic_db_Path, Context.MODE_PRIVATE, null);
+		return db;
+	}
+	
+	private SQLiteDatabase getdictionaryDB()
+	{
+		SQLiteDatabase db = mContext.openOrCreateDatabase(BaseApplication.dictionary_db_Path, Context.MODE_PRIVATE, null);
+		return db;
+	}
+	
+	/**
+	 * 获取所有字典分类
+	 * @return
+	 */
+	public List<BookCategory> getAllBookCats()
+	{
+		List<BookCategory> bookCategorys = new ArrayList<BookCategory>();
+		String sql = "select CateID,CateName,CateOrder from tbCate";
+		SQLiteDatabase db = getbookDB();
+		Cursor cur = db.rawQuery(sql, null);
+		BookCategory category = null;
+		while(cur.moveToNext())
+		{
+			category = new BookCategory();
+			category.setCateID(cur.getInt(cur.getColumnIndex("CateID")));
+			category.setCateName(cur.getString(cur.getColumnIndex("CateName")));
+			category.setCateOrder(cur.getInt(cur.getColumnIndex("CateOrder")));
+			bookCategorys.add(category);
+		}
+		return bookCategorys;
 	}
 	 
 }
