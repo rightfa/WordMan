@@ -32,6 +32,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.qlfsoft.wordman.ui.SelCategoryActivity"
+            android:label="@string/title_activity_sel_category" >
+        </activity>
     </application>
 
 </manifest>
