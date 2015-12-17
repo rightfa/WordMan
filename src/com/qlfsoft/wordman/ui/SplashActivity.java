@@ -4,6 +4,7 @@ import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.R.layout;
 import com.qlfsoft.wordman.R.menu;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
+import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.utils.TaskUtils;
 
 import android.os.AsyncTask;
@@ -27,7 +28,6 @@ public class SplashActivity extends BaseActivity {
 			boolean dbExist = true;
 			@Override
 			protected Object doInBackground(Object... params) {
-				// TODO Auto-generated method stub
 				DictionaryDBHelper dbHelper = new DictionaryDBHelper();
 				dbExist = dbHelper.CopyDataBase();
 				return null;
@@ -43,8 +43,17 @@ public class SplashActivity extends BaseActivity {
 	
 						@Override
 						public void run() {
-							Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-							SplashActivity.this.startActivity(intent);
+							SharePreferenceUtils spHelper = new SharePreferenceUtils();
+							if(spHelper.hasSelBook())
+							{
+								Intent intent = new Intent(SplashActivity.this,MainActivity.class);
+								SplashActivity.this.startActivity(intent);
+							}else
+							{
+								Intent intent = new Intent(SplashActivity.this,SelCategoryActivity.class);
+								SplashActivity.this.startActivity(intent);
+							}
+							
 							SplashActivity.this.finish();
 						}
 						

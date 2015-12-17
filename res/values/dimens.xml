@@ -10,4 +10,5 @@
     <dimen name="drop_down_list_footer_progress_bar_height">36dp</dimen>
     <dimen name="drop_down_list_footer_button_margin_left">8dp</dimen>
     <dimen name="drop_down_list_footer_button_height">48dp</dimen>
+    <dimen name="frg_category_item_font">30sp</dimen>
 </resources>

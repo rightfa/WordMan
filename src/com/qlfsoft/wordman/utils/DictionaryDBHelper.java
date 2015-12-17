@@ -111,6 +111,7 @@ public class DictionaryDBHelper {
 			category.setCateOrder(cur.getInt(cur.getColumnIndex("CateOrder")));
 			bookCategorys.add(category);
 		}
+		db.close();
 		return bookCategorys;
 	}
 	 

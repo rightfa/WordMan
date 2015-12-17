@@ -343,19 +343,19 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
          */
         public static final int activity_horizontal_margin=0x7f050000;
         public static final int activity_vertical_margin=0x7f050001;
-        public static final int default_circle_indicator_radius=0x7f050009;
-        public static final int default_circle_indicator_stroke_width=0x7f05000a;
-        public static final int default_line_indicator_gap_width=0x7f05000c;
-        public static final int default_line_indicator_line_width=0x7f05000b;
-        public static final int default_line_indicator_stroke_width=0x7f05000d;
-        public static final int default_title_indicator_clip_padding=0x7f05000e;
-        public static final int default_title_indicator_footer_indicator_height=0x7f050010;
-        public static final int default_title_indicator_footer_indicator_underline_padding=0x7f050011;
-        public static final int default_title_indicator_footer_line_height=0x7f05000f;
-        public static final int default_title_indicator_footer_padding=0x7f050012;
-        public static final int default_title_indicator_text_size=0x7f050013;
-        public static final int default_title_indicator_title_padding=0x7f050014;
-        public static final int default_title_indicator_top_padding=0x7f050015;
+        public static final int default_circle_indicator_radius=0x7f05000a;
+        public static final int default_circle_indicator_stroke_width=0x7f05000b;
+        public static final int default_line_indicator_gap_width=0x7f05000d;
+        public static final int default_line_indicator_line_width=0x7f05000c;
+        public static final int default_line_indicator_stroke_width=0x7f05000e;
+        public static final int default_title_indicator_clip_padding=0x7f05000f;
+        public static final int default_title_indicator_footer_indicator_height=0x7f050011;
+        public static final int default_title_indicator_footer_indicator_underline_padding=0x7f050012;
+        public static final int default_title_indicator_footer_line_height=0x7f050010;
+        public static final int default_title_indicator_footer_padding=0x7f050013;
+        public static final int default_title_indicator_text_size=0x7f050014;
+        public static final int default_title_indicator_title_padding=0x7f050015;
+        public static final int default_title_indicator_top_padding=0x7f050016;
         public static final int drop_down_list_footer_button_height=0x7f050008;
         public static final int drop_down_list_footer_button_margin_left=0x7f050007;
         public static final int drop_down_list_footer_progress_bar_height=0x7f050006;
@@ -363,35 +363,40 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int drop_down_list_header_padding_top=0x7f050002;
         public static final int drop_down_list_header_progress_bar_height=0x7f050005;
         public static final int drop_down_list_header_release_min_distance=0x7f050004;
+        public static final int frg_category_item_font=0x7f050009;
     }
     public static final class drawable {
-        public static final int custom_tab_indicator=0x7f020000;
-        public static final int custom_tab_indicator_divider=0x7f020001;
-        public static final int custom_tab_indicator_focused=0x7f020002;
-        public static final int custom_tab_indicator_selected=0x7f020003;
-        public static final int custom_tab_indicator_selected_focused=0x7f020004;
-        public static final int custom_tab_indicator_selected_pressed=0x7f020005;
-        public static final int custom_tab_indicator_unselected=0x7f020006;
-        public static final int custom_tab_indicator_unselected_focused=0x7f020007;
-        public static final int custom_tab_indicator_unselected_pressed=0x7f020008;
-        public static final int ic_launcher=0x7f020009;
-        public static final int logo_splash=0x7f02000a;
-        public static final int vpi__tab_indicator=0x7f02000b;
-        public static final int vpi__tab_selected_focused_holo=0x7f02000c;
-        public static final int vpi__tab_selected_holo=0x7f02000d;
-        public static final int vpi__tab_selected_pressed_holo=0x7f02000e;
-        public static final int vpi__tab_unselected_focused_holo=0x7f02000f;
-        public static final int vpi__tab_unselected_holo=0x7f020010;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f020011;
-        public static final int white_tab_indicator=0x7f020012;
+        public static final int bk_category=0x7f020000;
+        public static final int custom_tab_indicator=0x7f020001;
+        public static final int custom_tab_indicator_divider=0x7f020002;
+        public static final int custom_tab_indicator_focused=0x7f020003;
+        public static final int custom_tab_indicator_selected=0x7f020004;
+        public static final int custom_tab_indicator_selected_focused=0x7f020005;
+        public static final int custom_tab_indicator_selected_pressed=0x7f020006;
+        public static final int custom_tab_indicator_unselected=0x7f020007;
+        public static final int custom_tab_indicator_unselected_focused=0x7f020008;
+        public static final int custom_tab_indicator_unselected_pressed=0x7f020009;
+        public static final int ic_launcher=0x7f02000a;
+        public static final int logo_splash=0x7f02000b;
+        public static final int right_log=0x7f02000c;
+        public static final int vpi__tab_indicator=0x7f02000d;
+        public static final int vpi__tab_selected_focused_holo=0x7f02000e;
+        public static final int vpi__tab_selected_holo=0x7f02000f;
+        public static final int vpi__tab_selected_pressed_holo=0x7f020010;
+        public static final int vpi__tab_unselected_focused_holo=0x7f020011;
+        public static final int vpi__tab_unselected_holo=0x7f020012;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f020013;
+        public static final int white_tab_indicator=0x7f020014;
     }
     public static final class id {
         public static final int ac_splash_pb=0x7f08000a;
-        public static final int action_settings=0x7f08000b;
+        public static final int action_settings=0x7f08000d;
         public static final int activity_sel_category_indicator=0x7f080007;
         public static final int activity_sel_category_pager=0x7f080008;
         public static final int bottom=0x7f080003;
-        public static final int imageView1=0x7f080009;
+        public static final int frg_category_gv=0x7f08000b;
+        public static final int frg_category_item_img_sel=0x7f080009;
+        public static final int frg_category_item_tv=0x7f08000c;
         public static final int none=0x7f080000;
         public static final int textView1=0x7f080005;
         public static final int textView2=0x7f080006;
@@ -410,6 +415,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_main=0x7f030000;
         public static final int activity_sel_category=0x7f030001;
         public static final int activity_splash=0x7f030002;
+        public static final int fragment_category=0x7f030003;
+        public static final int fragment_category_item=0x7f030004;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;

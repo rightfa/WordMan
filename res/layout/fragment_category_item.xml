@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_margin="10dp"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bk_category" >
+
+        <TextView
+            android:id="@+id/frg_category_item_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="50dp"
+            android:ellipsize="end"
+            android:freezesText="false"
+            android:gravity="center"
+            android:maxLines="3"
+            android:maxWidth="200dp"
+            android:text="Large Text "
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/frg_category_item_font" />
+
+        <ImageView
+            android:id="@+id/frg_category_item_img_sel"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/right_log"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
+</LinearLayout>
