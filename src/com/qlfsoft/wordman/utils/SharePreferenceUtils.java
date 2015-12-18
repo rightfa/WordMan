@@ -37,4 +37,13 @@ public class SharePreferenceUtils {
 		ed.putInt(userBookId, bookId);
 		ed.commit();
 	}
+	
+	/**
+	 * 获取当前用户正在背诵的单词本序号
+	 * @return
+	 */
+	public int getSelBookId()
+	{
+		return sp.getInt(userBookId, 0);
+	}
 }

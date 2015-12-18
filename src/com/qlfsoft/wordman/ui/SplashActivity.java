@@ -4,6 +4,7 @@ import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.R.layout;
 import com.qlfsoft.wordman.R.menu;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
+import com.qlfsoft.wordman.utils.LogUtils;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.utils.TaskUtils;
 
@@ -57,7 +58,7 @@ public class SplashActivity extends BaseActivity {
 							SplashActivity.this.finish();
 						}
 						
-					}, 1000);
+					}, 700);
 				}else
 				{
 					System.exit(0);

@@ -14,12 +14,15 @@ import com.viewpagerindicator.TabPageIndicator;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
+import android.view.Window;
+import android.view.WindowManager;
 
-public class SelCategoryActivity extends BaseActivity {
+public class SelCategoryActivity extends FragmentActivity {
 
 	private List<BookCategory> indicators;
 	private TabPageIndicator tpi_indicator;
@@ -27,6 +30,8 @@ public class SelCategoryActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_sel_category);
 		initData();
 		initView();
@@ -50,6 +55,8 @@ public class SelCategoryActivity extends BaseActivity {
 	{
 		tpi_indicator = (TabPageIndicator) findViewById(R.id.activity_sel_category_indicator);
 		vp_pager = (ViewPager) findViewById(R.id.activity_sel_category_pager);
+		PageAdapter pageAdapter = new PageAdapter(getSupportFragmentManager());
+		vp_pager.setAdapter(pageAdapter);
 		tpi_indicator.setViewPager(vp_pager);
 	}
 	
@@ -67,7 +74,7 @@ public class SelCategoryActivity extends BaseActivity {
 
 		@Override
 		public Fragment getItem(int arg0) {
-			return SelCategoryFragment.newInstance(arg0);
+			return SelCategoryFragment.newInstance(indicators.get(arg0).getCateID());
 		}
 
 		@Override

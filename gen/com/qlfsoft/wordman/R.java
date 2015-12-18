@@ -395,10 +395,10 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_sel_category_pager=0x7f080008;
         public static final int bottom=0x7f080003;
         public static final int frg_category_gv=0x7f08000b;
+        public static final int frg_category_item_count=0x7f080005;
         public static final int frg_category_item_img_sel=0x7f080009;
         public static final int frg_category_item_tv=0x7f08000c;
         public static final int none=0x7f080000;
-        public static final int textView1=0x7f080005;
         public static final int textView2=0x7f080006;
         public static final int top=0x7f080004;
         public static final int triangle=0x7f080001;

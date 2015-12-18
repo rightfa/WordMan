@@ -20,9 +20,9 @@
             android:ellipsize="end"
             android:freezesText="false"
             android:gravity="center"
-            android:maxLines="3"
+            android:maxLines="2"
             android:maxWidth="200dp"
-            android:text="Large Text "
+            android:text="TextView"
             android:textColor="@android:color/white"
             android:textSize="@dimen/frg_category_item_font" />
 
@@ -34,6 +34,16 @@
             android:layout_marginBottom="30dp"
             android:src="@drawable/right_log"
             android:visibility="invisible" />
+
+        <TextView
+            android:id="@+id/frg_category_item_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="100dp"
+            android:text="TextView"
+            android:textColor="@android:color/white"
+            android:textSize="30sp" />
 
     </FrameLayout>
 
