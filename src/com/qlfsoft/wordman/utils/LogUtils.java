@@ -10,4 +10,10 @@ public class LogUtils {
 		if(DEBUG)
 			Log.v("myLog", msg);
 	}
+	
+	public static void Logv(int msg)
+	{
+		if(DEBUG)
+			Log.v("myLog", String.valueOf(msg));
+	}
 }

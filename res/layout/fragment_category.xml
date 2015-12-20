@@ -8,8 +8,15 @@
         android:id="@+id/frg_category_gv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:numColumns="3" >
+        android:layout_margin="@dimen/x5"
+        android:columnWidth="@dimen/x100"
+        android:gravity="center"
+        android:horizontalSpacing="@dimen/x4"
+        android:verticalSpacing="@dimen/x4"
+        android:numColumns="auto_fit"
+       	android:scrollbars="vertical"
+       	android:scrollbarStyle="insideOverlay"
+       	android:stretchMode="columnWidth" >
 
     </GridView>
 

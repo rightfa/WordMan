@@ -55,7 +55,7 @@ public class SelCategoryFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_category, null);
 		GridView gv = (GridView) view.findViewById(R.id.frg_category_gv);
-		CategoryAdapter adapter = new CategoryAdapter(getActivity());
+		final CategoryAdapter adapter = new CategoryAdapter(getActivity());
 		gv.setAdapter(adapter);
 		gv.setOnItemClickListener(new OnItemClickListener(){
 
@@ -64,18 +64,8 @@ public class SelCategoryFragment extends Fragment {
 					long id) {
 				
 				int selBookId = books.get(position).getBookId();
-				int preBookId = sp.getSelBookId();
 				sp.setBookId(selBookId);
-				ImageView iv = (ImageView) view.findViewById(R.id.frg_category_item_img_sel);
-				iv.setVisibility(View.VISIBLE);
-				int index = 0;
-				for(;index< books.size();index++)
-				{
-					if(books.get(index).getBookId() == preBookId)
-						break;
-				}
-				ImageView preIv = (ImageView) parent.getChildAt(index).findViewById(R.id.frg_category_item_img_sel);
-				preIv.setVisibility(View.INVISIBLE);
+				adapter.notifyDataSetChanged();
 			}
 			
 		});
@@ -129,13 +119,13 @@ public class SelCategoryFragment extends Fragment {
 				holder = new ViewHolder();
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.fragment_category_item, null);
 				holder.tv_name = (TextView) convertView.findViewById(R.id.frg_category_item_tv);
-				holder.tv_count = (TextView) convertView.findViewById(R.id.frg_category_item_count);
+				holder.tv_count = (TextView) convertView.findViewById(R.id.frg_category_item_tv_count);
 				holder.iv_sel = (ImageView) convertView.findViewById(R.id.frg_category_item_img_sel);
 				convertView.setTag(holder);
 			}
 			BookBook book = books.get(position);
 			holder.tv_name.setText(book.getBookName());
-			holder.tv_count.setText(book.getBookCount());
+			//holder.tv_count.setText(book.getBookCount());
 			if(sp.getSelBookId() == book.getBookId())
 			{
 				holder.iv_sel.setVisibility(View.VISIBLE);

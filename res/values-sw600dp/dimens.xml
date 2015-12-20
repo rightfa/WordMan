@@ -4,5 +4,7 @@
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw600dp devices (e.g. 7" tablets) here.
     -->
-
+    <dimen name="frg_category_item_tv_margintop">30dp</dimen>
+ 	<dimen name="frg_category_item_tv_maxwidth">130dp</dimen>
+ 	<dimen name="frg_category_item_tv_fontsize">20sp</dimen>
 </resources>
