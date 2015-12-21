@@ -9,4 +9,6 @@
     <color name="drop_down_list_footer_font_color">#000000</color>
     <color name="app_name_color">#ffffff</color>
     <color name="proverb_color">#ffffff</color>
+    <color name="translucent_20">#20000000</color>
+    <color name="translucent_00">#00000000</color>
 </resources>

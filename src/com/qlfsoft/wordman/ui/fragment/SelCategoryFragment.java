@@ -13,6 +13,8 @@ import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -57,6 +59,7 @@ public class SelCategoryFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_category, null);
 		GridView gv = (GridView) view.findViewById(R.id.frg_category_gv);
+		gv.setSelector(new ColorDrawable(Color.TRANSPARENT));
 		final CategoryAdapter adapter = new CategoryAdapter(getActivity());
 		gv.setAdapter(adapter);
 		gv.setOnItemClickListener(new OnItemClickListener(){
