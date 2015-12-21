@@ -6,11 +6,13 @@ import java.util.zip.Inflater;
 
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.BookBook;
+import com.qlfsoft.wordman.ui.MainActivity;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
 import com.qlfsoft.wordman.utils.LogUtils;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -66,6 +68,9 @@ public class SelCategoryFragment extends Fragment {
 				int selBookId = books.get(position).getBookId();
 				sp.setBookId(selBookId);
 				adapter.notifyDataSetChanged();
+				Intent intent = new Intent(getActivity(),MainActivity.class);
+				startActivity(intent);
+				getActivity().finish();
 			}
 			
 		});
@@ -125,7 +130,7 @@ public class SelCategoryFragment extends Fragment {
 			}
 			BookBook book = books.get(position);
 			holder.tv_name.setText(book.getBookName());
-			//holder.tv_count.setText(book.getBookCount());
+			holder.tv_count.setText(String.valueOf(book.getBookCount()));
 			if(sp.getSelBookId() == book.getBookId())
 			{
 				holder.iv_sel.setVisibility(View.VISIBLE);
