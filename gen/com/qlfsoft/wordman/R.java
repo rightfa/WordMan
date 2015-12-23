@@ -1195,17 +1195,26 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int sidebar_bg_black=0x7f020011;
         public static final int sidebar_dividing_line=0x7f020012;
         public static final int sidebar_dividing_line_middle=0x7f020013;
-        public static final int sidebar_icon_dynamic_pressed=0x7f020014;
-        public static final int sidebar_icon_set_up=0x7f020015;
-        public static final int sidebar_icon_set_up_pressed=0x7f020016;
-        public static final int vpi__tab_indicator=0x7f020017;
-        public static final int vpi__tab_selected_focused_holo=0x7f020018;
-        public static final int vpi__tab_selected_holo=0x7f020019;
-        public static final int vpi__tab_selected_pressed_holo=0x7f02001a;
-        public static final int vpi__tab_unselected_focused_holo=0x7f02001b;
-        public static final int vpi__tab_unselected_holo=0x7f02001c;
-        public static final int vpi__tab_unselected_pressed_holo=0x7f02001d;
-        public static final int white_tab_indicator=0x7f02001e;
+        public static final int sidebar_icon_dynamic=0x7f020014;
+        public static final int sidebar_icon_dynamic_pressed=0x7f020015;
+        public static final int sidebar_icon_library=0x7f020016;
+        public static final int sidebar_icon_library_pressed=0x7f020017;
+        public static final int sidebar_icon_myplan=0x7f020018;
+        public static final int sidebar_icon_myplan_pressed=0x7f020019;
+        public static final int sidebar_icon_process=0x7f02001a;
+        public static final int sidebar_icon_process_pressed=0x7f02001b;
+        public static final int sidebar_icon_set_up=0x7f02001c;
+        public static final int sidebar_icon_set_up_pressed=0x7f02001d;
+        public static final int sidebar_icon_test=0x7f02001e;
+        public static final int sidebar_icon_test_pressed=0x7f02001f;
+        public static final int vpi__tab_indicator=0x7f020020;
+        public static final int vpi__tab_selected_focused_holo=0x7f020021;
+        public static final int vpi__tab_selected_holo=0x7f020022;
+        public static final int vpi__tab_selected_pressed_holo=0x7f020023;
+        public static final int vpi__tab_unselected_focused_holo=0x7f020024;
+        public static final int vpi__tab_unselected_holo=0x7f020025;
+        public static final int vpi__tab_unselected_pressed_holo=0x7f020026;
+        public static final int white_tab_indicator=0x7f020027;
     }
     public static final class id {
         public static final int ac_splash_pb=0x7f08000a;
