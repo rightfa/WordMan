@@ -7,5 +7,7 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_sel_category">SelCategoryActivity</string>
     <string name="default_proverb">你有多努力无需多谈\n重要的是你完成了多少计划之中的事</string>
+    <string name="desktop_username">单词君</string>
+    <string name="desktop_usersig">决心是成功的开始</string>
 
 </resources>

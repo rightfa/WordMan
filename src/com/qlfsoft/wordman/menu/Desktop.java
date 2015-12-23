@@ -1,12 +1,16 @@
 package com.qlfsoft.wordman.menu;
 
 import com.qlfsoft.wordman.R;
+import com.qlfsoft.wordman.utils.PhotoUtil;
+import com.qlfsoft.wordman.utils.ViewUtil;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -36,7 +40,7 @@ public class Desktop {
 	public interface onChangeViewListener{
 		public abstract void onChangeView(int arg0);
 	}
-	//private DesktopAdapter mAdapter;
+	private DesktopAdapter mAdapter;
 	
 	private onChangeViewListener mOnChangeViewListener;
 	
@@ -64,13 +68,51 @@ public class Desktop {
 	
 	private void setListener()
 	{
-		
+		mTopLayout.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				if(null != mOnChangeViewListener)
+				{
+					mOnChangeViewListener.onChangeView(ViewUtil.USER);
+					mAdapter.setChoose(-1);
+					mAdapter.notifyDataSetChanged();
+				}
+				
+			}
+			
+		});
+		mSetUp.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}});
 	}
 	
 	private void init()
 	{
-		
+		mName.setText(R.string.desktop_username);
+		mSig.setText(R.string.desktop_usersig);
+		mAvatar.setImageBitmap(PhotoUtil.toRoundCorner(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.head), 15));
+		mAdapter = new DesktopAdapter(mContext);
+		mDisplay.setAdapter(mAdapter);
 	}
+	
+	public void setOnChangeViewListener(onChangeViewListener listener)
+	{
+		mOnChangeViewListener = listener;
+	}
+	
+	/**
+	 * 获取菜单界面
+	 * @return
+	 */
+	public View getView()
+	{
+		return mDesktop;
+	}
+	
 	
 	public class DesktopAdapter extends BaseAdapter{
 
@@ -111,7 +153,7 @@ public class Desktop {
 			mChoose = choose;
 		}
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			// TODO Auto-generated method stub
 			ViewHolder holder = null;
 			if(convertView == null)
@@ -138,7 +180,40 @@ public class Desktop {
 				holder.icon.setImageResource(mIcon[position]);
 				holder.layout.setBackgroundColor(Color.parseColor("#00000000"));
 			}
-			
+			convertView.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View v) {
+					if(null != mOnChangeViewListener)
+					{
+						switch(position)
+						{
+						case ViewUtil.HOME:
+							mOnChangeViewListener.onChangeView(ViewUtil.HOME);
+							break;
+						case ViewUtil.MYPLAN:
+							mOnChangeViewListener.onChangeView(ViewUtil.MYPLAN);
+							break;
+						case ViewUtil.PROCESS:
+							mOnChangeViewListener.onChangeView(ViewUtil.PROCESS);
+							break;
+						case ViewUtil.LIBRARY:
+							mOnChangeViewListener.onChangeView(ViewUtil.LIBRARY);
+							break;
+						case ViewUtil.TEST:
+							mOnChangeViewListener.onChangeView(ViewUtil.TEST);
+							break;
+						default:
+							mOnChangeViewListener.onChangeView(ViewUtil.HOME);
+							break;
+						}
+						mChoose = position;
+						notifyDataSetChanged();
+					}
+					
+				}
+				
+			});
 			
 			return convertView;
 		}
