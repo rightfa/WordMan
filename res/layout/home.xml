@@ -8,7 +8,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/x48"
-        android:background="@drawable/global_top_background" >
+        android:background="@drawable/global_top_background"
+        android:gravity="center_horizontal" >
 
         <Button
             android:id="@+id/home_menu"
@@ -31,6 +32,251 @@
             android:layout_marginRight="@dimen/x8"
             android:background="@drawable/title_search_button"
             android:text="" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/x5"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/home_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/x8"
+            android:layout_marginTop="@dimen/x8"
+            android:text="@string/desktop_username"
+            android:textColor="@android:color/black"
+            android:textSize="25sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/x10" >
+
+            <View android:layout_height="1dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"></View>
+
+            <TextView
+                android:id="@+id/home_tv_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:drawableLeft="@drawable/btn_point"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/home_tv_sign_str"
+                android:textColor="@color/app_color"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/home_tv_chgplan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:drawableLeft="@drawable/btn_point"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/home_tv_chgplan_str"
+                android:textColor="@color/app_color"
+                android:textSize="15sp" />
+
+            <View android:layout_height="1dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x100"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/x5"
+        android:layout_marginBottom="@dimen/x5"
+        android:background="@android:color/white"
+        android:padding="@dimen/x15" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="@dimen/x80"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" >
+
+                <TextView
+                    android:id="@+id/home_remain_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100"
+                    android:textColor="@android:color/black"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="天"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x10"
+                android:textColor="@android:color/darker_gray"
+                android:text="@string/home_remain_day_str"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_marginRight="@dimen/x15"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/home_day_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="34sp"
+                android:text="51"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="今日单词"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+        <View android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"></View>
+
+        <Button
+            android:id="@+id/home_btn_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/home_btn_start"
+            android:text="@string/start"
+            android:textColor="@android:color/white"
+            android:textSize="25sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x100"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="@dimen/x5"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/x5"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/x15" >
+
+        <TextView
+            android:id="@+id/home_tv_needstudy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:layout_margin="@dimen/x5"
+            android:text="今日需新学 49/51  今日需复习73" />
+
+        <TextView
+            android:id="@+id/home_tv_havestudy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:layout_margin="@dimen/x5"
+            android:text="已完成  880/4686" />
+
+        <ProgressBar
+            android:id="@+id/home_pb_havestudy"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="4686"
+            android:progress="880"
+            android:progressDrawable="@drawable/home_bg_color" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="@dimen/x5"
+        android:layout_marginLeft="@dimen/x5"
+        android:layout_marginRight="@dimen/x5"
+        android:layout_marginTop="@dimen/x5"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="@dimen/x15" >
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="15sp" 
+            android:text="每日一句" />
+        <View android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/x5"
+            android:layout_marginBottom="@dimen/x5"
+            android:background="@android:color/darker_gray"></View>
+
+        <TextView
+            android:id="@+id/home_tv_dailyword_en"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="15sp"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/home_tv_dailyword_ch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="15sp"
+            android:text="TextView" />
+
+  		<TextView
+  		    android:id="@+id/home_tv_dailyword_from"
+  		    android:layout_width="match_parent"
+  		    android:layout_height="wrap_content"
+  		    android:gravity="right"
+  		    android:text="TextView"
+  		    android:textColor="@android:color/darker_gray"
+  		    android:textSize="15sp" />
 
     </LinearLayout>
 
