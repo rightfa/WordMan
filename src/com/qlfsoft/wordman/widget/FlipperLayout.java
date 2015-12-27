@@ -1,4 +1,5 @@
 package com.qlfsoft.wordman.widget;
+import com.qlfsoft.wordman.utils.LogUtils;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,8 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Scroller;
 
 /**
+ * 自己重写的ViewGroup,用与滑动切换界面使用,代码不详解,慢点看的话应该能看懂的...
  * 
- * @author 
+ * @author rendongwei
  * 
  */
 public class FlipperLayout extends ViewGroup {
@@ -56,6 +58,7 @@ public class FlipperLayout extends ViewGroup {
 			View child = getChildAt(i);
 			int height = child.getMeasuredHeight();
 			int width = child.getMeasuredWidth();
+			LogUtils.Logv("child"+i+"-height:" + height + "  -width:" + width);
 			child.layout(0, 0, width, height);
 		}
 	}
@@ -64,6 +67,8 @@ public class FlipperLayout extends ViewGroup {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 		int width = MeasureSpec.getSize(widthMeasureSpec);
 		int height = MeasureSpec.getSize(heightMeasureSpec);
+		LogUtils.Logv("width:" + width);
+		LogUtils.Logv("height:"+height);
 		setMeasuredDimension(width, height);
 		for (int i = 0; i < getChildCount(); i++) {
 			getChildAt(i).measure(widthMeasureSpec, heightMeasureSpec);
@@ -232,6 +237,7 @@ public class FlipperLayout extends ViewGroup {
 		invalidate();
 		setContentView(view);
 	}
+
 
 	public void computeScroll() {
 		super.computeScroll();

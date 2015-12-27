@@ -158,7 +158,7 @@ public class Desktop {
 			ViewHolder holder = null;
 			if(convertView == null)
 			{
-				convertView = LayoutInflater.from(dContext).inflate(R.layout.desktop, null);
+				convertView = LayoutInflater.from(dContext).inflate(R.layout.desktop_item, null);
 				holder = new ViewHolder();
 				holder.layout = (LinearLayout) convertView.findViewById(R.id.desktop_item_layout);
 				holder.icon = (ImageView) convertView.findViewById(R.id.desktop_item_icon);

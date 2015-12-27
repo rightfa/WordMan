@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/wordman_background"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fadingEdge="none"
+        android:scrollbars="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:layout_width="@dimen/x100"
+                android:layout_height="@dimen/x100"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_login" />
+
+            <TextView
+                android:layout_width="@dimen/x220"
+                android:layout_height="@dimen/x20"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/x20"
+                android:gravity="center"
+                android:text="@string/desktop_usersig"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/login_et_account"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/x45"
+                android:layout_margin="@dimen/x8"
+                android:background="@drawable/login_input"
+                android:drawableLeft="@drawable/login_icon_account"
+                android:drawablePadding="@dimen/x25"
+                android:hint="请输入账号"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="@dimen/x25"
+                android:textColor="#ff98bede"
+                android:textColorHint="#ffdddddd" />
+
+            <EditText
+                android:id="@+id/login_et_pwd"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/x45"
+                android:layout_marginBottom="@dimen/x8"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:background="@drawable/login_input"
+                android:drawableLeft="@drawable/login_icon_password"
+                android:drawablePadding="@dimen/x25"
+                android:hint="请输入密码"
+                android:paddingLeft="@dimen/x25"
+                android:password="true"
+                android:textColor="#ff98bede"
+                android:textColorHint="#ffdddddd" />
+
+            <Button
+                android:id="@+id/login_activity_login"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/x45"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:background="@drawable/login_btn"
+                android:shadowColor="#7f000000"
+                android:shadowDx="0.0"
+                android:shadowDy="1.0"
+                android:shadowRadius="1.0"
+                android:text="登录"
+                android:textColor="#ffffff"
+                android:textSize="18sp" 
+                android:enabled="true"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/x45"
+                android:layout_margin="@dimen/x8"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/login_tv_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/x8"
+                    android:drawablePadding="@dimen/x8"
+                    android:drawableRight="@drawable/login_icon_enter"
+                    android:text="注册"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

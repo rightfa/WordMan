@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/wordman_background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/x40"
+        android:background="@drawable/global_top_background" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/title_bar_center_button_bg"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/about_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="middle"
+                android:maxWidth="@dimen/x150"
+                android:padding="@dimen/x8"
+                android:singleLine="true"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/about_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="@dimen/x2"
+            android:layout_marginLeft="@dimen/x4"
+            android:layout_marginTop="@dimen/x2"
+            android:background="@drawable/title_text_button_left_arrow"
+            android:ellipsize="end"
+            android:maxWidth="@dimen/x80"
+            android:minWidth="@dimen/x40"
+            android:singleLine="true"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/about_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="@dimen/x2"
+            android:layout_marginRight="@dimen/x4"
+            android:layout_marginTop="@dimen/x2"
+            android:background="@drawable/title_text_button"
+            android:text="@string/about_btn_modify_str"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" 
+                android:gravity="center">
+
+                <RelativeLayout
+                    android:id="@+id/about_avatar_layout"
+                    android:layout_width="@dimen/x120"
+                    android:layout_height="@dimen/x120" >
+
+                    <ImageButton
+                        android:id="@+id/about_avatar"
+                        android:layout_width="@dimen/x100"
+                        android:layout_height="@dimen/x100"
+                        android:layout_margin="@dimen/x8"
+                        android:background="@drawable/avatar_background_white"
+                        android:padding="@dimen/x4"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/head_default" />
+
+                    <Button
+                        android:id="@+id/about_avatar_change"
+                        android:layout_width="@dimen/x40"
+                        android:layout_height="@dimen/x40"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/about_button_change_logo"
+                        android:visibility="invisible" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:layout_marginTop="@dimen/x20"
+                android:background="@drawable/about_top_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/x8" >
+
+                <TextView
+                    android:layout_width="@dimen/x60"
+                    android:layout_height="@dimen/x30"
+                    android:layout_marginLeft="@dimen/x8"
+                    android:gravity="center_vertical"
+                    android:text="昵称"
+                    android:textColor="#222222"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/about_tv_nickname"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/x30"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x8"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:background="@drawable/about_mid_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/x8" >
+
+                <TextView
+                    android:layout_width="@dimen/x60"
+                    android:layout_height="@dimen/x30"
+                    android:layout_marginLeft="@dimen/x8"
+                    android:gravity="center_vertical"
+                    android:text="账号"
+                    android:textColor="#222222"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/about_tv_account"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/x30"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x8"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:background="@drawable/about_mid_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/x8" >
+
+                <TextView
+                    android:layout_width="@dimen/x60"
+                    android:layout_height="@dimen/x30"
+                    android:layout_marginLeft="@dimen/x8"
+                    android:gravity="center_vertical"
+                    android:text="签名"
+                    android:textColor="#222222"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/about_tv_significances"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/x30"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="8dip"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/about_ll_orginpwd"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:background="@drawable/about_mid_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/x8"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="@dimen/x60"
+                    android:layout_height="@dimen/x30"
+                    android:layout_marginLeft="@dimen/x8"
+                    android:gravity="center_vertical"
+                    android:text="原密码"
+                    android:textColor="#222222"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/about_tv_orginpwd"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/x30"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x8"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/about_ll_newpwd"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:background="@drawable/about_mid_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/x8"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="@dimen/x60"
+                    android:layout_height="@dimen/x30"
+                    android:layout_marginLeft="@dimen/x8"
+                    android:gravity="center_vertical"
+                    android:text="新密码"
+                    android:textColor="#222222"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/about_tv_newpwd"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/x30"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x8"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/about_ll_repwd"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:background="@drawable/about_mid_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/x8"
+                android:visibility="gone" >
+
+                <TextView
+                    android:layout_width="@dimen/x60"
+                    android:layout_height="@dimen/x30"
+                    android:layout_marginLeft="@dimen/x8"
+                    android:gravity="center_vertical"
+                    android:text="确认密码"
+                    android:textColor="#222222"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/about_tv_repwd"
+                    android:layout_width="fill_parent"
+                    android:layout_height="@dimen/x30"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/x8"
+                    android:textColor="#333333"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/x8"
+                android:layout_marginRight="@dimen/x8"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="@dimen/x30" >
+
+                <Button
+                    android:id="@+id/about_btn_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/title_text_button"
+                    android:paddingBottom="@dimen/x5"
+                    android:paddingLeft="@dimen/x10"
+                    android:paddingRight="@dimen/x10"
+                    android:paddingTop="@dimen/x5"
+                    android:textColor="@android:color/white"
+                    android:textSize="20sp"
+                    android:text="@string/about_btn_logout_str" />
+
+            </LinearLayout>
+            
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

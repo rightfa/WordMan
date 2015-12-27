@@ -13,5 +13,8 @@
     <string name="home_tv_chgplan_str">改计划</string>
     <string name="home_remain_day_str">剩余</string>
     <string name="start">开始</string>
+    <string name="about_btn_modify_str">修改</string>
+    <string name="about_btn_complete_str">完成</string>
+    <string name="about_btn_logout_str">退出账号</string>
 
 </resources>

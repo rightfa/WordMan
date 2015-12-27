@@ -2,21 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical" >
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/wordman_background"
     android:orientation="vertical" >
-
     <LinearLayout
+        android:id="@+id/home_top_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/x48"
+        android:layout_height="@dimen/x40"
         android:background="@drawable/global_top_background"
-        android:gravity="center_horizontal" >
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/x4"
+        android:paddingLeft="@dimen/x4"
+        android:paddingRight="@dimen/x2"
+        android:paddingTop="@dimen/x3" >
 
-        <Button
+        <ImageButton
             android:id="@+id/home_menu"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/x8"
-            android:background="@drawable/title_home_button" />
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x4"
+            android:background="@drawable/title_text_button"
+               android:scaleType="centerInside"
+            android:src="@drawable/global_home" />
 
         <TextView
             android:id="@+id/textView1"
@@ -25,12 +35,14 @@
             android:text="" 
             android:layout_weight="1"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/home_search"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/x8"
-            android:background="@drawable/title_search_button"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/x4"
+            android:background="@drawable/title_text_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/global_search"
             android:text="" />
 
     </LinearLayout>
@@ -279,5 +291,5 @@
   		    android:textSize="15sp" />
 
     </LinearLayout>
-
+</LinearLayout>
 </LinearLayout>
