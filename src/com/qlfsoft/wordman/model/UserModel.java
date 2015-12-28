@@ -7,7 +7,6 @@ import org.litepal.crud.DataSupport;
  *
  */
 public class UserModel extends DataSupport {
-	private int id;
 	private String nickname;//Í«≥∆
 	private String account;//’À∫≈
 	private String password;//√‹¬Î
@@ -71,12 +70,5 @@ public class UserModel extends DataSupport {
 	public void setDailyword(int dailyword) {
 		this.dailyword = dailyword;
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 	
 }

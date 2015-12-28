@@ -6,7 +6,6 @@ import org.litepal.crud.DataSupport;
 
 public class SignModel extends DataSupport {
 
-	private int id;
 	private String account;
 	private Date day;
 	public String getAccount() {
@@ -20,13 +19,5 @@ public class SignModel extends DataSupport {
 	}
 	public void setDay(Date day) {
 		this.day = day;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	
+	}	
 }

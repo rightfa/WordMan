@@ -2,11 +2,11 @@ package com.qlfsoft.wordman.ui;
 
 import java.util.List;
 
+import org.litepal.crud.DataSupport;
+
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
-import com.qlfsoft.wordman.utils.WordManDB;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -55,21 +55,18 @@ public class LoginActivity extends BaseActivity {
 					Toast.makeText(LoginActivity.this, "账号不能为空！", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				WordManDB wordmanDB = WordManDB.getInstance();
-				List<UserModel> list = wordmanDB.loadUserInfos();
-				for(UserModel item : list)
+				List<UserModel> list = DataSupport.where("account=? and password=?",userAccount,userPwd).find(UserModel.class);
+				if(list.size() > 0)
 				{
-					if(item.getAccount().equals(userAccount) && item.getPassword().equals(userPwd))
-					{
-						SharePreferenceUtils spHelper = new SharePreferenceUtils();
-						spHelper.setBookId(item.getSelBook());
-						spHelper.setNickName(item.getNickname());
-						spHelper.setUserAccount(item.getAccount());
-						spHelper.setLoginState(true);
-						Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-						startActivity(intent);
-						finish();
-					}
+					UserModel item = list.get(0);
+					SharePreferenceUtils spHelper = new SharePreferenceUtils();
+					spHelper.setBookId(item.getSelBook());
+					spHelper.setNickName(item.getNickname());
+					spHelper.setUserAccount(item.getAccount());
+					spHelper.setLoginState(true);
+					Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+					startActivity(intent);
+					finish();		
 				}
 				Toast.makeText(LoginActivity.this, "用户名或账号错误！", Toast.LENGTH_SHORT).show();
 				et_pwd.setText("");

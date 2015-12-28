@@ -2,10 +2,11 @@ package com.qlfsoft.wordman.ui;
 
 import java.util.List;
 
+import org.litepal.crud.DataSupport;
+
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
-import com.qlfsoft.wordman.utils.WordManDB;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -71,18 +72,17 @@ public class RegisterActivity extends BaseActivity {
 					return;
 				}
 				
-				WordManDB wordmanDB = WordManDB.getInstance();
-				List<UserModel> list = wordmanDB.loadUserInfos();
-				for(UserModel item : list)
+				List<UserModel> list = DataSupport.where("account=?",account).find(UserModel.class);
+				if(list.size()>0)
 				{
-					if(item.getAccount().equals(account))
-					{
-						showToast("账号已经存在！");
-						return;
-					}
-					
+					showToast("账号已经存在！");
+					return;
 				}
 				UserModel userModel = new UserModel();
+				userModel.setAccount(account);
+				userModel.setPassword(pwd);
+				userModel.setNickname(nickname);
+				userModel.save();
 				
 				SharePreferenceUtils spHelper = new SharePreferenceUtils();
 				spHelper.setBookId(0);
