@@ -45,13 +45,17 @@ public class SplashActivity extends BaseActivity {
 						@Override
 						public void run() {
 							SharePreferenceUtils spHelper = new SharePreferenceUtils();
-							if(spHelper.hasSelBook())
-							{
-								Intent intent = new Intent(SplashActivity.this,MainActivity.class);
-								SplashActivity.this.startActivity(intent);
-							}else
+							if(spHelper.getFirstOpen())
 							{
 								Intent intent = new Intent(SplashActivity.this,SelCategoryActivity.class);
+								SplashActivity.this.startActivity(intent);
+
+							}else if(spHelper.getUserAccount() == null ||spHelper.getUserAccount().equals(""))
+							{
+								//转入登录界面
+							}else
+							{
+								Intent intent = new Intent(SplashActivity.this,MainActivity.class);
 								SplashActivity.this.startActivity(intent);
 							}
 							

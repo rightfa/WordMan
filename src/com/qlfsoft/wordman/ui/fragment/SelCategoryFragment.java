@@ -71,6 +71,8 @@ public class SelCategoryFragment extends Fragment {
 				int selBookId = books.get(position).getBookId();
 				sp.setBookId(selBookId);
 				adapter.notifyDataSetChanged();
+				SharePreferenceUtils spHelper = new SharePreferenceUtils();
+				spHelper.setFirstOpen();
 				Intent intent = new Intent(getActivity(),MainActivity.class);
 				startActivity(intent);
 				getActivity().finish();

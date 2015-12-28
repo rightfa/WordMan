@@ -10,6 +10,8 @@ public class SharePreferenceUtils {
 	private Context mContext;
 	private SharedPreferences sp;
 	private String userBookId = "CURRENT_BOOK_ID";
+	private String firstopen = "FIRSTOPEN";
+	private String userAccount = "USERACCOUNT";
 	
 	public SharePreferenceUtils()
 	{
@@ -26,6 +28,20 @@ public class SharePreferenceUtils {
 		int bookId = sp.getInt(userBookId, 0);
 		return bookId != 0;
 	}
+	
+	public boolean getFirstOpen()
+	{
+		boolean flag = sp.getBoolean(firstopen, true);
+		return flag;
+	}
+	
+	public void setFirstOpen()
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putBoolean(firstopen, false);
+		ed.commit();
+	}
+	
 	
 	/**
 	 * 设置选中的单词本序号
@@ -45,5 +61,18 @@ public class SharePreferenceUtils {
 	public int getSelBookId()
 	{
 		return sp.getInt(userBookId, 0);
+	}
+	
+	public String getUserAccount()
+	{
+		String account = sp.getString(userAccount, "");
+		return account;
+	}
+	
+	public void setUserAccount(String value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putString(userAccount, value);
+		ed.commit();
 	}
 }
