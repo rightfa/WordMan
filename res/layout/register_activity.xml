@@ -73,7 +73,7 @@
                 android:paddingLeft="@dimen/x25"
                 android:textColor="#ff98bede"
                 android:textColorHint="#ffdddddd" />
-            <EditText
+            <EditText
                 android:id="@+id/register_et_nickname"
                 android:layout_width="fill_parent"
                 android:layout_height="@dimen/x45"
@@ -84,7 +84,7 @@
                 android:drawableLeft="@drawable/login_icon_nickname"
                 android:drawablePadding="@dimen/x25"
                 android:hint="请输入昵称"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 android:paddingLeft="@dimen/x25"
                 android:textColor="#ff98bede"
                 android:textColorHint="#ffdddddd" />
@@ -100,25 +100,29 @@
                 android:drawableLeft="@drawable/login_icon_password"
                 android:drawablePadding="@dimen/x25"
                 android:hint="请输入密码"
+                android:inputType="textPassword"
                 android:paddingLeft="@dimen/x25"
                 android:password="true"
                 android:textColor="#ff98bede"
                 android:textColorHint="#ffdddddd" />
+
 			<EditText
 			    android:id="@+id/register_et_repwd"
-                android:layout_width="fill_parent"
-                android:layout_height="@dimen/x45"
-                android:layout_marginBottom="@dimen/x8"
-                android:layout_marginLeft="@dimen/x8"
-                android:layout_marginRight="@dimen/x8"
-                android:background="@drawable/login_input"
-                android:drawableLeft="@drawable/login_icon_password"
-                android:drawablePadding="@dimen/x25"
-                android:hint="请确认密码"
-                android:paddingLeft="@dimen/x25"
-                android:password="true"
-                android:textColor="#ff98bede"
-                android:textColorHint="#ffdddddd" />
+			    android:layout_width="fill_parent"
+			    android:layout_height="@dimen/x45"
+			    android:layout_marginBottom="@dimen/x8"
+			    android:layout_marginLeft="@dimen/x8"
+			    android:layout_marginRight="@dimen/x8"
+			    android:background="@drawable/login_input"
+			    android:drawableLeft="@drawable/login_icon_password"
+			    android:drawablePadding="@dimen/x25"
+			    android:hint="请确认密码"
+			    android:inputType="textPassword"
+			    android:paddingLeft="@dimen/x25"
+			    android:password="true"
+			    android:textColor="#ff98bede"
+			    android:textColorHint="#ffdddddd" />
+
             <Button
                 android:id="@+id/register_activity_submit"
                 android:layout_width="fill_parent"

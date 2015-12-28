@@ -50,9 +50,11 @@ public class SplashActivity extends BaseActivity {
 								Intent intent = new Intent(SplashActivity.this,SelCategoryActivity.class);
 								SplashActivity.this.startActivity(intent);
 
-							}else if(spHelper.getUserAccount() == null ||spHelper.getUserAccount().equals(""))
+							}else if(!spHelper.getLoginState())
 							{
 								//转入登录界面
+								Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
+								startActivity(intent);
 							}else
 							{
 								Intent intent = new Intent(SplashActivity.this,MainActivity.class);

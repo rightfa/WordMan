@@ -10,8 +10,10 @@ public class SharePreferenceUtils {
 	private Context mContext;
 	private SharedPreferences sp;
 	private String userBookId = "CURRENT_BOOK_ID";
-	private String firstopen = "FIRSTOPEN";
-	private String userAccount = "USERACCOUNT";
+	private String firstopen = "FIRSTOPEN";//第一次打开应用
+	private String userAccount = "USERACCOUNT";//用户账号
+	private String loginState = "LOGINSTATE";//时候登录状态
+	private String nickname = "NICKNAME";//昵称
 	
 	public SharePreferenceUtils()
 	{
@@ -75,4 +77,45 @@ public class SharePreferenceUtils {
 		ed.putString(userAccount, value);
 		ed.commit();
 	}
+	
+	/**
+	 * 获取登录状态
+	 * @return
+	 */
+	public boolean getLoginState()
+	{
+		return sp.getBoolean(loginState, true);
+	}
+	
+	/**
+	 * 设置登录状态
+	 * @param value
+	 */
+	public void setLoginState(boolean value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putBoolean(loginState, value);
+		ed.commit();
+	}
+	
+	/**
+	 * 获取昵称
+	 * @return
+	 */
+	public String getNickName()
+	{
+		return sp.getString(nickname, "单词君");
+	}
+	
+	/**
+	 * 设置昵称
+	 * @param value
+	 */
+	public void setNickName(String value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putString(nickname,value);
+		ed.commit();
+	}
+	
 }

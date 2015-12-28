@@ -60,6 +60,7 @@
                 android:drawableLeft="@drawable/login_icon_password"
                 android:drawablePadding="@dimen/x25"
                 android:hint="请输入密码"
+                android:inputType="textPassword"
                 android:paddingLeft="@dimen/x25"
                 android:password="true"
                 android:textColor="#ff98bede"
