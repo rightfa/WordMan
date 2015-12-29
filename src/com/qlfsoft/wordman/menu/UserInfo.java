@@ -1,10 +1,13 @@
 package com.qlfsoft.wordman.menu;
 
 import com.qlfsoft.wordman.R;
+import com.qlfsoft.wordman.ui.LoginActivity;
+import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +24,7 @@ public class UserInfo {
 	private OnOpenListener mOnOpenListener;
 	
 	private TextView tv_title;
-	private Button btn_back;
+	private ImageButton btn_back;
 	private Button btn_submit;
 	private ImageButton ib_avatar;
 	private Button btn_avatarchg;
@@ -57,7 +60,8 @@ public class UserInfo {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				if(null != mOnOpenListener)
+					mOnOpenListener.open();
 				
 			}
 			
@@ -84,7 +88,14 @@ public class UserInfo {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
+				if(!(null == spu.getUserAccount() || "".equals(spu.getUserAccount())))
+				{
+					spu.setLoginState(false);
+				}
+				Intent intent = new Intent(mContext,LoginActivity.class);
+				mActivity.startActivity(intent);
+				mActivity.finish();
 				
 			}
 			
@@ -93,7 +104,7 @@ public class UserInfo {
 
 	private void findViewById() {
 		tv_title = (TextView) mUserInfo.findViewById(R.id.about_title);
-		btn_back = (Button) mUserInfo.findViewById(R.id.about_back);
+		btn_back = (ImageButton) mUserInfo.findViewById(R.id.about_back);
 		btn_submit = (Button) mUserInfo.findViewById(R.id.about_submit);
 		ib_avatar = (ImageButton) mUserInfo.findViewById(R.id.about_avatar);
 		btn_avatarchg = (Button) mUserInfo.findViewById(R.id.about_avatar_change);

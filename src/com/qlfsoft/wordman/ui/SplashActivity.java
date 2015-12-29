@@ -1,5 +1,7 @@
 package com.qlfsoft.wordman.ui;
 
+import org.litepal.tablemanager.Connector;
+
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.R.layout;
 import com.qlfsoft.wordman.R.menu;
@@ -14,16 +16,21 @@ import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 public class SplashActivity extends BaseActivity {
 
+	private TextView splash_tv_firstLoading;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
-		
+		splash_tv_firstLoading = (TextView) findViewById(R.id.splash_tv_firstLoading);
+		if(SharePreferenceUtils.getInstnace().getFirstOpen())
+			splash_tv_firstLoading.setVisibility(View.VISIBLE);
 		TaskUtils.executeAsyncTask(new AsyncTask<Object,Object,Object>(){
 
 			boolean dbExist = true;
@@ -31,6 +38,7 @@ public class SplashActivity extends BaseActivity {
 			protected Object doInBackground(Object... params) {
 				DictionaryDBHelper dbHelper = new DictionaryDBHelper();
 				dbExist = dbHelper.CopyDataBase();
+				
 				return null;
 			}
 			
@@ -44,7 +52,7 @@ public class SplashActivity extends BaseActivity {
 	
 						@Override
 						public void run() {
-							SharePreferenceUtils spHelper = new SharePreferenceUtils();
+							SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
 							if(spHelper.getFirstOpen())
 							{
 								Intent intent = new Intent(SplashActivity.this,SelCategoryActivity.class);

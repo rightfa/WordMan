@@ -21,6 +21,15 @@ public class SharePreferenceUtils {
 		sp = mContext.getSharedPreferences("com.qlfsoft.wordman", Context.MODE_PRIVATE);
 	}
 	
+	private static SharePreferenceUtils sharedPreferenceUtil;
+	
+	public synchronized static SharePreferenceUtils getInstnace()
+	{
+		if(null == sharedPreferenceUtil)
+			sharedPreferenceUtil = new SharePreferenceUtils();
+		return sharedPreferenceUtil;
+	}
+	
 	/**
 	 * 当前用户是否已经选择了背诵单词本
 	 * @return

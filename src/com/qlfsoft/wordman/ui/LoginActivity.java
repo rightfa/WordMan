@@ -3,12 +3,14 @@ package com.qlfsoft.wordman.ui;
 import java.util.List;
 
 import org.litepal.crud.DataSupport;
+import org.litepal.tablemanager.Connector;
 
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -28,13 +30,14 @@ public class LoginActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.login_activity);
 		initView();
 		setListener();
 		init();
 	}
 
 	private void init() {
-		SharePreferenceUtils spHelper = new SharePreferenceUtils();
+		SharePreferenceUtils spHelper =SharePreferenceUtils.getInstnace();
 		String userAccount = spHelper.getUserAccount();
 		if(userAccount != null && (!userAccount.equals("")))
 		{
@@ -48,6 +51,7 @@ public class LoginActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
+				SQLiteDatabase db = Connector.getDatabase();
 				String userAccount = et_account.getText().toString();
 				String userPwd = et_pwd.getText().toString();
 				if(TextUtils.isEmpty(userAccount))

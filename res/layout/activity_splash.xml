@@ -17,12 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"
+        android:gravity="center"
+        android:layout_gravity="center"
         android:orientation="vertical" >
 
         <ImageView
             android:id="@+id/frg_category_item_img_sel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:scaleType="centerInside"
             android:src="@drawable/logo_splash" />
 
@@ -39,9 +42,20 @@
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/frg_category_item_wdSize"
+            android:layout_below="@+id/splash_tv_firstLoading"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="14dp" />
+
+        <TextView
+            android:id="@+id/splash_tv_firstLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/frg_category_item_wdSize"
+            android:layout_centerHorizontal="true"
+            android:text="第一次加载需要较多时间，请耐心等待"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/frg_category_item_wdSize"
