@@ -226,6 +226,7 @@ public class UserInfo {
 
 	}
 
+	/*
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		//结果码不等于取消时候
@@ -256,7 +257,7 @@ public class UserInfo {
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
+*/
 	/**
 	 * 裁剪图片方法实现
 	 * 
