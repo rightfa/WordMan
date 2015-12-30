@@ -14,6 +14,9 @@ public class SharePreferenceUtils {
 	private String userAccount = "USERACCOUNT";//用户账号
 	private String loginState = "LOGINSTATE";//时候登录状态
 	private String nickname = "NICKNAME";//昵称
+	private String significance = "SIGNIFICANCE";//签名
+	private String password = "PASSWORD";//密码
+	private String avatarImage = "AVATARIMAGE";//头像路径
 	
 	public SharePreferenceUtils()
 	{
@@ -127,4 +130,51 @@ public class SharePreferenceUtils {
 		ed.commit();
 	}
 	
+	/**
+	 * 设置签名
+	 * @param value
+	 */
+	public void setSignificance(String value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putString(significance,value);
+		ed.commit();
+	}
+	
+	public String getSignificance()
+	{
+		return sp.getString(significance, "你有多努力无需多谈,重要的是你完成了多少计划之中的事");
+	}
+	
+	public String getPassword()
+	{
+		return sp.getString(password, "");
+	}
+	
+	/**
+	 * 设置密码
+	 * @param value
+	 */
+	public void setPassword(String value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putString(password,value);
+		ed.commit();
+	}
+	
+	/**
+	 * 设置背景图片
+	 * @param value
+	 */
+	public void setAvatarImage(String value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putString(avatarImage,value);
+		ed.commit();
+	}
+	
+	public String getAvatarImage()
+	{
+		return sp.getString(avatarImage, "");
+	}
 }

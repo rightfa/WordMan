@@ -51,7 +51,6 @@ public class LoginActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				SQLiteDatabase db = Connector.getDatabase();
 				String userAccount = et_account.getText().toString();
 				String userPwd = et_pwd.getText().toString();
 				if(TextUtils.isEmpty(userAccount))
@@ -67,6 +66,7 @@ public class LoginActivity extends BaseActivity {
 					spHelper.setBookId(item.getSelBook());
 					spHelper.setNickName(item.getNickname());
 					spHelper.setUserAccount(item.getAccount());
+					spHelper.setPassword(item.getPassword());
 					spHelper.setLoginState(true);
 					Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 					startActivity(intent);

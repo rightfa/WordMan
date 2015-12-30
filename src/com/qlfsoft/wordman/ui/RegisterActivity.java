@@ -7,6 +7,7 @@ import org.litepal.crud.DataSupport;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
+import com.qlfsoft.wordman.utils.ToastUtils;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -58,24 +59,24 @@ public class RegisterActivity extends BaseActivity {
 				
 				if(TextUtils.isEmpty(account))
 				{
-					showToast("账号不能为空！");
+					ToastUtils.showShort("账号不能为空！");
 					return;
 				}
 				if(TextUtils.isEmpty(nickname))
 				{
-					showToast("昵称不能为空！");
+					ToastUtils.showShort("昵称不能为空！");
 					return;
 				}
 				if(!pwd.equals(rePwd))
 				{
-					showToast("两次输入的密码不一致！");
+					ToastUtils.showShort("两次输入的密码不一致！");
 					return;
 				}
 				
 				List<UserModel> list = DataSupport.where("account=?",account).find(UserModel.class);
 				if(list.size()>0)
 				{
-					showToast("账号已经存在！");
+					ToastUtils.showShort("账号已经存在！");
 					return;
 				}
 				UserModel userModel = new UserModel();
@@ -88,6 +89,7 @@ public class RegisterActivity extends BaseActivity {
 				spHelper.setBookId(0);
 				spHelper.setNickName(nickname);
 				spHelper.setUserAccount(account);
+				spHelper.setPassword(pwd);
 				spHelper.setLoginState(true);
 				
 				Intent intent = new Intent(RegisterActivity.this,SelCategoryActivity.class);
@@ -107,10 +109,4 @@ public class RegisterActivity extends BaseActivity {
 		btn_submit = (Button) this.findViewById(R.id.register_activity_submit);
 		
 	}
-	
-	private void showToast(String text)
-	{
-		Toast.makeText(RegisterActivity.this, text, Toast.LENGTH_SHORT).show();
-	}
-
 }
