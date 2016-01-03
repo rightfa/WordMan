@@ -38,7 +38,7 @@ public class SplashActivity extends BaseActivity {
 			protected Object doInBackground(Object... params) {
 				DictionaryDBHelper dbHelper = new DictionaryDBHelper();
 				dbExist = dbHelper.CopyDataBase();
-				
+				Connector.getDatabase();
 				return null;
 			}
 			

@@ -1,4 +1,5 @@
 package com.qlfsoft.wordman.widget;
+import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.utils.LogUtils;
 
 import android.content.Context;
@@ -36,13 +37,14 @@ public class FlipperLayout extends ViewGroup {
 	private boolean mOnClick = false;
 	private onUgcDismissListener mOnUgcDismissListener;
 	private onUgcShowListener mOnUgcShowListener;
+	private int mMoveWidth;
 
 	public FlipperLayout(Context context) {
 		super(context);
 		mScroller = new Scroller(context);
 		mWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
 				54, getResources().getDisplayMetrics());
-
+		mMoveWidth = BaseApplication.screenWidth / 2;
 	}
 
 	public FlipperLayout(Context context, AttributeSet attrs, int defStyle) {
@@ -84,9 +86,9 @@ public class FlipperLayout extends ViewGroup {
 			if (mTouchState == TOUCH_STATE_RESTART) {
 				int x = (int) ev.getX();
 				int screenWidth = getWidth();
-				if (x <= mWidth && mScreenState == SCREEN_STATE_CLOSE
+				if (x <= mMoveWidth && mScreenState == SCREEN_STATE_CLOSE
 						&& mTouchState == TOUCH_STATE_RESTART
-						|| x >= screenWidth - mWidth
+						|| x >= mMoveWidth
 						&& mScreenState == SCREEN_STATE_OPEN
 						&& mTouchState == TOUCH_STATE_RESTART) {
 					if (mScreenState == SCREEN_STATE_OPEN) {

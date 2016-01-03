@@ -1,11 +1,24 @@
 package com.qlfsoft.wordman.menu;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
+import org.litepal.crud.DataSupport;
+
+import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
+import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.ui.LoginActivity;
+import com.qlfsoft.wordman.utils.ActivityForResultUtil;
 import com.qlfsoft.wordman.utils.FileUtils;
+import com.qlfsoft.wordman.utils.PhotoUtil;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
+import com.qlfsoft.wordman.utils.ToastUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,16 +26,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,26 +57,20 @@ public class UserInfo {
 	private Button btn_submit;
 	private ImageButton ib_avatar;
 	private Button btn_avatarchg;
-	private TextView tv_nickname;
-	private TextView tv_account;
-	private TextView tv_significances;
+	private EditText tv_nickname;
+	private EditText tv_account;
+	private EditText tv_significances;
 	private LinearLayout ll_orginPwd;
-	private TextView tv_orginPwd;
+	private EditText tv_orginPwd;
 	private LinearLayout ll_newPwd;
 	private LinearLayout ll_rePwd;
-	private TextView tv_newPwd;
-	private TextView tv_rePwd;
+	private EditText tv_newPwd;
+	private EditText tv_rePwd;
 	private Button btn_logout;
 	private boolean modify_flag;
 	
 	private String[] items = new String[] { "选择本地图片", "拍照" };
-	/* 头像名称 */
-	private static final String IMAGE_FILE_NAME = "faceImage.jpg";
-
-	/* 请求码 */
-	private static final int IMAGE_REQUEST_CODE = 0;
-	private static final int CAMERA_REQUEST_CODE = 1;
-	private static final int RESULT_REQUEST_CODE = 2;
+	private String tempImage = "temp.jpg";
 	
 	public UserInfo(Context context,Activity activity)
 	{
@@ -76,14 +87,14 @@ public class UserInfo {
 		tv_nickname.setText(spu.getNickName());
 		tv_account.setText(spu.getUserAccount());
 		tv_significances.setText(spu.getSignificance());
-		String imgUri = spu.getAvatarImage();
-		if(imgUri.equals(""))
+		boolean defaultImage = spu.getAvatarImage();
+		ib_avatar.setImageResource(R.drawable.head);
+		File file = new File(mActivity.getFilesDir(),BaseApplication.FACEIMAGE_FILE_NAME);
+		if(!defaultImage && file.exists())
 		{
-			ib_avatar.setImageResource(R.drawable.head);
-		}else{
-			
+			Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+			ib_avatar.setImageBitmap(bmp);	
 		}
-			
 	}
 
 	private void setListener() {
@@ -104,20 +115,87 @@ public class UserInfo {
 				if(btn_submit.getText().toString().equals(mContext.getResources().getString(R.string.about_btn_modify_str)))
 				{
 					//进行修改
+					tv_account.setEnabled(true);
+					tv_nickname.setEnabled(true);
+					tv_significances.setEnabled(true);
 					btn_submit.setText(R.string.about_btn_complete_str);
 					ll_orginPwd.setVisibility(View.VISIBLE);
 					ll_newPwd.setVisibility(View.VISIBLE);
 					ll_rePwd.setVisibility(View.VISIBLE);
+					btn_avatarchg.setVisibility(View.VISIBLE);
 				}else
 				{
+					SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
 					//修改完成
+					String account = tv_account.getText().toString().trim();
+					if(TextUtils.isEmpty(account))
+					{
+						ToastUtils.showShort("账号不能为空！");
+						return;
+					}
+					String nickname = tv_nickname.getText().toString().trim();
+					if(TextUtils.isEmpty(nickname))
+					{
+						ToastUtils.showShort("昵称不能为空！");
+						return;
+					}
 					
+					String newPwd = tv_newPwd.getText().toString().trim();
+					String rePwd = tv_rePwd.getText().toString().trim();
+					if(!newPwd.equals(rePwd))
+					{
+						ToastUtils.showShort("两次密码输入不一致");
+						return;
+					}
+					String orginPwd = tv_orginPwd.getText().toString().trim();
+					if(!orginPwd.equals(spu.getPassword()))
+					{
+						ToastUtils.showShort("原密码不正确");
+						return;
+					}
+					String significances = tv_significances.getText().toString();
 					
+					UserModel myUser = new UserModel();
+					myUser.setAccount(account);
+					myUser.setNickname(nickname);
+					myUser.setPassword(newPwd);
+					myUser.setSignificances(significances);
+					boolean updateFlag = false;
+					
+					List<UserModel> list = DataSupport.where("account=?",account).find(UserModel.class);
+					if(list.size() > 0)
+					{
+						if(list.get(0).getPassword().equals(orginPwd))
+						{
+							myUser.updateAll("account=?",account);
+							updateFlag = true;
+						}else
+						{
+							ToastUtils.showShort("账号已经存在，不能再创建！");
+							return;
+						}
+					}else
+					{
+						myUser.save();
+						updateFlag = true;
+					}
+					
+					if(updateFlag)
+					{
+						spu.setUserAccount(account);
+						spu.setNickName(nickname);
+						spu.setPassword(orginPwd);
+						spu.setSignificance(significances);
+					}
 					
 					btn_submit.setText(R.string.about_btn_modify_str);
 					ll_orginPwd.setVisibility(View.GONE);
 					ll_newPwd.setVisibility(View.GONE);
 					ll_rePwd.setVisibility(View.GONE);
+					btn_avatarchg.setVisibility(View.INVISIBLE);
+					tv_account.setEnabled(false);
+					tv_nickname.setEnabled(false);
+					tv_significances.setEnabled(false);
 				}
 				
 			}
@@ -127,7 +205,14 @@ public class UserInfo {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				String account = tv_account.getText().toString().trim();
+				String nickname = tv_nickname.getText().toString().trim();
+				String newPwd = tv_newPwd.getText().toString().trim();
+				String rePwd = tv_rePwd.getText().toString().trim();
+				String orginPwd = tv_orginPwd.getText().toString().trim();
+				String significances = tv_significances.getText().toString();
+				SharePreferenceUtils.getInstnace().setTempUserInfo(nickname, account, significances, orginPwd, newPwd, rePwd);
+				showDialog();
 				
 			}
 			
@@ -156,15 +241,15 @@ public class UserInfo {
 		btn_submit = (Button) mUserInfo.findViewById(R.id.about_submit);
 		ib_avatar = (ImageButton) mUserInfo.findViewById(R.id.about_avatar);
 		btn_avatarchg = (Button) mUserInfo.findViewById(R.id.about_avatar_change);
-		tv_nickname = (TextView) mUserInfo.findViewById(R.id.about_tv_nickname);
-		tv_account = (TextView) mUserInfo.findViewById(R.id.about_tv_account);
-		tv_significances = (TextView) mUserInfo.findViewById(R.id.about_tv_significances);
+		tv_nickname = (EditText) mUserInfo.findViewById(R.id.about_tv_nickname);
+		tv_account = (EditText) mUserInfo.findViewById(R.id.about_tv_account);
+		tv_significances = (EditText) mUserInfo.findViewById(R.id.about_tv_significances);
 		ll_orginPwd = (LinearLayout) mUserInfo.findViewById(R.id.about_ll_orginpwd);
-		tv_orginPwd = (TextView) mUserInfo.findViewById(R.id.about_tv_orginpwd);
+		tv_orginPwd = (EditText) mUserInfo.findViewById(R.id.about_tv_orginpwd);
 		ll_newPwd = (LinearLayout) mUserInfo.findViewById(R.id.about_ll_newpwd);
-		tv_newPwd = (TextView) mUserInfo.findViewById(R.id.about_tv_newpwd);
+		tv_newPwd = (EditText) mUserInfo.findViewById(R.id.about_tv_newpwd);
 		ll_rePwd = (LinearLayout) mUserInfo.findViewById(R.id.about_ll_repwd);
-		tv_rePwd = (TextView) mUserInfo.findViewById(R.id.about_tv_repwd);
+		tv_rePwd = (EditText) mUserInfo.findViewById(R.id.about_tv_repwd);
 		btn_logout = (Button) mUserInfo.findViewById(R.id.about_btn_logout);
 	}
 	
@@ -194,24 +279,16 @@ public class UserInfo {
 							intentFromGallery
 									.setAction(Intent.ACTION_GET_CONTENT);
 							mActivity.startActivityForResult(intentFromGallery,
-									IMAGE_REQUEST_CODE);
+									ActivityForResultUtil.REQUESTCODE_USERINFO_IMAGE);
 							break;
 						case 1:
 
 							Intent intentFromCapture = new Intent(
 									MediaStore.ACTION_IMAGE_CAPTURE);
-							// 判断存储卡是否可以用，可用进行存储
-							if (FileUtils.ExistSDCard()) {
-
-								intentFromCapture.putExtra(
-										MediaStore.EXTRA_OUTPUT,
-										Uri.fromFile(new File(Environment
-												.getExternalStorageDirectory(),
-												IMAGE_FILE_NAME)));
-							}
+							//intentFromCapture.putExtra(MediaStore.EXTRA_OUTPUT,Uri.fromFile(new File(mActivity.getFilesDir(),tempImage)));
 
 							mActivity.startActivityForResult(intentFromCapture,
-									CAMERA_REQUEST_CODE);
+									ActivityForResultUtil.REQUESTCODE_USERINFO_CAMERA);
 							break;
 						}
 					}
@@ -226,38 +303,32 @@ public class UserInfo {
 
 	}
 
-	/*
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	
+	public void doActivityResult(int requestCode, int resultCode, Intent data) {
+		SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
+		tv_nickname.setText(spu.getTemp_nickname());
+		tv_account.setText(spu.getTemp_account());
+		tv_significances.setText(spu.getTemp_significance());
+		tv_orginPwd.setText(spu.getTemp_orginPwd());
+		tv_newPwd.setText(spu.getTemp_newPwd());
+		tv_rePwd.setText(spu.getTemp_rePwd());
+		
 		//结果码不等于取消时候
-		if (resultCode != RESULT_CANCELED) {
-
-			switch (requestCode) {
-			case IMAGE_REQUEST_CODE:
+		switch (requestCode) {
+			case ActivityForResultUtil.REQUESTCODE_USERINFO_IMAGE:
 				startPhotoZoom(data.getData());
 				break;
-			case CAMERA_REQUEST_CODE:
-				if (Tools.hasSdcard()) {
-					File tempFile = new File(
-							Environment.getExternalStorageDirectory()
-									+ IMAGE_FILE_NAME);
-					startPhotoZoom(Uri.fromFile(tempFile));
-				} else {
-					Toast.makeText(MainActivity.this, "未找到存储卡，无法存储照片！",
-							Toast.LENGTH_LONG).show();
-				}
-
+			case ActivityForResultUtil.REQUESTCODE_USERINFO_CAMERA:
+				startPhotoZoom(data.getData());
 				break;
-			case RESULT_REQUEST_CODE:
+			case ActivityForResultUtil.REQUESTCODE_USERINFO_RESULT:
 				if (data != null) {
 					getImageToView(data);
 				}
 				break;
 			}
-		}
-		super.onActivityResult(requestCode, resultCode, data);
 	}
-*/
+
 	/**
 	 * 裁剪图片方法实现
 	 * 
@@ -288,8 +359,14 @@ public class UserInfo {
 		Bundle extras = data.getExtras();
 		if (extras != null) {
 			Bitmap photo = extras.getParcelable("data");
+			File file = new File(mActivity.getFilesDir(),BaseApplication.FACEIMAGE_FILE_NAME);
+			PhotoUtil.saveBitmap(photo,file);
 			Drawable drawable = new BitmapDrawable(photo);
 			ib_avatar.setImageDrawable(drawable);
+			SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
+			spu.setAvatarImage(false);
 		}
 	}
+	
+
 }

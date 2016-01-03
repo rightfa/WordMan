@@ -1,11 +1,16 @@
 package com.qlfsoft.wordman.menu;
 
+import java.io.File;
+
+import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.utils.PhotoUtil;
+import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.utils.ViewUtil;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -93,9 +98,16 @@ public class Desktop {
 	
 	private void init()
 	{
-		mName.setText(R.string.desktop_username);
-		mSig.setText(R.string.desktop_usersig);
+		SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
+		mName.setText(spu.getNickName());
+		mSig.setText(spu.getSignificance());
 		mAvatar.setImageBitmap(PhotoUtil.toRoundCorner(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.head), 15));
+		File file = new File(mActivity.getFilesDir(),BaseApplication.FACEIMAGE_FILE_NAME);
+		if(!spu.getAvatarImage() && file.exists())
+		{
+			Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
+			mAvatar.setImageBitmap(PhotoUtil.toRoundCorner(bmp,15));	
+		}
 		mAdapter = new DesktopAdapter(mContext);
 		mDisplay.setAdapter(mAdapter);
 	}

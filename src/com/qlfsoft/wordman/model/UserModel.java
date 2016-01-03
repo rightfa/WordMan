@@ -11,6 +11,7 @@ public class UserModel extends DataSupport {
 	private String account;//账号
 	private String password;//密码
 	private String avatar;//头像
+	private String significances;//签名
 	private int selBook;//选择的单词本
 	private int haveStudy;//已经学习的单词数
 	private int totalDay;//计划学习的天数
@@ -69,6 +70,12 @@ public class UserModel extends DataSupport {
 	}
 	public void setDailyword(int dailyword) {
 		this.dailyword = dailyword;
+	}
+	public String getSignificances() {
+		return significances;
+	}
+	public void setSignificances(String significances) {
+		this.significances = significances;
 	}
 	
 }

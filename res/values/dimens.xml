@@ -13,4 +13,5 @@
     <dimen name="frg_category_item_tv_margintop">50dp</dimen>
     <dimen name="frg_category_item_tv_maxwidth">180dp</dimen>
     <dimen name="frg_category_item_tv_fontsize">25sp</dimen>
+    <dimen name="main_activity_toptitle_size">20sp</dimen>
 </resources>

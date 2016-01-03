@@ -138,26 +138,19 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-
 		switch (requestCode) {
-		/**
-		 * 切换墙纸时回调此方法,通知菜单界面和用户界面修改墙纸
-		 */
-		case ActivityForResultUtil.REQUESTCODE_CHANGEWALLPAGER:
-			if (resultCode == RESULT_OK) {
-				//mDesktop.setWallpager();
+		case ActivityForResultUtil.REQUESTCODE_USERINFO_CAMERA:
+		case ActivityForResultUtil.REQUESTCODE_USERINFO_IMAGE:
+		case ActivityForResultUtil.REQUESTCODE_USERINFO_RESULT:
+			if(mUserInfo == null)
+			{
+				mUserInfo = new UserInfo(MainActivity.this,MainActivity.this);
+				mUserInfo.setOnOpenListener(MainActivity.this);
 			}
-			break;
-		/**
-		 * 修改签名时回调此方法,通知菜单界面和用户界面修改签名
-		 */
-		case ActivityForResultUtil.REQUESTCODE_EDITSIGNATURE:
-			if (resultCode == RESULT_OK) {
-				String arg0 = data.getStringExtra("signature");
-				//mDesktop.setSignature(arg0);
-			}
+			mRoot.close(mUserInfo.getView());
+			mUserInfo.doActivityResult(requestCode, resultCode, data);
 			break;
 		}
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 }

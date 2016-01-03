@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <litepal>
     <dbname value="wordman"></dbname>
-    <version value="1"></version>
+    <version value="1">
+    </version>
     
     <list>
         <mapping class="com.qlfsoft.wordman.model.SignModel"></mapping>
-        <mapping class="com.qlfsoft.wordman.model.UserModel""></mapping>
+        <mapping class="com.qlfsoft.wordman.model.UserModel"></mapping>
     </list>
 </litepal>

@@ -11,6 +11,6 @@ public class ToastUtils {
 	
 	public static void showShort(String msg)
 	{
-		Toast.makeText(BaseApplication.getContext(), msg, Toast.LENGTH_SHORT);
+		Toast.makeText(BaseApplication.getContext(), msg, Toast.LENGTH_SHORT).show();
 	}
 }

@@ -121,14 +121,16 @@
                     android:textColor="#222222"
                     android:textSize="14sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/about_tv_nickname"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/x30"
+                    android:enabled="false"
                     android:gravity="center_vertical"
                     android:paddingLeft="@dimen/x8"
                     android:textColor="#333333"
                     android:textSize="14sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -150,12 +152,14 @@
                     android:textColor="#222222"
                     android:textSize="14sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/about_tv_account"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/x30"
                     android:layout_weight="1"
+                    android:enabled="false"
                     android:gravity="center_vertical"
+                    android:inputType="textEmailAddress"
                     android:paddingLeft="@dimen/x8"
                     android:textColor="#333333"
                     android:textSize="14sp" />
@@ -181,13 +185,14 @@
                     android:textColor="#222222"
                     android:textSize="14sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/about_tv_significances"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/x30"
                     android:gravity="center_vertical"
                     android:paddingLeft="8dip"
                     android:textColor="#333333"
+                    android:enabled="false"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -212,11 +217,12 @@
                     android:textColor="#222222"
                     android:textSize="14sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/about_tv_orginpwd"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/x30"
                     android:gravity="center_vertical"
+                    android:inputType="textPassword"
                     android:paddingLeft="@dimen/x8"
                     android:textColor="#333333"
                     android:textSize="14sp" />
@@ -244,12 +250,13 @@
                     android:textColor="#222222"
                     android:textSize="14sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/about_tv_newpwd"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/x30"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:inputType="textPassword"
                     android:paddingLeft="@dimen/x8"
                     android:textColor="#333333"
                     android:textSize="14sp" />
@@ -277,12 +284,13 @@
                     android:textColor="#222222"
                     android:textSize="14sp" />
 
-                <TextView
+                <EditText
                     android:id="@+id/about_tv_repwd"
                     android:layout_width="fill_parent"
                     android:layout_height="@dimen/x30"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
+                    android:inputType="textPassword"
                     android:paddingLeft="@dimen/x8"
                     android:textColor="#333333"
                     android:textSize="14sp" />

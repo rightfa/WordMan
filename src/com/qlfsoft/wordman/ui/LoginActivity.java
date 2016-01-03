@@ -8,6 +8,8 @@ import org.litepal.tablemanager.Connector;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
+import com.qlfsoft.wordman.utils.ToastUtils;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -55,25 +57,28 @@ public class LoginActivity extends BaseActivity {
 				String userPwd = et_pwd.getText().toString();
 				if(TextUtils.isEmpty(userAccount))
 				{
-					Toast.makeText(LoginActivity.this, "账号不能为空！", Toast.LENGTH_SHORT).show();
+					ToastUtils.showShort( "账号不能为空！");
 					return;
 				}
 				List<UserModel> list = DataSupport.where("account=? and password=?",userAccount,userPwd).find(UserModel.class);
 				if(list.size() > 0)
 				{
 					UserModel item = list.get(0);
-					SharePreferenceUtils spHelper = new SharePreferenceUtils();
+					SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
 					spHelper.setBookId(item.getSelBook());
 					spHelper.setNickName(item.getNickname());
 					spHelper.setUserAccount(item.getAccount());
 					spHelper.setPassword(item.getPassword());
 					spHelper.setLoginState(true);
+					spHelper.setAvatarImage(true);
 					Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 					startActivity(intent);
 					finish();		
+				}else
+				{
+					ToastUtils.showShort( "用户名或账号错误！");
+					et_pwd.setText("");
 				}
-				Toast.makeText(LoginActivity.this, "用户名或账号错误！", Toast.LENGTH_SHORT).show();
-				et_pwd.setText("");
 			}
 			
 		});
