@@ -136,7 +136,7 @@
                     android:textSize="34sp" />
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/plan_tv_dailyword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="天"

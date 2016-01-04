@@ -118,6 +118,42 @@
 	            android:text="确定"
 	            android:textColor="@android:color/darker_gray"
 	            android:textSize="16sp" />
+
+	      <RelativeLayout
+	          android:layout_width="match_parent"
+	          android:layout_height="wrap_content" 
+	          android:layout_marginBottom="@dimen/x10"
+	          android:gravity="center">
+
+	          <TextView
+	              android:id="@+id/plan_tv_dailyword"
+	              android:layout_width="@dimen/x120"
+	              android:layout_height="wrap_content"
+	              android:gravity="center"
+	              android:text="每天单词"
+	              android:textColor="@android:color/black"
+	              android:textSize="@dimen/main_activity_toptitle_size" />
+
+	          <TextView
+	              android:id="@+id/plan_tv_needDay"
+	              android:layout_width="@dimen/x120"
+	              android:layout_height="wrap_content"
+	              android:layout_toRightOf="@id/plan_tv_dailyword"
+	              android:gravity="center"
+	              android:text="完成天数"
+	              android:textColor="@android:color/black"
+	              android:textSize="@dimen/main_activity_toptitle_size" />
+	          <kankan.wheel.widget.WheelView android:id="@+id/plan_wheel_dailyword"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/plan_tv_dailyword"
+				android:layout_width="@dimen/x120"/>
+			  <kankan.wheel.widget.WheelView android:id="@+id/plan_wheel_needDay"
+				android:layout_height="wrap_content"
+				android:layout_toRightOf="@id/plan_wheel_dailyword"
+				android:layout_below="@id/plan_tv_needDay"
+				android:layout_width="@dimen/x120"/>
+	      </RelativeLayout>
+	      
 	    </LinearLayout>
 
 	</LinearLayout>
