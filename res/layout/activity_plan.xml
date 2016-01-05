@@ -9,7 +9,7 @@
     android:background="@drawable/wordman_background"
     android:orientation="vertical" >
 	    <LinearLayout
-	        android:id="@+id/home_top_layout"
+	        android:id="@+id/plan_top_layout"
 	        android:layout_width="match_parent"
 	        android:layout_height="@dimen/x40"
 	        android:background="@drawable/global_top_background"

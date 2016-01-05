@@ -50,9 +50,9 @@ public class SelCategoryFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		mNum = getArguments() != null ?  getArguments().getInt("num") : 1;
 		books = new ArrayList<BookBook>();
-		DictionaryDBHelper dbHelper = new DictionaryDBHelper();
+		DictionaryDBHelper dbHelper = DictionaryDBHelper.getInstance();
 		books = dbHelper.getBooksByCateId(mNum);
-		sp = new SharePreferenceUtils();
+		sp = SharePreferenceUtils.getInstnace();
 	}
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,7 +71,7 @@ public class SelCategoryFragment extends Fragment {
 				int selBookId = books.get(position).getBookId();
 				sp.setBookId(selBookId);
 				adapter.notifyDataSetChanged();
-				SharePreferenceUtils spHelper = new SharePreferenceUtils();
+				SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
 				spHelper.setFirstOpen();
 				Intent intent = new Intent(getActivity(),MainActivity.class);
 				startActivity(intent);

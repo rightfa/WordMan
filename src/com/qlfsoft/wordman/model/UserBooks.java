@@ -1,57 +1,32 @@
 package com.qlfsoft.wordman.model;
 
 import org.litepal.crud.DataSupport;
-/**
- * 用户信息
- * @author hyn
- *
- */
-public class UserModel extends DataSupport {
-	private String nickname;//昵称
+
+public class UserBooks extends DataSupport{
 	private String account;//账号
-	private String password;//密码
-	private String avatar;//头像
-	private String significances;//签名
-	private int selBook;//选择的单词本
+	private int bookId;//单词本序号
+	private boolean inUser;//是否在使用中
 	private int haveStudy;//已经学习的单词数
 	private int totalDay;//计划学习的天数
 	private int remainDay;//剩余学习的天数
 	private int dailyword;//每日学习单词数
-	public String getNickname() {
-		return nickname;
-	}
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
 	public String getAccount() {
 		return account;
 	}
 	public void setAccount(String account) {
 		this.account = account;
 	}
-	public String getPassword() {
-		return password;
+	public int getBookId() {
+		return bookId;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
 	}
-	public String getAvatar() {
-		return avatar;
+	public boolean isInUser() {
+		return inUser;
 	}
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
-	public int getSelBook() {
-		return selBook;
-	}
-	public void setSelBook(int selBook) {
-		this.selBook = selBook;
-	}
-	public String getSignificances() {
-		return significances;
-	}
-	public void setSignificances(String significances) {
-		this.significances = significances;
+	public void setInUser(boolean inUser) {
+		this.inUser = inUser;
 	}
 	public int getHaveStudy() {
 		return haveStudy;
@@ -77,5 +52,4 @@ public class UserModel extends DataSupport {
 	public void setDailyword(int dailyword) {
 		this.dailyword = dailyword;
 	}
-	
 }

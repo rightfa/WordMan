@@ -20,9 +20,18 @@ import android.util.Log;
 public class DictionaryDBHelper {
 
 	private Context mContext;
-	public DictionaryDBHelper()
+	private DictionaryDBHelper()
 	{
 		this.mContext = BaseApplication.getContext();
+	}
+	
+	private static DictionaryDBHelper instance;
+	
+	public synchronized static DictionaryDBHelper getInstance()
+	{
+		if(null == instance)
+			instance = new DictionaryDBHelper();
+		return instance;
 	}
 	
 	/**
@@ -160,5 +169,29 @@ public class DictionaryDBHelper {
 		}
 		db.close();
 		return books;
+	}
+	
+	/**
+	 * 根据单词本序号获取单词本信息
+	 * @param bookId
+	 * @return
+	 */
+	public BookBook getBookById(int bookId)
+	{
+		BookBook book = null;
+		String sql = "select BookID,CateID,BookName,BookCount,BookOrder from tbBook where BookID=" + bookId;
+		SQLiteDatabase db = getbookDB();
+		Cursor cursor = db.rawQuery(sql, null);
+		while(cursor.moveToNext())
+		{
+			book = new BookBook();
+			book.setBookId(cursor.getInt(cursor.getColumnIndex("BookID")));
+			book.setCateId(cursor.getInt(cursor.getColumnIndex("CateID")));
+			book.setBookName(cursor.getString(cursor.getColumnIndex("BookName")));
+			book.setBookCount(cursor.getInt(cursor.getColumnIndex("BookCount")));
+			book.setBookOrder(cursor.getInt(cursor.getColumnIndex("BookOrder")));
+		}
+		db.close();
+		return book;
 	}
 }

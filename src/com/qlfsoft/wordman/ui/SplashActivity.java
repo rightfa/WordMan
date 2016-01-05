@@ -36,7 +36,7 @@ public class SplashActivity extends BaseActivity {
 			boolean dbExist = true;
 			@Override
 			protected Object doInBackground(Object... params) {
-				DictionaryDBHelper dbHelper = new DictionaryDBHelper();
+				DictionaryDBHelper dbHelper = DictionaryDBHelper.getInstance();
 				dbExist = dbHelper.CopyDataBase();
 				Connector.getDatabase();
 				return null;

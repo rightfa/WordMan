@@ -25,7 +25,7 @@ public class SharePreferenceUtils {
 	private String temp_newPwd = "TEMP_NEWPWD";
 	private String temp_rePwd = "TEMP_REPWD";
 	
-	public SharePreferenceUtils()
+	private SharePreferenceUtils()
 	{
 		mContext = BaseApplication.sContext;
 		sp = mContext.getSharedPreferences("com.qlfsoft.wordman", Context.MODE_PRIVATE);

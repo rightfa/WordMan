@@ -46,7 +46,7 @@ public class SelCategoryActivity extends FragmentActivity {
 	
 	private void initData()
 	{
-		DictionaryDBHelper dbHelper = new DictionaryDBHelper();
+		DictionaryDBHelper dbHelper = DictionaryDBHelper.getInstance();
 		indicators = new ArrayList<BookCategory>();
 		indicators = dbHelper.getAllBookCats();
 	}

@@ -85,7 +85,7 @@ public class RegisterActivity extends BaseActivity {
 				userModel.setNickname(nickname);
 				userModel.save();
 				
-				SharePreferenceUtils spHelper = new SharePreferenceUtils();
+				SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
 				spHelper.setBookId(0);
 				spHelper.setNickName(nickname);
 				spHelper.setUserAccount(account);
