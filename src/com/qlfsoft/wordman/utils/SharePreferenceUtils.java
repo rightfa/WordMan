@@ -21,6 +21,7 @@ public class SharePreferenceUtils {
 	private String totalDay = "TOTALDAY";//计划学习的天数
 	private String remainDay = "REMAINDAY";//剩余学习的天数
 	private String dailyWord = "DAILYWORD";//每日学习的单词数
+	private String wordSize = "WORDSIZE";//单词本包含的单词量
 	
 	private String temp_nickname = "TEMP_NICKNAME";
 	private String temp_account = "TEMP_ACCOUNT";
@@ -42,6 +43,26 @@ public class SharePreferenceUtils {
 		if(null == sharedPreferenceUtil)
 			sharedPreferenceUtil = new SharePreferenceUtils();
 		return sharedPreferenceUtil;
+	}
+	
+	/**
+	 * 获取单词本的单词量
+	 * @return
+	 */
+	public int getWordSize()
+	{
+		return sp.getInt(wordSize, 0);
+	}
+	
+	/**
+	 * 设置单词本的单词量
+	 * @param value
+	 */
+	public void setWordSize(int value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putInt(wordSize, value);
+		ed.commit();
 	}
 	
 	/**

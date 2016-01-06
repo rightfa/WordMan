@@ -7,6 +7,7 @@ import com.qlfsoft.wordman.R.menu;
 import com.qlfsoft.wordman.menu.Desktop;
 import com.qlfsoft.wordman.menu.Desktop.onChangeViewListener;
 import com.qlfsoft.wordman.menu.Home;
+import com.qlfsoft.wordman.menu.MyPlan;
 import com.qlfsoft.wordman.menu.UserInfo;
 import com.qlfsoft.wordman.utils.ActivityForResultUtil;
 import com.qlfsoft.wordman.utils.ViewUtil;
@@ -32,7 +33,7 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 	private Desktop mDesktop;
 	private Home mHome;
 	private UserInfo mUserInfo;
-	
+	private MyPlan mPlan;
 	/*
 	 * 当前显示的View的编号
 	 */
@@ -91,6 +92,15 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 						mUserInfo.setOnOpenListener(MainActivity.this);
 					}
 					mRoot.close(mUserInfo.getView());
+					break;
+				case ViewUtil.MYPLAN:
+					if(mPlan == null)
+					{
+						mPlan = new MyPlan(MainActivity.this,MainActivity.this);
+						mPlan.setOnOpenListener(MainActivity.this);
+					}
+					mRoot.close(mPlan.getView());
+					break;
 				default:
 						break;
 				}

@@ -1,5 +1,6 @@
 package com.qlfsoft.wordman.menu;
 import com.qlfsoft.wordman.R;
+import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 
 import android.app.Activity;
@@ -47,7 +48,13 @@ public class Home {
 	}
 
 	private void init() {
-		// TODO Auto-generated method stub
+		SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
+		tv_username.setText(spu.getNickName());
+		tv_remainDay.setText(String.valueOf(spu.getRemainDay()));
+		tv_dayCount.setText(String.valueOf(spu.getDailyWord()));
+		tv_haveStudy.setText("ÒÑÍê³É " + spu.getHaveStudy() + "/" + spu.getWordSize());
+		pb_haveStudy.setMax(spu.getWordSize());
+		pb_haveStudy.setProgress(spu.getHaveStudy());
 		
 	}
 

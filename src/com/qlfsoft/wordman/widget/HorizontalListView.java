@@ -73,12 +73,8 @@ public class HorizontalListView extends AdapterView<ListAdapter> {
 		mCurrentX = 0;
 		mNextX = 0;
 		mMaxX = Integer.MAX_VALUE;
-		if (!this.isInEditMode()) {
-		      mScroller = new Scroller(getContext());
-		      mGesture = new GestureDetector(getContext(), mOnGesture);
-		}
-		//mScroller = new Scroller(getContext());
-		//mGesture = new GestureDetector(getContext(), mOnGesture);
+		mScroller = new Scroller(getContext());
+		mGesture = new GestureDetector(getContext(), mOnGesture);
 	}
 	
 	@Override

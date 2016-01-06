@@ -67,9 +67,16 @@ public class SelCategoryFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				
-				int selBookId = books.get(position).getBookId();
+				//Ñ¡Ôñµ¥´Ê±¾
+				BookBook bookInfo = books.get(position);
+				int selBookId = bookInfo.getBookId();
+				int bookwords = bookInfo.getBookCount();
+				sp.setDailyWord(50);
+				sp.setHaveStudy(0);
+				sp.setRemainDay(bookwords / 50);
+				sp.setTotalDay(bookwords / 50);
 				sp.setBookId(selBookId);
+				sp.setWordSize(bookwords);
 				adapter.notifyDataSetChanged();
 				SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
 				spHelper.setFirstOpen();

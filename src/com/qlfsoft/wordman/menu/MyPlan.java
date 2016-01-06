@@ -5,7 +5,10 @@ import java.util.List;
 
 import org.litepal.crud.DataSupport;
 
+import kankan.wheel.widget.OnWheelChangedListener;
+import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
+import kankan.wheel.widget.adapters.NumericWheelAdapter;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -47,6 +50,8 @@ public class MyPlan {
 	
 	private OnOpenListener mOnOpenListener;
 	private List<UserBooks> myBooks;
+	private boolean w_d1 = false;//标记每日单词量是否在滚动
+	private boolean w_d2=false;//标记计划学习天数是否在滚动
 	
 	public MyPlan(Context ctx,Activity act)
 	{
@@ -81,7 +86,7 @@ public class MyPlan {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
@@ -90,8 +95,12 @@ public class MyPlan {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
+				SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
+				int tmp_dailyword = wheel_dailyword.getCurrentItem() + 10;
+				int tmp_needDay = wheel_needDay.getCurrentItem() + 10;
+				spu.setRemainDay((spu.getWordSize()-spu.getHaveStudy())/tmp_dailyword);
+				spu.setTotalDay(tmp_needDay);
+				spu.setDailyWord(tmp_dailyword);
 			}
 			
 		});
@@ -100,11 +109,13 @@ public class MyPlan {
 	private void init() {
 		SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
 		int selBookId = spu.getSelBookId();
+		int curBookSize = spu.getWordSize();//当前选中的单词本词汇量
 		String account = spu.getUserAccount();
 		if(!("".equals(account)))
 		{
 			myBooks = DataSupport.where("account=?",account).find(UserBooks.class);
-		}else{
+		}
+		if(myBooks.size()== 0){
 			myBooks = new ArrayList<UserBooks>();
 			UserBooks book = new UserBooks();
 			book.setBookId(selBookId);
@@ -143,6 +154,9 @@ public class MyPlan {
 				}
 				
 				spu.setBookId(selBookId);
+				BookBook bookInfo = dbHelper.getBookById(selBookId);
+				int bookwords = bookInfo.getBookCount();
+				spu.setWordSize(bookwords);
 				List<UserBooks> tmpBooks = DataSupport.where("account=? and bookId=?",account,String.valueOf(selBookId)).find(UserBooks.class);
 				if(tmpBooks.size() > 0)
 				{
@@ -150,16 +164,64 @@ public class MyPlan {
 					spu.setHaveStudy(tmpBooks.get(0).getHaveStudy());
 					spu.setRemainDay(tmpBooks.get(0).getRemainDay());
 					spu.setTotalDay(tmpBooks.get(0).getTotalDay());
+					
 				}else
 				{
-					BookBook bookInfo = dbHelper.getBookById(selBookId);
-					int bookwords = bookInfo.getBookCount();
 					spu.setDailyWord(50);
 					spu.setHaveStudy(0);
 					spu.setRemainDay(bookwords / 50);
 					spu.setTotalDay(bookwords / 50);
 				}
 				adapter.notifyDataSetChanged();
+				
+			}
+			
+		});
+		
+		wheel_dailyword.setViewAdapter(new NumericWheelAdapter(mContext,10,500));
+		wheel_needDay.setViewAdapter(new NumericWheelAdapter(mContext,1,500));
+		
+		wheel_dailyword.setCurrentItem(spu.getDailyWord() - 10);
+		wheel_needDay.setCurrentItem(spu.getTotalDay() - 10);
+		
+		
+		wheel_dailyword.addChangingListener(new OnWheelChangedListener(){
+
+			@Override
+			public void onChanged(WheelView wheel, int oldValue, int newValue) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		wheel_dailyword.addScrollingListener(new OnWheelScrollListener(){
+
+			@Override
+			public void onScrollingStarted(WheelView wheel) {
+				w_d1 = true;
+			}
+
+			@Override
+			public void onScrollingFinished(WheelView wheel) {
+				w_d1 = false;
+				int tmp_dailyword = wheel_dailyword.getCurrentItem() + 10;
+				wheel_needDay.setCurrentItem(SharePreferenceUtils.getInstnace().getWordSize() / tmp_dailyword,true);
+				
+			}
+			
+		});
+		wheel_needDay.addScrollingListener(new OnWheelScrollListener(){
+
+			@Override
+			public void onScrollingStarted(WheelView wheel) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onScrollingFinished(WheelView wheel) {
+				int tmp_needDay = wheel_needDay.getCurrentItem() + 10;
+				wheel_dailyword.setCurrentItem(SharePreferenceUtils.getInstnace().getWordSize() / tmp_needDay,true);
 				
 			}
 			
