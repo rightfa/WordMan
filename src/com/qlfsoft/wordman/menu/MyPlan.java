@@ -26,6 +26,7 @@ import com.qlfsoft.wordman.model.BookBook;
 import com.qlfsoft.wordman.model.UserBooks;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
+import com.qlfsoft.wordman.utils.ToastUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 import com.qlfsoft.wordman.widget.HorizontalListView;
 
@@ -94,16 +95,6 @@ public class MyPlan {
 			}
 			
 		});
-		hlv_books.setOnItemClickListener(new OnItemClickListener(){
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-		});
 	}
 
 	private void init() {
@@ -118,8 +109,61 @@ public class MyPlan {
 			UserBooks book = new UserBooks();
 			book.setBookId(selBookId);
 		}
-		
-		
+		final HLVAdapter adapter = new HLVAdapter(mContext);
+		hlv_books.setAdapter(adapter);
+		hlv_books.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+				SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
+				DictionaryDBHelper dbHelper = DictionaryDBHelper.getInstance();
+				String account = spu.getUserAccount();
+				if("".equals(account))
+				{
+					ToastUtils.showShort("请先去设置账号！");
+					return;
+				}
+				int selBookId = myBooks.get(position).getBookId();
+				//保存前一本单词本的内容
+				int preBookId = spu.getSelBookId();
+				UserBooks preBook = new UserBooks();
+				preBook.setBookId(preBookId);
+				preBook.setAccount(account);
+				preBook.setDailyword(spu.getDailyWord());
+				preBook.setHaveStudy(spu.getHaveStudy());
+				preBook.setRemainDay(spu.getRemainDay());
+				preBook.setTotalDay(spu.getTotalDay());
+				if(DataSupport.where("account=? and bookId=?",account,String.valueOf(preBookId)).find(UserBooks.class).size() > 0)
+				{
+					preBook.updateAll("account=? and bookId=?",account,String.valueOf(preBookId));
+				}else
+				{
+					preBook.save();
+				}
+				
+				spu.setBookId(selBookId);
+				List<UserBooks> tmpBooks = DataSupport.where("account=? and bookId=?",account,String.valueOf(selBookId)).find(UserBooks.class);
+				if(tmpBooks.size() > 0)
+				{
+					spu.setDailyWord(tmpBooks.get(0).getDailyword());
+					spu.setHaveStudy(tmpBooks.get(0).getHaveStudy());
+					spu.setRemainDay(tmpBooks.get(0).getRemainDay());
+					spu.setTotalDay(tmpBooks.get(0).getTotalDay());
+				}else
+				{
+					BookBook bookInfo = dbHelper.getBookById(selBookId);
+					int bookwords = bookInfo.getBookCount();
+					spu.setDailyWord(50);
+					spu.setHaveStudy(0);
+					spu.setRemainDay(bookwords / 50);
+					spu.setTotalDay(bookwords / 50);
+				}
+				adapter.notifyDataSetChanged();
+				
+			}
+			
+		});
 		
 	}
 

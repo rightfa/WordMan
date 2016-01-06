@@ -17,6 +17,10 @@ public class SharePreferenceUtils {
 	private String significance = "SIGNIFICANCE";//签名
 	private String password = "PASSWORD";//密码
 	private String defaultImage = "DEFAULTIMAGE";//是否默认头像
+	private String haveStudy = "HAVESTUDY";//已经学习的单词数
+	private String totalDay = "TOTALDAY";//计划学习的天数
+	private String remainDay = "REMAINDAY";//剩余学习的天数
+	private String dailyWord = "DAILYWORD";//每日学习的单词数
 	
 	private String temp_nickname = "TEMP_NICKNAME";
 	private String temp_account = "TEMP_ACCOUNT";
@@ -38,6 +42,86 @@ public class SharePreferenceUtils {
 		if(null == sharedPreferenceUtil)
 			sharedPreferenceUtil = new SharePreferenceUtils();
 		return sharedPreferenceUtil;
+	}
+	
+	/**
+	 * 获取已经学习过的单词数
+	 * @return
+	 */
+	public int getHaveStudy()
+	{
+		return sp.getInt(haveStudy, 0);
+	}
+	
+	/**
+	 * 设置已经学习过的单词数
+	 * @param value
+	 */
+	public void setHaveStudy(int value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putInt(haveStudy, value);
+		ed.commit();
+	}
+	
+	/**
+	 * 获取计划学习的天数
+	 * @return
+	 */
+	public int getTotalDay()
+	{
+		return sp.getInt(totalDay, 0);
+	}
+	
+	/**
+	 * 设置计划学习的天数
+	 * @param value
+	 */
+	public void setTotalDay(int value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putInt(totalDay, value);
+		ed.commit();
+	}
+	
+	/**
+	 * 获取剩余学习的天数
+	 * @return
+	 */
+	public int getRemainDay()
+	{
+		return sp.getInt(remainDay, 0);
+	}
+	
+	/**
+	 * 设置剩余学习的天数
+	 * @param value
+	 */
+	public void setRemainDay(int value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putInt(remainDay, value);
+		ed.commit();
+	}
+	
+	/**
+	 * 获取每日学习的单词数
+	 * @return
+	 */
+	public int getDailyWord()
+	{
+		return sp.getInt(dailyWord, 0);
+	}
+	
+	/**
+	 * 设置每日学习的单词数
+	 * @param value
+	 */
+	public void setDailyWord(int value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putInt(dailyWord, value);
+		ed.commit();
 	}
 	
 	/**
@@ -235,4 +319,5 @@ public class SharePreferenceUtils {
 	{
 		return sp.getString(temp_rePwd, "");
 	}
+	
 }
