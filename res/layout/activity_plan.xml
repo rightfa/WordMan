@@ -66,29 +66,30 @@
 	            android:textColor="@android:color/darker_gray"
 	            android:textSize="16sp" />
 
-	        <LinearLayout
+	        <RelativeLayout
 	            android:layout_width="match_parent"
-	            android:layout_height="@dimen/x80"
-	            android:orientation="horizontal" >
+	            android:layout_height="@dimen/x100"
+	         >
 
 	            <com.qlfsoft.wordman.widget.HorizontalListView
 	                android:id="@+id/plan_hlv_books"
-	                android:layout_width="match_parent"
-	                android:layout_weight="1"
+	                android:layout_width="@dimen/x10"
 	                android:layout_height="match_parent" 
+	                android:layout_alignParentLeft="true"
 	                android:layout_margin="@dimen/x2">                
 	            </com.qlfsoft.wordman.widget.HorizontalListView>
 
 	            <Button
 	                android:id="@+id/plan_btn_addbook"
-	                android:layout_width="wrap_content"
-	                android:layout_height="wrap_content"
+	                android:layout_width="@dimen/x80"
+	                android:layout_height="@dimen/x80"
 	                android:layout_gravity="center_vertical"
+	                android:layout_toRightOf="@id/plan_hlv_books"
+	                android:layout_marginTop="@dimen/x10"
 	                android:layout_marginRight="@dimen/x2"
-	                android:layout_weight="0"
 	                android:background="@drawable/pic_addbook" />
 
-	        </LinearLayout>
+	        </RelativeLayout>
 	    
 	    </LinearLayout>
 

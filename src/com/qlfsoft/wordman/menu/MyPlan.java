@@ -14,20 +14,24 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.BookBook;
 import com.qlfsoft.wordman.model.UserBooks;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
+import com.qlfsoft.wordman.utils.LogUtils;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.utils.ToastUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
@@ -119,7 +123,13 @@ public class MyPlan {
 			myBooks = new ArrayList<UserBooks>();
 			UserBooks book = new UserBooks();
 			book.setBookId(selBookId);
+			myBooks.add(book);
 		}
+		
+		float hlv_dimen_item = mContext.getResources().getDimension(R.dimen.x100); 
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)(hlv_dimen_item * myBooks.size()), (int)hlv_dimen_item);
+		hlv_books.setLayoutParams(params);
+		
 		final HLVAdapter adapter = new HLVAdapter(mContext);
 		hlv_books.setAdapter(adapter);
 		hlv_books.setOnItemClickListener(new OnItemClickListener(){
@@ -178,22 +188,20 @@ public class MyPlan {
 			
 		});
 		
-		wheel_dailyword.setViewAdapter(new NumericWheelAdapter(mContext,10,500));
-		wheel_needDay.setViewAdapter(new NumericWheelAdapter(mContext,1,500));
-		
-		wheel_dailyword.setCurrentItem(spu.getDailyWord() - 10);
-		wheel_needDay.setCurrentItem(spu.getTotalDay());
-		
+		wheel_dailyword.setViewAdapter(new NumericWheelAdapter(mContext,10,300));
+		wheel_needDay.setViewAdapter(new NumericWheelAdapter(mContext,1,365));
+		resetWheels();
 		
 		wheel_dailyword.addChangingListener(new OnWheelChangedListener(){
 
 			@Override
 			public void onChanged(WheelView wheel, int oldValue, int newValue) {
-				if(!w_d1)
-				{
-					int tmp_dailyword = wheel_dailyword.getCurrentItem() + 10;
-					wheel_needDay.setCurrentItem(SharePreferenceUtils.getInstnace().getWordSize() / tmp_dailyword,true);
-				}
+//				if(!w_d1)
+//				{
+//					int tmp_dailyword = wheel_dailyword.getCurrentItem() + 10;
+//					int tmp_w_item = (int)Math.ceil((float)(SharePreferenceUtils.getInstnace().getWordSize() / tmp_dailyword)) + 1;
+//					wheel_needDay.setCurrentItem(tmp_w_item,true);
+//				}
 				
 			}
 			
@@ -207,7 +215,17 @@ public class MyPlan {
 
 			@Override
 			public void onScrollingFinished(WheelView wheel) {
-				w_d1 = false;	
+				w_d1 = false;
+				LogUtils.Logv("dailyword:" + wheel_dailyword.getCurrentItem());
+				int tmp_dailyword = wheel_dailyword.getCurrentItem() + 10;
+				int tmp_w_item = (int)Math.ceil((float)(SharePreferenceUtils.getInstnace().getWordSize() / tmp_dailyword));
+				if(tmp_w_item < 0 || tmp_w_item > 365)
+				{
+					ToastUtils.showShort("不切实际的计划不利于学单词哦！");
+					resetWheels();
+					return;
+				}
+				wheel_needDay.setCurrentItem(tmp_w_item,false);
 			}
 			
 		});
@@ -221,7 +239,17 @@ public class MyPlan {
 
 			@Override
 			public void onScrollingFinished(WheelView wheel) {
-				w_d2 = false;			
+				w_d2 = false;	
+				LogUtils.Logv("need_day:" + wheel_needDay.getCurrentItem());
+				int tmp_needDay = wheel_needDay.getCurrentItem() + 1;
+				int tmp_w_item = (int)Math.ceil((float)(SharePreferenceUtils.getInstnace().getWordSize() / tmp_needDay)) - 9;
+				if(tmp_w_item < 0 || tmp_w_item > 290)
+				{
+					ToastUtils.showShort("不切实际的计划不利于学单词哦！");
+					resetWheels();
+					return;
+				}
+				wheel_dailyword.setCurrentItem(tmp_w_item,false);
 			}
 			
 		});
@@ -229,11 +257,11 @@ public class MyPlan {
 
 			@Override
 			public void onChanged(WheelView wheel, int oldValue, int newValue) {
-				if(!w_d2)
-				{
-					int tmp_needDay = wheel_needDay.getCurrentItem() + 10;
-					wheel_dailyword.setCurrentItem(SharePreferenceUtils.getInstnace().getWordSize() / tmp_needDay,true);
-				}
+//				if(!w_d2)
+//				{
+//					int tmp_needDay = wheel_needDay.getCurrentItem() + 1;
+//					wheel_dailyword.setCurrentItem(SharePreferenceUtils.getInstnace().getWordSize() / tmp_needDay,true);
+//				}
 				
 			}
 			
@@ -258,6 +286,13 @@ public class MyPlan {
 
 	public void setOnOpenListener(OnOpenListener onOpenListener) {
 		mOnOpenListener = onOpenListener;
+	}
+	
+	private void resetWheels()
+	{
+		SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
+		wheel_dailyword.setCurrentItem(spu.getDailyWord() - 10);
+		wheel_needDay.setCurrentItem(spu.getTotalDay() -1);
 	}
 	
 	class HLVAdapter extends BaseAdapter{
@@ -309,7 +344,7 @@ public class MyPlan {
 			
 			BookBook book = DictionaryDBHelper.getInstance().getBookById(curBookId);
 			holder.tv_name.setText(book.getBookName());
-			holder.tv_account.setText(book.getBookCount());
+			holder.tv_account.setText(String.valueOf(book.getBookCount()));
 			return convertView;
 		}
 		
