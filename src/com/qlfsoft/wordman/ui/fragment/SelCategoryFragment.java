@@ -73,8 +73,8 @@ public class SelCategoryFragment extends Fragment {
 				int bookwords = bookInfo.getBookCount();
 				sp.setDailyWord(50);
 				sp.setHaveStudy(0);
-				sp.setRemainDay(bookwords / 50);
-				sp.setTotalDay(bookwords / 50);
+				sp.setRemainDay((int) Math.ceil((float)bookwords / 50));
+				sp.setTotalDay((int)Math.ceil((float)bookwords / 50));
 				sp.setBookId(selBookId);
 				sp.setWordSize(bookwords);
 				adapter.notifyDataSetChanged();

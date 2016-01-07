@@ -115,7 +115,7 @@ public class MyPlan {
 		{
 			myBooks = DataSupport.where("account=?",account).find(UserBooks.class);
 		}
-		if(myBooks.size()== 0){
+		if(null == myBooks || myBooks.size() == 0){
 			myBooks = new ArrayList<UserBooks>();
 			UserBooks book = new UserBooks();
 			book.setBookId(selBookId);
@@ -169,8 +169,8 @@ public class MyPlan {
 				{
 					spu.setDailyWord(50);
 					spu.setHaveStudy(0);
-					spu.setRemainDay(bookwords / 50);
-					spu.setTotalDay(bookwords / 50);
+					spu.setRemainDay((int)Math.ceil((float)bookwords / 50));
+					spu.setTotalDay((int)Math.ceil((float)bookwords / 50));
 				}
 				adapter.notifyDataSetChanged();
 				
@@ -182,14 +182,18 @@ public class MyPlan {
 		wheel_needDay.setViewAdapter(new NumericWheelAdapter(mContext,1,500));
 		
 		wheel_dailyword.setCurrentItem(spu.getDailyWord() - 10);
-		wheel_needDay.setCurrentItem(spu.getTotalDay() - 10);
+		wheel_needDay.setCurrentItem(spu.getTotalDay());
 		
 		
 		wheel_dailyword.addChangingListener(new OnWheelChangedListener(){
 
 			@Override
 			public void onChanged(WheelView wheel, int oldValue, int newValue) {
-				// TODO Auto-generated method stub
+				if(!w_d1)
+				{
+					int tmp_dailyword = wheel_dailyword.getCurrentItem() + 10;
+					wheel_needDay.setCurrentItem(SharePreferenceUtils.getInstnace().getWordSize() / tmp_dailyword,true);
+				}
 				
 			}
 			
@@ -203,10 +207,7 @@ public class MyPlan {
 
 			@Override
 			public void onScrollingFinished(WheelView wheel) {
-				w_d1 = false;
-				int tmp_dailyword = wheel_dailyword.getCurrentItem() + 10;
-				wheel_needDay.setCurrentItem(SharePreferenceUtils.getInstnace().getWordSize() / tmp_dailyword,true);
-				
+				w_d1 = false;	
 			}
 			
 		});
@@ -214,14 +215,25 @@ public class MyPlan {
 
 			@Override
 			public void onScrollingStarted(WheelView wheel) {
-				// TODO Auto-generated method stub
+				w_d2 = true;
 				
 			}
 
 			@Override
 			public void onScrollingFinished(WheelView wheel) {
-				int tmp_needDay = wheel_needDay.getCurrentItem() + 10;
-				wheel_dailyword.setCurrentItem(SharePreferenceUtils.getInstnace().getWordSize() / tmp_needDay,true);
+				w_d2 = false;			
+			}
+			
+		});
+		wheel_needDay.addChangingListener(new OnWheelChangedListener(){
+
+			@Override
+			public void onChanged(WheelView wheel, int oldValue, int newValue) {
+				if(!w_d2)
+				{
+					int tmp_needDay = wheel_needDay.getCurrentItem() + 10;
+					wheel_dailyword.setCurrentItem(SharePreferenceUtils.getInstnace().getWordSize() / tmp_needDay,true);
+				}
 				
 			}
 			

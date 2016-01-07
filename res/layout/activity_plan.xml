@@ -73,7 +73,7 @@
 
 	            <com.qlfsoft.wordman.widget.HorizontalListView
 	                android:id="@+id/plan_hlv_books"
-	                android:layout_width="wrap_content"
+	                android:layout_width="match_parent"
 	                android:layout_weight="1"
 	                android:layout_height="match_parent" 
 	                android:layout_margin="@dimen/x2">                
