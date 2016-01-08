@@ -7,18 +7,28 @@
     android:background="@drawable/bk_category"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:orientation="vertical" >
-
+         >
+		<Button
+		    android:id="@+id/plan_btn_delete"
+		    android:layout_width="@dimen/x20"
+		    android:layout_height="@dimen/x20"
+		    android:background="@drawable/png_delete"
+		    android:layout_alignParentTop="true"
+		    android:layout_alignParentRight="true"
+		    android:visibility="invisible"
+		    ></Button>
+        
         <TextView
             android:id="@+id/plan_item_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/x10"
+            android:layout_toLeftOf="@id/plan_btn_delete"
+            android:layout_below="@id/plan_btn_delete"
+            android:layout_marginLeft="@dimen/x15"
             android:ellipsize="end"
             android:freezesText="false"
             android:maxLines="2"
@@ -31,19 +41,28 @@
             android:id="@+id/plan_item_tv_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/plan_item_tv"
+            android:layout_toLeftOf="@id/plan_btn_delete"
             android:layout_marginTop="@dimen/x10"
             android:text="TextView"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
         <ImageView
             android:id="@+id/plan_item_img_sel"
-            android:layout_width="@dimen/x60"
-            android:layout_height="@dimen/x60"
+            android:layout_width="@dimen/x40"
+            android:layout_height="@dimen/x40"
             android:layout_gravity="center"
             android:src="@drawable/right_log"
             android:visibility="invisible" />
+        <Button 
+            android:id="@+id/plan_btn_refresh"
+            android:layout_width="@dimen/x30"
+            android:layout_height="@dimen/x30"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            android:background="@drawable/png_refresh"/>
 
 </com.qlfsoft.wordman.widget.SquareLayout>

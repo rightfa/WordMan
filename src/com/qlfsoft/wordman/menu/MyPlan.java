@@ -81,7 +81,14 @@ public class MyPlan {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				if(tv_bookedit.getText().equals("编辑"))//编辑状态
+				{
+					tv_bookedit.setText("完成");
+					
+				}else//保存内容
+				{
+					tv_bookedit.setText("编辑");
+				}
 				
 			}
 			
@@ -333,6 +340,8 @@ public class MyPlan {
 				holder.tv_name = (TextView) convertView.findViewById(R.id.plan_item_tv);
 				holder.tv_account = (TextView) convertView.findViewById(R.id.plan_item_tv_count);
 				holder.iv_sel = (ImageView) convertView.findViewById(R.id.plan_item_img_sel);
+				holder.btn_delete = (Button) convertView.findViewById(R.id.plan_btn_delete);
+				holder.btn_refresh = (Button) convertView.findViewById(R.id.plan_btn_refresh);
 				convertView.setTag(holder);
 			}
 			int selBookId = SharePreferenceUtils.getInstnace().getSelBookId();
@@ -345,6 +354,29 @@ public class MyPlan {
 			BookBook book = DictionaryDBHelper.getInstance().getBookById(curBookId);
 			holder.tv_name.setText(book.getBookName());
 			holder.tv_account.setText(String.valueOf(book.getBookCount()));
+			
+			//删除单词本,如果是当前正在学习的单词本则不能删除
+			holder.btn_delete.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			//重置单词本学习内容
+			holder.btn_refresh.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			
+			
 			return convertView;
 		}
 		
@@ -354,5 +386,7 @@ public class MyPlan {
 		public TextView tv_name;
 		public TextView tv_account;
 		public ImageView iv_sel;
+		public Button btn_delete;
+		public Button btn_refresh;
 	}
 }
