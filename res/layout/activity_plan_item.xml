@@ -16,7 +16,7 @@
 		    android:id="@+id/plan_btn_delete"
 		    android:layout_width="@dimen/x20"
 		    android:layout_height="@dimen/x20"
-		    android:background="@drawable/png_delete"
+		    android:background="@drawable/plan_btn_delete"
 		    android:layout_alignParentTop="true"
 		    android:layout_alignParentRight="true"
 		    android:visibility="invisible"
@@ -63,6 +63,6 @@
             android:layout_height="@dimen/x30"
             android:layout_gravity="center"
             android:visibility="invisible"
-            android:background="@drawable/png_refresh"/>
+            android:background="@drawable/plan_btn_refresh"/>
 
 </com.qlfsoft.wordman.widget.SquareLayout>

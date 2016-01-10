@@ -11,11 +11,14 @@ import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.NumericWheelAdapter;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -27,15 +30,19 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.meetme.android.horizontallistview.HorizontalListView;
+import com.qlfsoft.wordman.IPlanChange;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.BookBook;
 import com.qlfsoft.wordman.model.UserBooks;
+import com.qlfsoft.wordman.model.UserModel;
+import com.qlfsoft.wordman.ui.SelCategoryActivity;
+import com.qlfsoft.wordman.utils.ActivityForResultUtil;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
 import com.qlfsoft.wordman.utils.LogUtils;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.utils.ToastUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
-import com.qlfsoft.wordman.widget.HorizontalListView;
 
 public class MyPlan {
 
@@ -54,8 +61,11 @@ public class MyPlan {
 	
 	private OnOpenListener mOnOpenListener;
 	private List<UserBooks> myBooks;
+	private HLVAdapter adapter = null;
 	private boolean w_d1 = false;//标记每日单词量是否在滚动
 	private boolean w_d2=false;//标记计划学习天数是否在滚动
+	private boolean b_shake = false;//是否正在编辑状态
+	private IPlanChange mHomeView;
 	
 	public MyPlan(Context ctx,Activity act)
 	{
@@ -84,10 +94,16 @@ public class MyPlan {
 				if(tv_bookedit.getText().equals("编辑"))//编辑状态
 				{
 					tv_bookedit.setText("完成");
+					b_shake = true;
+					if(null!= adapter)
+						adapter.notifyDataSetChanged();
 					
 				}else//保存内容
 				{
 					tv_bookedit.setText("编辑");
+					b_shake = false;
+					if(null!= adapter)
+						adapter.notifyDataSetChanged();
 				}
 				
 			}
@@ -97,8 +113,15 @@ public class MyPlan {
 
 			@Override
 			public void onClick(View v) {
-				
-				
+				SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
+				String account = spu.getUserAccount();
+				if("".equals(account))
+				{
+					ToastUtils.showShort("请先去设置账号！");
+					return;
+				}
+				Intent intent = new Intent(mContext,SelCategoryActivity.class);
+				mActivity.startActivityForResult(intent, ActivityForResultUtil.REQUESTCODE_MYPLAN_ADD);
 			}
 			
 		});
@@ -108,10 +131,11 @@ public class MyPlan {
 			public void onClick(View v) {
 				SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
 				int tmp_dailyword = wheel_dailyword.getCurrentItem() + 10;
-				int tmp_needDay = wheel_needDay.getCurrentItem() + 10;
-				spu.setRemainDay((spu.getWordSize()-spu.getHaveStudy())/tmp_dailyword);
+				int tmp_needDay = wheel_needDay.getCurrentItem() + 1;
+				spu.setRemainDay((int)Math.ceil((float)((spu.getWordSize()-spu.getHaveStudy())/tmp_dailyword)));
 				spu.setTotalDay(tmp_needDay);
 				spu.setDailyWord(tmp_dailyword);
+				ToastUtils.showShort("修改计划成功！");
 			}
 			
 		});
@@ -137,13 +161,15 @@ public class MyPlan {
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams((int)(hlv_dimen_item * myBooks.size()), (int)hlv_dimen_item);
 		hlv_books.setLayoutParams(params);
 		
-		final HLVAdapter adapter = new HLVAdapter(mContext);
+		adapter = new HLVAdapter(mContext);
 		hlv_books.setAdapter(adapter);
 		hlv_books.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
+				if(b_shake)
+					return;
 				SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
 				DictionaryDBHelper dbHelper = DictionaryDBHelper.getInstance();
 				String account = spu.getUserAccount();
@@ -189,6 +215,7 @@ public class MyPlan {
 					spu.setRemainDay((int)Math.ceil((float)bookwords / 50));
 					spu.setTotalDay((int)Math.ceil((float)bookwords / 50));
 				}
+				resetWheels();
 				adapter.notifyDataSetChanged();
 				
 			}
@@ -295,11 +322,26 @@ public class MyPlan {
 		mOnOpenListener = onOpenListener;
 	}
 	
+	public void setPlanChange(IPlanChange iPlanChange)
+	{
+		this.mHomeView = iPlanChange;
+	}
+	
 	private void resetWheels()
 	{
 		SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
 		wheel_dailyword.setCurrentItem(spu.getDailyWord() - 10);
 		wheel_needDay.setCurrentItem(spu.getTotalDay() -1);
+		if(myBooks.size() >= 3)
+		{
+			btn_addbook.setVisibility(View.INVISIBLE);
+		}
+		else
+		{
+			btn_addbook.setVisibility(View.VISIBLE);
+		}
+		if(null != mHomeView)
+			mHomeView.dataChange();
 	}
 	
 	class HLVAdapter extends BaseAdapter{
@@ -328,7 +370,7 @@ public class MyPlan {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public View getView(final int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if(null != convertView)
 			{
@@ -349,19 +391,38 @@ public class MyPlan {
 			if(selBookId == curBookId)
 				holder.iv_sel.setVisibility(View.VISIBLE);
 			else
+			{
 				holder.iv_sel.setVisibility(View.INVISIBLE);
+				if(b_shake)
+				{
+					holder.btn_delete.setVisibility(View.VISIBLE);
+					holder.btn_refresh.setVisibility(View.VISIBLE);
+					Animation animation = AnimationUtils.loadAnimation(m_ctx, R.anim.shake);
+					convertView.startAnimation(animation);
+					
+				}else
+				{
+					holder.btn_delete.setVisibility(View.INVISIBLE);
+					holder.btn_refresh.setVisibility(View.INVISIBLE);
+					Animation animation = convertView.getAnimation();
+					if(null != animation)
+						animation.cancel();
+				}
+			}
 			
-			BookBook book = DictionaryDBHelper.getInstance().getBookById(curBookId);
+			final BookBook book = DictionaryDBHelper.getInstance().getBookById(curBookId);
 			holder.tv_name.setText(book.getBookName());
 			holder.tv_account.setText(String.valueOf(book.getBookCount()));
+			
 			
 			//删除单词本,如果是当前正在学习的单词本则不能删除
 			holder.btn_delete.setOnClickListener(new OnClickListener(){
 
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
+					DataSupport.deleteAll(UserBooks.class, "account=? and bookId=?",SharePreferenceUtils.getInstnace().getUserAccount(),String.valueOf(book.getBookId()));
+					myBooks.remove(position);
+					adapter.notifyDataSetChanged();
 				}
 				
 			});
@@ -370,13 +431,17 @@ public class MyPlan {
 
 				@Override
 				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					
+					UserBooks model = new UserBooks();
+					model.setBookId(book.getBookId());
+					model.setDailyword(50);
+					model.setHaveStudy(0);
+					model.setRemainDay((int)Math.ceil((float)book.getBookCount() / 50));
+					model.setTotalDay((int)Math.ceil((float)book.getBookCount() / 50));
+					model.setAccount(SharePreferenceUtils.getInstnace().getUserAccount());
+					model.updateAll("account=? and bookId=?",model.getAccount(),String.valueOf(model.getBookId()));
 				}
 				
 			});
-			
-			
 			return convertView;
 		}
 		

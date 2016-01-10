@@ -1,4 +1,5 @@
 package com.qlfsoft.wordman.menu;
+import com.qlfsoft.wordman.IPlanChange;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
@@ -14,7 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class Home {
+public class Home implements IPlanChange{
 
 	private Context mContext;
 	private Activity mActivity;
@@ -57,7 +58,7 @@ public class Home {
 		pb_haveStudy.setProgress(spu.getHaveStudy());
 		
 	}
-
+	
 	private void setListener() {
 		btn_menu.setOnClickListener(new OnClickListener(){
 
@@ -132,5 +133,11 @@ public class Home {
 
 	public void setOnOpenListener(OnOpenListener onOpenListener) {
 		mOnOpenListener = onOpenListener;
+	}
+
+	@Override
+	public void dataChange() {
+		init();
+		
 	}
 }

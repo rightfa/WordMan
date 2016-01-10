@@ -12,6 +12,7 @@ import org.litepal.crud.DataSupport;
 
 import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
+import com.qlfsoft.wordman.model.UserBooks;
 import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.ui.LoginActivity;
 import com.qlfsoft.wordman.utils.ActivityForResultUtil;
@@ -162,6 +163,14 @@ public class UserInfo {
 					myUser.setSignificances(significances);
 					boolean updateFlag = false;
 					
+					UserBooks myBook = new UserBooks();
+					myBook.setAccount(account);
+					myBook.setBookId(spu.getSelBookId());
+					myBook.setDailyword(spu.getDailyWord());
+					myBook.setHaveStudy(spu.getHaveStudy());
+					myBook.setRemainDay(spu.getRemainDay());
+					myBook.setTotalDay(spu.getTotalDay());
+					
 					List<UserModel> list = DataSupport.where("account=?",account).find(UserModel.class);
 					if(list.size() > 0)
 					{
@@ -177,6 +186,7 @@ public class UserInfo {
 					}else
 					{
 						myUser.save();
+						myBook.save();
 						updateFlag = true;
 					}
 					

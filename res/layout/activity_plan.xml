@@ -63,7 +63,7 @@
 	            android:layout_marginRight="@dimen/x15"
 	            android:layout_marginTop="@dimen/x5"
 	            android:text="编辑"
-	            android:textColor="@android:color/darker_gray"
+	            android:textColor="@drawable/tv_gray_black"
 	            android:textSize="16sp" />
 
 	        <RelativeLayout
@@ -71,26 +71,27 @@
 	            android:layout_height="@dimen/x100"
 	         >
 
-	            <com.qlfsoft.wordman.widget.HorizontalListView
+	            <com.meetme.android.horizontallistview.HorizontalListView
 	                android:id="@+id/plan_hlv_books"
 	                android:layout_width="@dimen/x10"
+	                android:divider="#fff"
 	                android:layout_height="match_parent" 
 	                android:layout_alignParentLeft="true"
-	                android:layout_margin="@dimen/x2">                
-	            </com.qlfsoft.wordman.widget.HorizontalListView>
-
-	            <Button
+	                android:layout_margin="@dimen/x2"/>                
+	           <Button
 	                android:id="@+id/plan_btn_addbook"
-	                android:layout_width="@dimen/x80"
-	                android:layout_height="@dimen/x80"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
 	                android:layout_gravity="center_vertical"
 	                android:layout_toRightOf="@id/plan_hlv_books"
 	                android:layout_marginTop="@dimen/x10"
 	                android:layout_marginRight="@dimen/x2"
 	                android:background="@drawable/pic_addbook" />
 
+	 
+
 	        </RelativeLayout>
-	    
+
 	    </LinearLayout>
 
 	    <LinearLayout
@@ -117,7 +118,7 @@
 	            android:layout_gravity="right"
 	            android:layout_marginRight="@dimen/x15"
 	            android:text="确定"
-	            android:textColor="@android:color/darker_gray"
+	            android:textColor="@drawable/tv_gray_black"
 	            android:textSize="16sp" />
 
 	      <RelativeLayout

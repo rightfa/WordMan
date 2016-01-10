@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.Inflater;
 
+import org.litepal.crud.DataSupport;
+
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.BookBook;
+import com.qlfsoft.wordman.model.UserBooks;
 import com.qlfsoft.wordman.ui.MainActivity;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
 import com.qlfsoft.wordman.utils.LogUtils;
@@ -32,11 +35,13 @@ public class SelCategoryFragment extends Fragment {
 	int mNum;
 	private List<BookBook> books;
 	private SharePreferenceUtils sp;
-	public static SelCategoryFragment newInstance(int num)
+	int type;
+	public static SelCategoryFragment newInstance(int num,int _type)
 	{
 		SelCategoryFragment fragment = new SelCategoryFragment();
 		Bundle bundle = new Bundle();
 		bundle.putInt("num", num);
+		bundle.putInt("type", _type);
 		fragment.setArguments(bundle);
 		return fragment;
 	}
@@ -49,6 +54,7 @@ public class SelCategoryFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mNum = getArguments() != null ?  getArguments().getInt("num") : 1;
+		type = getArguments() != null ? getArguments().getInt("type"): 0;
 		books = new ArrayList<BookBook>();
 		DictionaryDBHelper dbHelper = DictionaryDBHelper.getInstance();
 		books = dbHelper.getBooksByCateId(mNum);
@@ -67,22 +73,71 @@ public class SelCategoryFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				//选择单词本
-				BookBook bookInfo = books.get(position);
-				int selBookId = bookInfo.getBookId();
-				int bookwords = bookInfo.getBookCount();
-				sp.setDailyWord(50);
-				sp.setHaveStudy(0);
-				sp.setRemainDay((int) Math.ceil((float)bookwords / 50));
-				sp.setTotalDay((int)Math.ceil((float)bookwords / 50));
-				sp.setBookId(selBookId);
-				sp.setWordSize(bookwords);
-				adapter.notifyDataSetChanged();
-				SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
-				spHelper.setFirstOpen();
-				Intent intent = new Intent(getActivity(),MainActivity.class);
-				startActivity(intent);
-				getActivity().finish();
+				switch(type)
+				{
+				case 0:
+					//选择单词本
+					BookBook bookInfo = books.get(position);
+					int selBookId = bookInfo.getBookId();
+					SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
+					String userAccount = spu.getUserAccount();
+					int curBookId = spu.getSelBookId();
+					int bookwords = bookInfo.getBookCount();
+					int user_books_size = DataSupport.where("account = ?",userAccount).find(UserBooks.class).size();
+					if((!userAccount.equals("")) && user_books_size > 0)
+					{
+						if(curBookId != selBookId)
+						{
+							sp.setDailyWord(50);
+							sp.setHaveStudy(0);
+							sp.setRemainDay((int) Math.ceil((float)bookwords / 50));
+							sp.setTotalDay((int)Math.ceil((float)bookwords / 50));
+							sp.setBookId(selBookId);
+							sp.setWordSize(bookwords);
+							UserBooks userBook = new UserBooks();
+							userBook.setAccount(userAccount);
+							userBook.setDailyword(50);
+							userBook.setHaveStudy(0);
+							userBook.setInUser(true);
+							userBook.setRemainDay((int) Math.ceil((float)bookwords / 50));
+							userBook.setTotalDay((int)Math.ceil((float)bookwords / 50));
+							userBook.setBookId(selBookId);
+							userBook.save();
+							adapter.notifyDataSetChanged();
+						}
+						getActivity().finish();
+						
+					}else{
+						sp.setDailyWord(50);
+						sp.setHaveStudy(0);
+						sp.setRemainDay((int) Math.ceil((float)bookwords / 50));
+						sp.setTotalDay((int)Math.ceil((float)bookwords / 50));
+						sp.setBookId(selBookId);
+						sp.setWordSize(bookwords);
+						adapter.notifyDataSetChanged();
+						SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
+						spHelper.setFirstOpen();
+						if(!userAccount.equals(""))
+						{
+							UserBooks userBook = new UserBooks();
+							userBook.setAccount(userAccount);
+							userBook.setDailyword(50);
+							userBook.setHaveStudy(0);
+							userBook.setInUser(true);
+							userBook.setRemainDay((int) Math.ceil((float)bookwords / 50));
+							userBook.setTotalDay((int)Math.ceil((float)bookwords / 50));
+							userBook.setBookId(selBookId);
+							userBook.save();
+						}
+						Intent intent = new Intent(getActivity(),MainActivity.class);
+						startActivity(intent);
+						getActivity().finish();
+					}
+					break;
+				case 1:
+					
+					break;
+				}	
 			}
 			
 		});

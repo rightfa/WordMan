@@ -13,6 +13,7 @@ import com.viewpagerindicator.TabPageIndicator;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -27,12 +28,15 @@ public class SelCategoryActivity extends FragmentActivity {
 	private List<BookCategory> indicators;
 	private TabPageIndicator tpi_indicator;
 	private ViewPager vp_pager;
+	private int type;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_sel_category);
+		Intent intent = getIntent();
+		type = intent.getIntExtra("type", 0);
 		initData();
 		initView();
 	}
@@ -74,7 +78,7 @@ public class SelCategoryActivity extends FragmentActivity {
 
 		@Override
 		public Fragment getItem(int arg0) {
-			return SelCategoryFragment.newInstance(indicators.get(arg0).getCateID());
+			return SelCategoryFragment.newInstance(indicators.get(arg0).getCateID(),type);
 		}
 
 		@Override

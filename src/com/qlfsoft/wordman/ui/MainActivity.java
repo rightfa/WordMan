@@ -98,6 +98,7 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 					{
 						mPlan = new MyPlan(MainActivity.this,MainActivity.this);
 						mPlan.setOnOpenListener(MainActivity.this);
+						mPlan.setPlanChange(mHome);
 					}
 					mRoot.close(mPlan.getView());
 					break;
@@ -160,7 +161,17 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 			mRoot.close(mUserInfo.getView());
 			mUserInfo.doActivityResult(requestCode, resultCode, data);
 			break;
+		case ActivityForResultUtil.REQUESTCODE_MYPLAN_ADD:
+			if(mPlan == null)
+			{
+				mPlan = new MyPlan(MainActivity.this,MainActivity.this);
+				mPlan.setOnOpenListener(MainActivity.this);
+				mPlan.setPlanChange(mHome);
+			}
+			mRoot.close(mPlan.getView());
+			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+		
 	}
 }
