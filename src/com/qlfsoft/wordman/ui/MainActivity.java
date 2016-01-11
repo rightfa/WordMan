@@ -94,13 +94,7 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 					mRoot.close(mUserInfo.getView());
 					break;
 				case ViewUtil.MYPLAN:
-					if(mPlan == null)
-					{
-						mPlan = new MyPlan(MainActivity.this,MainActivity.this);
-						mPlan.setOnOpenListener(MainActivity.this);
-						mPlan.setPlanChange(mHome);
-					}
-					mRoot.close(mPlan.getView());
+					initMyPlan();
 					break;
 				default:
 						break;
@@ -112,7 +106,16 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 		}
 	
 	
-	
+	private void initMyPlan()
+	{
+		if(mPlan == null)
+		{
+			mPlan = new MyPlan(MainActivity.this,MainActivity.this);
+			mPlan.setOnOpenListener(MainActivity.this);
+			mPlan.setPlanChange(mHome);
+		}
+		mRoot.close(mPlan.getView());
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,13 +165,7 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 			mUserInfo.doActivityResult(requestCode, resultCode, data);
 			break;
 		case ActivityForResultUtil.REQUESTCODE_MYPLAN_ADD:
-			if(mPlan == null)
-			{
-				mPlan = new MyPlan(MainActivity.this,MainActivity.this);
-				mPlan.setOnOpenListener(MainActivity.this);
-				mPlan.setPlanChange(mHome);
-			}
-			mRoot.close(mPlan.getView());
+			initMyPlan();
 			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
