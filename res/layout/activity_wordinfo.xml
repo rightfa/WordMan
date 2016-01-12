@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wordman_background"
+    android:orientation="vertical" >
+    
+ <LinearLayout
+        android:id="@+id/wordinfo_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:background="@drawable/global_top_background"
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/x4"
+        android:paddingLeft="@dimen/x4"
+        android:paddingRight="@dimen/x2"
+        android:paddingTop="@dimen/x3" >
+
+        <ImageButton
+            android:id="@+id/wordinfo_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x4"
+            android:background="@drawable/title_text_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/activity_word_homemenu_bk" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x4"
+            android:background="@drawable/title_text_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/global_home"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/wordinfo_sv"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/wordinfo_btn_sound"
+                android:layout_width="@dimen/x50"
+                android:layout_height="@dimen/x50"
+                android:layout_gravity="center"
+                android:background="@drawable/activity_word_sound_bk" />
+
+            <TextView
+                android:id="@+id/wordinfo_tv_word"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/x5"
+                android:layout_marginTop="@dimen/x3"
+                android:layout_gravity="center"
+                android:text="accounts payable"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/wordinfo_tv_phonetic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="[ə&apos;kuːtə]"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/wordinfo_tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/x10"
+                android:layout_marginTop="@dimen/x10"
+                android:text="adv.正确的，紧缺的"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/x10"
+                android:layout_marginRight="@dimen/x10"
+                android:background="@android:color/white" >
+
+                <TextView
+                    android:id="@+id/wordinfo_textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/x3"
+                    android:layout_marginTop="@dimen/x3"
+                    android:text="例句"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/wordinfo_tv_sentence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wordinfo_textView1"
+                    android:layout_marginLeft="@dimen/x3"
+                    android:layout_marginRight="@dimen/x3"
+                    android:layout_marginTop="@dimen/x5"
+                    android:text="TextView"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/wordinfo_btn_next"
+        android:layout_width="@dimen/x150"
+        android:layout_height="@dimen/x45"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/x8"
+        android:layout_weight="0"
+        android:textSize="20sp"
+        android:textColor="@android:color/white"
+        android:background="#ee374e"
+        android:text="下一个" />
+
+</LinearLayout>

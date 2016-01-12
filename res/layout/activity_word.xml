@@ -4,8 +4,9 @@
     android:layout_height="match_parent"
     android:background="@drawable/wordman_background"
     android:orientation="vertical" >
-        <LinearLayout
-        android:id="@+id/home_top_layout"
+
+    <LinearLayout
+        android:id="@+id/word_top_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/x40"
         android:background="@drawable/global_top_background"
@@ -16,47 +17,145 @@
         android:paddingTop="@dimen/x3" >
 
         <ImageButton
-            android:id="@+id/home_menu"
+            android:id="@+id/word_menu"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/x4"
             android:background="@drawable/title_text_button"
-           	android:scaleType="centerInside"
+            android:scaleType="centerInside"
             android:src="@drawable/activity_word_homemenu_bk" />
 
         <TextView
             android:id="@+id/textView1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="" 
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:text="" />
 
-      	  <ImageButton
-			      android:layout_width="wrap_content"
-			      android:layout_height="match_parent"
-			      android:layout_marginLeft="@dimen/x4"
-			      android:background="@drawable/title_text_button"
-			      android:scaleType="centerInside"
-			      android:src="@drawable/global_home"
-			      android:visibility="invisible" />
-
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x4"
+            android:background="@drawable/title_text_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/global_home"
+            android:visibility="invisible" />
     </LinearLayout>
 
-        <TextView
-            android:id="@+id/word_tv_log"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/x5"
-            android:text="今日需新学 49/51  今日需复习73"
-            android:textColor="@color/app_color"
-            android:textSize="15sp" />
+    <TextView
+        android:id="@+id/word_tv_log"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/x5"
+        android:text="今日需新学 49/51  今日需复习73"
+        android:textColor="@color/app_color"
+        android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/word_btn_sound"
-            android:layout_width="@dimen/x50"
-            android:layout_height="@dimen/x50"
-            android:layout_gravity="center"
-            android:background="@drawable/activity_word_sound_bk" />
+    <Button
+        android:id="@+id/word_btn_sound"
+        android:layout_width="@dimen/x50"
+        android:layout_height="@dimen/x50"
+        android:layout_gravity="center"
+        android:background="@drawable/activity_word_sound_bk" />
+
+    <TextView
+        android:id="@+id/word_tv_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x5"
+        android:layout_marginTop="@dimen/x3"
+        android:text="accounts payable"
+        android:layout_gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/word_tv_phonetic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="[ə&apos;kuːtə]"
+        android:layout_gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:id="@+id/word_rl_new"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible" >
+
+            <TextView
+                android:id="@+id/word_tv_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/x10"
+                android:gravity="center"
+                android:text="adv.正确地，精确地；ad.准确地；精密地"
+                android:textColor="@android:color/black"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/word_btn_next1"
+                android:layout_marginTop="@dimen/x20"
+                android:layout_below="@id/word_tv_description"
+                android:layout_width="@dimen/x80"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+                android:text="下一个" />
+            <Button
+                android:id="@+id/word_btn_konw"
+                android:layout_marginTop="@dimen/x20"
+                android:layout_below="@id/word_btn_next1"
+                android:layout_width="@dimen/x80"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_centerHorizontal="true"
+                android:text="认   识" />
+            <Button
+                android:id="@+id/word_btn_unkonw"
+                android:layout_below="@id/word_btn_konw"
+                android:layout_width="@dimen/x80"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_centerHorizontal="true"
+                android:text="不认识" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/word_ll_review"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" 
+            android:visibility="invisible"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/word_lv_selectors"
+                android:layout_margin="@dimen/x10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+            </ListView>
+
+            <Button
+                android:id="@+id/word_btn_next2"
+                android:layout_width="@dimen/x80"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:visibility="invisible"
+                android:text="下一个" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
