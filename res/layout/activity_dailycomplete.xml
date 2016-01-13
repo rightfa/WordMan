@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wordman_background"
+    android:orientation="vertical" >
+     <LinearLayout
+        android:id="@+id/dailycomplete_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:background="@drawable/global_top_background"
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/x4"
+        android:paddingLeft="@dimen/x4"
+        android:paddingRight="@dimen/x2"
+        android:paddingTop="@dimen/x3" >
+
+        <ImageButton
+            android:id="@+id/dailycomplete_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x4"
+            android:background="@drawable/title_text_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/activity_word_homemenu_bk" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x4"
+            android:background="@drawable/title_text_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/global_home"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+     <ImageView
+         android:id="@+id/imageView1"
+         android:layout_width="@dimen/x320"
+         android:layout_height="@dimen/x80"
+         android:layout_gravity="center"
+         android:layout_marginTop="@dimen/x100"
+         android:src="@drawable/png_dailycomplete" />
+
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="@dimen/x30" >
+
+
+         <View 
+             android:id="@+id/dailycomplete_view1"
+             android:layout_width="1dp"
+             android:layout_height="1dp"
+             android:layout_marginLeft="@dimen/x30"
+             android:layout_marginRight="@dimen/x30"
+             android:layout_centerInParent="true"/>
+        <Button
+             android:id="@+id/dailycomplete_btn_back"
+             android:layout_width="@dimen/x60"
+             android:layout_height="@dimen/x60"
+             android:layout_centerHorizontal="true"
+             android:background="@drawable/greenbutton_bg"
+             android:text="返回"
+             android:textColor="@android:color/white"
+             android:layout_toLeftOf="@id/dailycomplete_view1"
+             android:textSize="16sp" />
+
+ 		<Button
+             android:id="@+id/dailycomplete_btn_replay"
+             android:layout_toRightOf="@id/dailycomplete_view1"
+             android:layout_width="@dimen/x60"
+             android:layout_height="@dimen/x60"
+             android:background="@drawable/greenbutton_bg"
+             android:textSize="16sp"
+             android:textColor="@android:color/white"
+             android:layout_centerInParent="true"
+             android:text="再来\n一波" />
+     </RelativeLayout>
+
+</LinearLayout>
