@@ -1,10 +1,15 @@
 package com.qlfsoft.wordman.ui;
 
+import java.util.List;
+
+import org.litepal.crud.DataSupport;
 import org.litepal.tablemanager.Connector;
 
+import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.R.layout;
 import com.qlfsoft.wordman.R.menu;
+import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
 import com.qlfsoft.wordman.utils.LogUtils;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
@@ -38,7 +43,35 @@ public class SplashActivity extends BaseActivity {
 			protected Object doInBackground(Object... params) {
 				DictionaryDBHelper dbHelper = DictionaryDBHelper.getInstance();
 				dbExist = dbHelper.CopyDataBase();
-				Connector.getDatabase();
+				//获取数据
+				List<UserModel> users = DataSupport.where("loginState=?",String.valueOf(1)).find(UserModel.class);
+				if(users.size() <= 0)
+				{
+					UserModel user = new UserModel();
+					user.setAccount("");
+					user.setNickname("单词君");
+					user.setPassword("");
+					user.setSignificances("你有多努力无需多谈重要的是你完成了多少计划之中的事");
+					user.setLoginState(1);
+					user.setSelBook(0);
+					user.save();
+					BaseApplication.nickName="单词君";
+					BaseApplication.significance = user.getSignificances();
+					BaseApplication.userAccount = user.getAccount();
+					BaseApplication.curBookId = 0;
+				}else
+				{
+					UserModel user = users.get(0);
+					BaseApplication.curBookId = user.getSelBook();
+					BaseApplication.dailyWord = user.getDailyword();
+					BaseApplication.haveStudy = user.getHaveStudy();
+					BaseApplication.remainDay = user.getRemainDay();
+					BaseApplication.nickName = user.getNickname();
+					BaseApplication.significance = user.getSignificances();
+					BaseApplication.totalDay = user.getTotalDay();
+					BaseApplication.userAccount = user.getAccount();
+					BaseApplication.wordSize = user.getWordSize();
+				}
 				return null;
 			}
 			
@@ -48,7 +81,7 @@ public class SplashActivity extends BaseActivity {
 				super.onPostExecute(o);
 				if(dbExist)
 				{
-					new Handler().postDelayed(new Runnable(){
+					new Handler().post(new Runnable(){
 	
 						@Override
 						public void run() {
@@ -58,7 +91,7 @@ public class SplashActivity extends BaseActivity {
 								Intent intent = new Intent(SplashActivity.this,SelCategoryActivity.class);
 								SplashActivity.this.startActivity(intent);
 
-							}else if(!spHelper.getLoginState())
+							}else if(DataSupport.where("loginState=?",String.valueOf(1)).find(UserModel.class).size()<=0)
 							{
 								//转入登录界面
 								Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
@@ -72,7 +105,7 @@ public class SplashActivity extends BaseActivity {
 							SplashActivity.this.finish();
 						}
 						
-					}, 700);
+					});
 				}else
 				{
 					System.exit(0);

@@ -13,6 +13,16 @@ public class BaseApplication extends LitePalApplication {
 	public static String dictionary_db_Path;
 	public static int screenWidth;
 	public static int screenHeight;
+	public static int curBookId;
+	public static String userAccount;
+	public static String nickName;
+	public static String significance;
+	public static int haveStudy;
+	public static int wordSize;
+	public static int totalDay;
+	public static int remainDay;
+	public static int dailyWord;
+	
 	/* Í·ÏñÃû³Æ */
 	public static final String FACEIMAGE_FILE_NAME = "faceImage.jpg";
 	@Override

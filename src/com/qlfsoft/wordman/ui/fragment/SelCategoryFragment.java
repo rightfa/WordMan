@@ -6,6 +6,7 @@ import java.util.zip.Inflater;
 
 import org.litepal.crud.DataSupport;
 
+import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.BookBook;
 import com.qlfsoft.wordman.model.UserBooks;
@@ -80,20 +81,20 @@ public class SelCategoryFragment extends Fragment {
 					BookBook bookInfo = books.get(position);
 					int selBookId = bookInfo.getBookId();
 					SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
-					String userAccount = spu.getUserAccount();
-					int curBookId = spu.getSelBookId();
+					String userAccount = BaseApplication.userAccount;
+					int curBookId = BaseApplication.curBookId;
 					int bookwords = bookInfo.getBookCount();
 					int user_books_size = DataSupport.where("account = ?",userAccount).find(UserBooks.class).size();
 					if((!userAccount.equals("")) && user_books_size > 0)
 					{
 						if(curBookId != selBookId)
 						{
-							sp.setDailyWord(50);
-							sp.setHaveStudy(0);
-							sp.setRemainDay((int) Math.ceil((float)bookwords / 50));
-							sp.setTotalDay((int)Math.ceil((float)bookwords / 50));
-							sp.setBookId(selBookId);
-							sp.setWordSize(bookwords);
+							BaseApplication.dailyWord = 50;
+							BaseApplication.haveStudy = 0;
+							BaseApplication.remainDay = (int) Math.ceil((float)bookwords / 50);
+							BaseApplication.totalDay = (int)Math.ceil((float)bookwords / 50);
+							BaseApplication.curBookId = selBookId;
+							BaseApplication.wordSize = bookwords;
 							UserBooks userBook = new UserBooks();
 							userBook.setAccount(userAccount);
 							userBook.setDailyword(50);
@@ -108,12 +109,12 @@ public class SelCategoryFragment extends Fragment {
 						getActivity().finish();
 						
 					}else{
-						sp.setDailyWord(50);
-						sp.setHaveStudy(0);
-						sp.setRemainDay((int) Math.ceil((float)bookwords / 50));
-						sp.setTotalDay((int)Math.ceil((float)bookwords / 50));
-						sp.setBookId(selBookId);
-						sp.setWordSize(bookwords);
+						BaseApplication.dailyWord = 50;
+						BaseApplication.haveStudy = 0;
+						BaseApplication.remainDay = (int) Math.ceil((float)bookwords / 50);
+						BaseApplication.totalDay = (int)Math.ceil((float)bookwords / 50);
+						BaseApplication.curBookId = selBookId;
+						BaseApplication.wordSize = bookwords;
 						adapter.notifyDataSetChanged();
 						SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
 						spHelper.setFirstOpen();
@@ -198,7 +199,7 @@ public class SelCategoryFragment extends Fragment {
 			BookBook book = books.get(position);
 			holder.tv_name.setText(book.getBookName());
 			holder.tv_count.setText(String.valueOf(book.getBookCount()));
-			if(sp.getSelBookId() == book.getBookId())
+			if(BaseApplication.curBookId == book.getBookId())
 			{
 				holder.iv_sel.setVisibility(View.VISIBLE);
 			}else

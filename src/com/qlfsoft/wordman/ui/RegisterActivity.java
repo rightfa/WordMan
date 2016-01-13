@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.litepal.crud.DataSupport;
 
+import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.utils.ToastUtils;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -79,18 +81,19 @@ public class RegisterActivity extends BaseActivity {
 					ToastUtils.showShort("’À∫≈“—æ≠¥Ê‘⁄£°");
 					return;
 				}
+				ContentValues values = new ContentValues();
+				values.put("loginState", 0);
+				DataSupport.updateAll(UserModel.class, values, null);
 				UserModel userModel = new UserModel();
 				userModel.setAccount(account);
 				userModel.setPassword(pwd);
 				userModel.setNickname(nickname);
+				userModel.setLoginState(1);
 				userModel.save();
 				
-				SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
-				spHelper.setBookId(0);
-				spHelper.setNickName(nickname);
-				spHelper.setUserAccount(account);
-				spHelper.setPassword(pwd);
-				spHelper.setLoginState(true);
+				BaseApplication.curBookId = 0;
+				BaseApplication.nickName = nickname;
+				BaseApplication.userAccount = account;	
 				
 				Intent intent = new Intent(RegisterActivity.this,SelCategoryActivity.class);
 				startActivity(intent);

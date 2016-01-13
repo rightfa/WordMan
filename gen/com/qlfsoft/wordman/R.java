@@ -1311,11 +1311,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_sel_category_indicator=0x7f09002e;
         public static final int activity_sel_category_pager=0x7f09002f;
         public static final int bottom=0x7f090003;
-        public static final int dailycomplete_btn_back=0x7f090019;
+        public static final int dailycomplete_btn_back=0x7f09001a;
         public static final int dailycomplete_btn_replay=0x7f09001b;
         public static final int dailycomplete_menu=0x7f090016;
         public static final int dailycomplete_top_layout=0x7f090015;
-        public static final int dailycomplete_view1=0x7f09001a;
+        public static final int dailycomplete_view1=0x7f090019;
         public static final int desktop_avatar=0x7f09004d;
         public static final int desktop_display=0x7f090050;
         public static final int desktop_item_icon=0x7f090053;

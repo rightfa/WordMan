@@ -1,11 +1,14 @@
 package com.qlfsoft.wordman.menu;
+import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.IPlanChange;
 import com.qlfsoft.wordman.R;
+import com.qlfsoft.wordman.ui.WordActivity;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -49,13 +52,12 @@ public class Home implements IPlanChange{
 	}
 
 	private void init() {
-		SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
-		tv_username.setText(spu.getNickName());
-		tv_remainDay.setText(String.valueOf(spu.getRemainDay()));
-		tv_dayCount.setText(String.valueOf(spu.getDailyWord()));
-		tv_haveStudy.setText("已完成 " + spu.getHaveStudy() + "/" + spu.getWordSize());
-		pb_haveStudy.setMax(spu.getWordSize());
-		pb_haveStudy.setProgress(spu.getHaveStudy());
+		tv_username.setText(BaseApplication.nickName);
+		tv_remainDay.setText(String.valueOf(BaseApplication.remainDay));
+		tv_dayCount.setText(String.valueOf(BaseApplication.dailyWord));
+		tv_haveStudy.setText("已完成 " + BaseApplication.haveStudy + "/" + BaseApplication.wordSize);
+		pb_haveStudy.setMax(BaseApplication.wordSize);
+		pb_haveStudy.setProgress(BaseApplication.haveStudy);
 		
 	}
 	
@@ -92,7 +94,7 @@ public class Home implements IPlanChange{
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 			
@@ -101,8 +103,9 @@ public class Home implements IPlanChange{
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				
+				Intent intent = new Intent(mContext,WordActivity.class);
+				mContext.startActivity(intent);
+				mActivity.finish();
 			}
 			
 		});

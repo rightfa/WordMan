@@ -23,6 +23,7 @@ import com.qlfsoft.wordman.utils.ToastUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -85,9 +86,9 @@ public class UserInfo {
 
 	private void init() {
 		SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
-		tv_nickname.setText(spu.getNickName());
-		tv_account.setText(spu.getUserAccount());
-		tv_significances.setText(spu.getSignificance());
+		tv_nickname.setText(BaseApplication.nickName);
+		tv_account.setText(BaseApplication.userAccount);
+		tv_significances.setText(BaseApplication.significance);
 		boolean defaultImage = spu.getAvatarImage();
 		ib_avatar.setImageResource(R.drawable.head);
 		File file = new File(mActivity.getFilesDir(),BaseApplication.FACEIMAGE_FILE_NAME);
@@ -149,7 +150,8 @@ public class UserInfo {
 						return;
 					}
 					String orginPwd = tv_orginPwd.getText().toString().trim();
-					if(!orginPwd.equals(spu.getPassword()))
+					String psd = DataSupport.where("account=?",account).find(UserModel.class).get(0).getPassword();
+					if(!orginPwd.equals(psd))
 					{
 						ToastUtils.showShort("原密码不正确");
 						return;
@@ -165,11 +167,11 @@ public class UserInfo {
 					
 					UserBooks myBook = new UserBooks();
 					myBook.setAccount(account);
-					myBook.setBookId(spu.getSelBookId());
-					myBook.setDailyword(spu.getDailyWord());
-					myBook.setHaveStudy(spu.getHaveStudy());
-					myBook.setRemainDay(spu.getRemainDay());
-					myBook.setTotalDay(spu.getTotalDay());
+					myBook.setBookId(BaseApplication.curBookId);
+					myBook.setDailyword(BaseApplication.dailyWord);
+					myBook.setHaveStudy(BaseApplication.haveStudy);
+					myBook.setRemainDay(BaseApplication.remainDay);
+					myBook.setTotalDay(BaseApplication.totalDay);
 					
 					List<UserModel> list = DataSupport.where("account=?",account).find(UserModel.class);
 					if(list.size() > 0)
@@ -192,10 +194,9 @@ public class UserInfo {
 					
 					if(updateFlag)
 					{
-						spu.setUserAccount(account);
-						spu.setNickName(nickname);
-						spu.setPassword(orginPwd);
-						spu.setSignificance(significances);
+						BaseApplication.userAccount = account;
+						BaseApplication.nickName = nickname;
+						BaseApplication.significance = significances;
 					}
 					
 					btn_submit.setText(R.string.about_btn_modify_str);
@@ -232,9 +233,11 @@ public class UserInfo {
 			@Override
 			public void onClick(View v) {
 				SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
-				if(!(null == spu.getUserAccount() || "".equals(spu.getUserAccount())))
+				if(!(null == BaseApplication.userAccount || "".equals(BaseApplication.userAccount)))
 				{
-					spu.setLoginState(false);
+					ContentValues values = new ContentValues();
+					values.put("loginState", 0);
+					DataSupport.updateAll(UserModel.class, values, "account=?",BaseApplication.userAccount);
 				}
 				Intent intent = new Intent(mContext,LoginActivity.class);
 				mActivity.startActivity(intent);

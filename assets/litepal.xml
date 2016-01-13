@@ -8,5 +8,6 @@
         <mapping class="com.qlfsoft.wordman.model.SignModel"></mapping>
         <mapping class="com.qlfsoft.wordman.model.UserModel"></mapping>
         <mapping class="com.qlfsoft.wordman.model.UserBooks"></mapping>
+        <mapping class="com.qlfsoft.wordman.model.UserWords"></mapping>
     </list>
 </litepal>

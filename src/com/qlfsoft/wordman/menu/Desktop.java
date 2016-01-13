@@ -99,8 +99,8 @@ public class Desktop {
 	private void init()
 	{
 		SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
-		mName.setText(spu.getNickName());
-		mSig.setText(spu.getSignificance());
+		mName.setText(BaseApplication.nickName);
+		mSig.setText(BaseApplication.significance);
 		mAvatar.setImageBitmap(PhotoUtil.toRoundCorner(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.head), 15));
 		File file = new File(mActivity.getFilesDir(),BaseApplication.FACEIMAGE_FILE_NAME);
 		if(!spu.getAvatarImage() && file.exists())

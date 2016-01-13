@@ -12,11 +12,13 @@ public class UserModel extends DataSupport {
 	private String password;//密码
 	private String avatar;//头像
 	private String significances;//签名
+	private int loginState;//登录状态,1为登录，0为登出
 	private int selBook;//选择的单词本
 	private int haveStudy;//已经学习的单词数
 	private int totalDay;//计划学习的天数
 	private int remainDay;//剩余学习的天数
 	private int dailyword;//每日学习单词数
+	private int wordSize;//单词本的单词量
 	public String getNickname() {
 		return nickname;
 	}
@@ -76,6 +78,18 @@ public class UserModel extends DataSupport {
 	}
 	public void setDailyword(int dailyword) {
 		this.dailyword = dailyword;
+	}
+	public void setLoginState(int loginState) {
+		this.loginState = loginState;
+	}
+	public int getWordSize() {
+		return wordSize;
+	}
+	public void setWordSize(int wordSize) {
+		this.wordSize = wordSize;
+	}
+	public int getLoginState() {
+		return loginState;
 	}
 	
 }

@@ -5,12 +5,14 @@ import java.util.List;
 import org.litepal.crud.DataSupport;
 import org.litepal.tablemanager.Connector;
 
+import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.utils.ToastUtils;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -39,8 +41,7 @@ public class LoginActivity extends BaseActivity {
 	}
 
 	private void init() {
-		SharePreferenceUtils spHelper =SharePreferenceUtils.getInstnace();
-		String userAccount = spHelper.getUserAccount();
+		String userAccount = BaseApplication.userAccount;
 		if(userAccount != null && (!userAccount.equals("")))
 		{
 			et_account.setText(userAccount);
@@ -64,12 +65,15 @@ public class LoginActivity extends BaseActivity {
 				if(list.size() > 0)
 				{
 					UserModel item = list.get(0);
+					BaseApplication.curBookId = item.getSelBook();
+					BaseApplication.nickName = item.getNickname();
+					BaseApplication.userAccount = item.getAccount();
+					ContentValues values = new ContentValues();
+					values.put("loginState", 0);
+					DataSupport.updateAll(UserModel.class, values, null);
+					item.setLoginState(1);
+					item.updateAll("account=?",userAccount);
 					SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
-					spHelper.setBookId(item.getSelBook());
-					spHelper.setNickName(item.getNickname());
-					spHelper.setUserAccount(item.getAccount());
-					spHelper.setPassword(item.getPassword());
-					spHelper.setLoginState(true);
 					spHelper.setAvatarImage(true);
 					Intent intent = new Intent(LoginActivity.this,MainActivity.class);
 					startActivity(intent);

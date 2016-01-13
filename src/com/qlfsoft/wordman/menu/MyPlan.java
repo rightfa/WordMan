@@ -31,6 +31,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.meetme.android.horizontallistview.HorizontalListView;
+import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.IPlanChange;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.BookBook;
@@ -114,7 +115,7 @@ public class MyPlan {
 			@Override
 			public void onClick(View v) {
 				SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
-				String account = spu.getUserAccount();
+				String account = BaseApplication.userAccount;
 				if("".equals(account))
 				{
 					ToastUtils.showShort("请先去设置账号！");
@@ -132,9 +133,9 @@ public class MyPlan {
 				SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
 				int tmp_dailyword = wheel_dailyword.getCurrentItem() + 10;
 				int tmp_needDay = wheel_needDay.getCurrentItem() + 1;
-				spu.setRemainDay((int)Math.ceil((float)((spu.getWordSize()-spu.getHaveStudy())/tmp_dailyword)));
-				spu.setTotalDay(tmp_needDay);
-				spu.setDailyWord(tmp_dailyword);
+				BaseApplication.remainDay = (int)Math.ceil((float)((BaseApplication.wordSize-BaseApplication.haveStudy)/tmp_dailyword));
+				BaseApplication.totalDay = tmp_needDay;
+				BaseApplication.dailyWord = tmp_dailyword;
 				ToastUtils.showShort("修改计划成功！");
 			}
 			
@@ -142,10 +143,9 @@ public class MyPlan {
 	}
 
 	private void init() {
-		SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
-		int selBookId = spu.getSelBookId();
-		int curBookSize = spu.getWordSize();//当前选中的单词本词汇量
-		String account = spu.getUserAccount();
+		int selBookId = BaseApplication.curBookId;
+		int curBookSize = BaseApplication.wordSize;//当前选中的单词本词汇量
+		String account = BaseApplication.userAccount;
 		if(!("".equals(account)))
 		{
 			myBooks = DataSupport.where("account=?",account).find(UserBooks.class);
@@ -170,9 +170,8 @@ public class MyPlan {
 					long id) {
 				if(b_shake)
 					return;
-				SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
 				DictionaryDBHelper dbHelper = DictionaryDBHelper.getInstance();
-				String account = spu.getUserAccount();
+				String account = BaseApplication.userAccount;
 				if("".equals(account))
 				{
 					ToastUtils.showShort("请先去设置账号！");
@@ -180,14 +179,14 @@ public class MyPlan {
 				}
 				int selBookId = myBooks.get(position).getBookId();
 				//保存前一本单词本的内容
-				int preBookId = spu.getSelBookId();
+				int preBookId = BaseApplication.curBookId;
 				UserBooks preBook = new UserBooks();
 				preBook.setBookId(preBookId);
 				preBook.setAccount(account);
-				preBook.setDailyword(spu.getDailyWord());
-				preBook.setHaveStudy(spu.getHaveStudy());
-				preBook.setRemainDay(spu.getRemainDay());
-				preBook.setTotalDay(spu.getTotalDay());
+				preBook.setDailyword(BaseApplication.dailyWord);
+				preBook.setHaveStudy(BaseApplication.haveStudy);
+				preBook.setRemainDay(BaseApplication.remainDay);
+				preBook.setTotalDay(BaseApplication.totalDay);
 				if(DataSupport.where("account=? and bookId=?",account,String.valueOf(preBookId)).find(UserBooks.class).size() > 0)
 				{
 					preBook.updateAll("account=? and bookId=?",account,String.valueOf(preBookId));
@@ -196,24 +195,24 @@ public class MyPlan {
 					preBook.save();
 				}
 				
-				spu.setBookId(selBookId);
+				BaseApplication.curBookId = selBookId;
 				BookBook bookInfo = dbHelper.getBookById(selBookId);
 				int bookwords = bookInfo.getBookCount();
-				spu.setWordSize(bookwords);
+				BaseApplication.curBookId = bookwords;
 				List<UserBooks> tmpBooks = DataSupport.where("account=? and bookId=?",account,String.valueOf(selBookId)).find(UserBooks.class);
 				if(tmpBooks.size() > 0)
 				{
-					spu.setDailyWord(tmpBooks.get(0).getDailyword());
-					spu.setHaveStudy(tmpBooks.get(0).getHaveStudy());
-					spu.setRemainDay(tmpBooks.get(0).getRemainDay());
-					spu.setTotalDay(tmpBooks.get(0).getTotalDay());
+					BaseApplication.dailyWord = tmpBooks.get(0).getDailyword();
+					BaseApplication.haveStudy = tmpBooks.get(0).getHaveStudy();
+					BaseApplication.remainDay = tmpBooks.get(0).getRemainDay();
+					BaseApplication.totalDay = tmpBooks.get(0).getTotalDay();
 					
 				}else
 				{
-					spu.setDailyWord(50);
-					spu.setHaveStudy(0);
-					spu.setRemainDay((int)Math.ceil((float)bookwords / 50));
-					spu.setTotalDay((int)Math.ceil((float)bookwords / 50));
+					BaseApplication.dailyWord = 50;
+					BaseApplication.haveStudy = 0;
+					BaseApplication.remainDay =(int)Math.ceil((float)bookwords / 50);
+					BaseApplication.totalDay = (int)Math.ceil((float)bookwords / 50);
 				}
 				resetWheels();
 				adapter.notifyDataSetChanged();
@@ -252,7 +251,7 @@ public class MyPlan {
 				w_d1 = false;
 				LogUtils.Logv("dailyword:" + wheel_dailyword.getCurrentItem());
 				int tmp_dailyword = wheel_dailyword.getCurrentItem() + 10;
-				int tmp_w_item = (int)Math.ceil((float)(SharePreferenceUtils.getInstnace().getWordSize() / tmp_dailyword));
+				int tmp_w_item = (int)Math.ceil((float)(BaseApplication.wordSize / tmp_dailyword));
 				if(tmp_w_item < 0 || tmp_w_item > 365)
 				{
 					ToastUtils.showShort("不切实际的计划不利于学单词哦！");
@@ -276,7 +275,7 @@ public class MyPlan {
 				w_d2 = false;	
 				LogUtils.Logv("need_day:" + wheel_needDay.getCurrentItem());
 				int tmp_needDay = wheel_needDay.getCurrentItem() + 1;
-				int tmp_w_item = (int)Math.ceil((float)(SharePreferenceUtils.getInstnace().getWordSize() / tmp_needDay)) - 9;
+				int tmp_w_item = (int)Math.ceil((float)(BaseApplication.wordSize / tmp_needDay)) - 9;
 				if(tmp_w_item < 0 || tmp_w_item > 290)
 				{
 					ToastUtils.showShort("不切实际的计划不利于学单词哦！");
@@ -329,9 +328,8 @@ public class MyPlan {
 	
 	private void resetWheels()
 	{
-		SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
-		wheel_dailyword.setCurrentItem(spu.getDailyWord() - 10);
-		wheel_needDay.setCurrentItem(spu.getTotalDay() -1);
+		wheel_dailyword.setCurrentItem(BaseApplication.dailyWord - 10);
+		wheel_needDay.setCurrentItem(BaseApplication.totalDay -1);
 		if(myBooks.size() >= 3)
 		{
 			btn_addbook.setVisibility(View.INVISIBLE);
@@ -386,7 +384,7 @@ public class MyPlan {
 				holder.btn_refresh = (Button) convertView.findViewById(R.id.plan_btn_refresh);
 				convertView.setTag(holder);
 			}
-			int selBookId = SharePreferenceUtils.getInstnace().getSelBookId();
+			int selBookId = BaseApplication.curBookId;
 			int curBookId = myBooks.get(position).getBookId();
 			if(selBookId == curBookId)
 				holder.iv_sel.setVisibility(View.VISIBLE);
@@ -420,7 +418,7 @@ public class MyPlan {
 
 				@Override
 				public void onClick(View v) {
-					DataSupport.deleteAll(UserBooks.class, "account=? and bookId=?",SharePreferenceUtils.getInstnace().getUserAccount(),String.valueOf(book.getBookId()));
+					DataSupport.deleteAll(UserBooks.class, "account=? and bookId=?",BaseApplication.userAccount,String.valueOf(book.getBookId()));
 					myBooks.remove(position);
 					adapter.notifyDataSetChanged();
 				}
@@ -437,7 +435,7 @@ public class MyPlan {
 					model.setHaveStudy(0);
 					model.setRemainDay((int)Math.ceil((float)book.getBookCount() / 50));
 					model.setTotalDay((int)Math.ceil((float)book.getBookCount() / 50));
-					model.setAccount(SharePreferenceUtils.getInstnace().getUserAccount());
+					model.setAccount(BaseApplication.userAccount);
 					model.updateAll("account=? and bookId=?",model.getAccount(),String.valueOf(model.getBookId()));
 				}
 				
