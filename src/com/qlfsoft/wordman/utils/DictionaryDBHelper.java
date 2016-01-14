@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.model.BookBook;
@@ -238,11 +239,40 @@ public class DictionaryDBHelper {
 		return wordId;
 	}
 	
+	/**
+	 * 获取4个解释
+	 * @param wordId
+	 * @return
+	 */
 	public List<String> get4Selectors(int wordId)
 	{
 		List<String> results = new ArrayList<String>();
+		SQLiteDatabase db = getdicDB();
+		Random random = new Random(System.currentTimeMillis());
+		int word1 =  random.nextInt(ConstantsUtil.MAXWORDID);
+		while(word1 == wordId)
+			word1 = random.nextInt(ConstantsUtil.MAXWORDID);
+		int word2 = random.nextInt(ConstantsUtil.MAXWORDID);
+		while(word2== word1 || word2== wordId)
+			word2 = random.nextInt(ConstantsUtil.MAXWORDID);
+		int word3 = random.nextInt(ConstantsUtil.MAXWORDID);
+		while(word3 == word2 || word3== word1 || word3 == wordId)
+			word3 =random.nextInt(ConstantsUtil.MAXWORDID);
+		String sql = "select Description from tbWord where WordID in(" + wordId+ "," + word1 + "," + word2 + "," + word3 + ")";
+		Cursor cursor = db.rawQuery(sql, null);
+		while(cursor.moveToNext())
+		{
+			String description = cursor.getString(cursor.getColumnIndex("Description"));
+			results.add(description);
+		}
 		
-		
+		for(int i = 0; i < 10; i++)
+		{
+			int intFlag = random.nextInt(4);
+			String temp = results.get(intFlag);
+			results.set(intFlag, results.get(0));
+			results.set(0,temp);
+		}
 		return results;
 	}
 }

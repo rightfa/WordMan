@@ -69,7 +69,8 @@ public class WordActivity extends BaseActivity {
 		tv_log.setText(strLog);
 		int before_maxOrder = DataSupport.where("account=? and bookId=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId)).max(UserWords.class, "orderNo", int.class);
 		DictionaryDBHelper db = DictionaryDBHelper.getInstance();
-		WordModel wordModel = db.getWordById(db.getWordId(BaseApplication.curBookId, before_maxOrder));
+		int wordId = db.getWordId(BaseApplication.curBookId, before_maxOrder);
+		WordModel wordModel = db.getWordById(wordId);
 		word = wordModel.getWord();
 		phonetic = wordModel.getPhonetic();
 		description = wordModel.getDescription();
@@ -93,6 +94,7 @@ public class WordActivity extends BaseActivity {
 			rl_new.setVisibility(View.INVISIBLE);
 			ll_review.setVisibility(View.VISIBLE);
 			btn_next2.setVisibility(View.INVISIBLE);
+			selectors = db.get4Selectors(wordId);
 			break;
 		}
 		
@@ -172,5 +174,5 @@ public class WordActivity extends BaseActivity {
 		btn_next2 = (Button) findViewById(R.id.word_btn_next2);
 
 	}
-
+	
 }
