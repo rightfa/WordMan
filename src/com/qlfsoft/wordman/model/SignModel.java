@@ -4,6 +4,11 @@ import java.util.Date;
 
 import org.litepal.crud.DataSupport;
 
+/**
+ * ´ò¿¨ÐÅÏ¢
+ * @author qlf
+ *
+ */
 public class SignModel extends DataSupport {
 
 	private String account;

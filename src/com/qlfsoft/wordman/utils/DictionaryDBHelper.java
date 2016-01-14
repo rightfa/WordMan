@@ -10,6 +10,7 @@ import java.util.List;
 import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.model.BookBook;
 import com.qlfsoft.wordman.model.BookCategory;
+import com.qlfsoft.wordman.model.WordModel;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -193,5 +194,55 @@ public class DictionaryDBHelper {
 		}
 		db.close();
 		return book;
+	}
+	
+	/**
+	 * 获取单词信息
+	 * @param wordId
+	 * @return
+	 */
+	public WordModel getWordById(int wordId)
+	{
+		WordModel wordModel = null;
+		String sql = "select WordID,Word,Description,Phonetic,Sentence from tbWord where WordID=" + wordId;
+		SQLiteDatabase db = getdicDB();
+		Cursor cursor = db.rawQuery(sql, null);
+		while(cursor.moveToNext())
+		{
+			wordModel = new WordModel();
+			wordModel.setWordId(cursor.getInt(cursor.getColumnIndex("WordID")));
+			wordModel.setWord(cursor.getString(cursor.getColumnIndex("Word")));
+			wordModel.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
+			wordModel.setPhonetic(cursor.getString(cursor.getColumnIndex("Phonetic")));
+			wordModel.setSentence(cursor.getString(cursor.getColumnIndex("Sentence")));
+		}
+		return wordModel;
+	}
+	
+	/**
+	 * 获取单词序号
+	 * @param selBook  单词本
+	 * @param orderNo  排序
+	 * @return
+	 */
+	public int getWordId(int selBook,int orderNo)
+	{
+		int wordId = 0;
+		String sql = "select WordID from tbData where BookID=" + selBook + " and OrderNo=" + orderNo;
+		SQLiteDatabase db = getbookDB();
+		Cursor cursor = db.rawQuery(sql, null);
+		while(cursor.moveToNext())
+		{
+			wordId = cursor.getInt(cursor.getColumnIndex("WordID"));
+		}
+		return wordId;
+	}
+	
+	public List<String> get4Selectors(int wordId)
+	{
+		List<String> results = new ArrayList<String>();
+		
+		
+		return results;
 	}
 }

@@ -1,5 +1,10 @@
 package com.qlfsoft.wordman.model;
 
+/**
+ * 单词本信息
+ * @author qlf
+ *
+ */
 public class BookBook {
 
 	private int BookId;
