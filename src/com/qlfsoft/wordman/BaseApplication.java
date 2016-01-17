@@ -13,15 +13,15 @@ public class BaseApplication extends LitePalApplication {
 	public static String dictionary_db_Path;
 	public static int screenWidth;
 	public static int screenHeight;
-	public static int curBookId;
-	public static String userAccount;
-	public static String nickName;
-	public static String significance;
-	public static int haveStudy;
-	public static int wordSize;
-	public static int totalDay;
-	public static int remainDay;
-	public static int dailyWord;
+	public static int curBookId;//当前选择的单词本的序号
+	public static String userAccount;//用户账号
+	public static String nickName;//昵称
+	public static String significance;//签名
+	public static int haveStudy;//已经学习的单词数
+	public static int wordSize;//单词本词汇量
+	public static int totalDay;////计划学习的天数
+	public static int remainDay;//剩余学习的天数
+	public static int dailyWord;//每日需要学习的单词量
 	
 	/* 头像名称 */
 	public static final String FACEIMAGE_FILE_NAME = "faceImage.jpg";

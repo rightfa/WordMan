@@ -86,11 +86,7 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 					mRoot.close(mHome.getView());
 					break;
 				case ViewUtil.USER:
-					if(mUserInfo == null)
-					{
-						mUserInfo = new UserInfo(MainActivity.this,MainActivity.this);
-						mUserInfo.setOnOpenListener(MainActivity.this);
-					}
+					initUserInfo();
 					mRoot.close(mUserInfo.getView());
 					break;
 				case ViewUtil.MYPLAN:
@@ -108,13 +104,38 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 	
 	private void initMyPlan()
 	{
+		if(mHome == null)
+		{
+			mHome = new Home(MainActivity.this,MainActivity.this);
+			mHome.setOnOpenListener(MainActivity.this);
+		}
 		if(mPlan == null)
 		{
 			mPlan = new MyPlan(MainActivity.this,MainActivity.this);
 			mPlan.setOnOpenListener(MainActivity.this);
-			mPlan.setPlanChange(mHome);
+			mPlan.attach(mHome);
 		}
 		mRoot.close(mPlan.getView());
+	}
+	
+	private void initUserInfo()
+	{
+		if(mHome == null)
+		{
+			mHome = new Home(MainActivity.this,MainActivity.this);
+			mHome.setOnOpenListener(MainActivity.this);
+		}
+		if(mDesktop == null)
+		{
+			mDesktop = new Desktop(MainActivity.this,MainActivity.this);
+		}
+		if(mUserInfo == null)
+		{
+			mUserInfo = new UserInfo(MainActivity.this,MainActivity.this);
+			mUserInfo.setOnOpenListener(MainActivity.this);
+			mUserInfo.attach(mHome);
+			mUserInfo.attach(mDesktop);
+		}
 	}
 	
 	@Override
@@ -156,11 +177,7 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 		case ActivityForResultUtil.REQUESTCODE_USERINFO_CAMERA:
 		case ActivityForResultUtil.REQUESTCODE_USERINFO_IMAGE:
 		case ActivityForResultUtil.REQUESTCODE_USERINFO_RESULT:
-			if(mUserInfo == null)
-			{
-				mUserInfo = new UserInfo(MainActivity.this,MainActivity.this);
-				mUserInfo.setOnOpenListener(MainActivity.this);
-			}
+			initUserInfo();
 			mRoot.close(mUserInfo.getView());
 			mUserInfo.doActivityResult(requestCode, resultCode, data);
 			break;

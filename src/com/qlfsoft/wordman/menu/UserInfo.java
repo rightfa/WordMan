@@ -12,6 +12,7 @@ import org.litepal.crud.DataSupport;
 
 import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
+import com.qlfsoft.wordman.UserInfoSubject;
 import com.qlfsoft.wordman.model.UserBooks;
 import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.ui.LoginActivity;
@@ -47,7 +48,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class UserInfo {
+public class UserInfo extends UserInfoSubject {
 
 	private Context mContext;
 	private Activity mActivity;
@@ -127,7 +128,6 @@ public class UserInfo {
 					btn_avatarchg.setVisibility(View.VISIBLE);
 				}else
 				{
-					SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
 					//修改完成
 					String account = tv_account.getText().toString().trim();
 					if(TextUtils.isEmpty(account))
@@ -150,7 +150,7 @@ public class UserInfo {
 						return;
 					}
 					String orginPwd = tv_orginPwd.getText().toString().trim();
-					String psd = DataSupport.where("account=?",account).find(UserModel.class).get(0).getPassword();
+					String psd = DataSupport.where("account=?",BaseApplication.userAccount).find(UserModel.class).get(0).getPassword();
 					if(!orginPwd.equals(psd))
 					{
 						ToastUtils.showShort("原密码不正确");
@@ -187,7 +187,7 @@ public class UserInfo {
 						}
 					}else
 					{
-						myUser.save();
+						myUser.updateAll("account=?",BaseApplication.userAccount);
 						myBook.save();
 						updateFlag = true;
 					}
@@ -197,6 +197,7 @@ public class UserInfo {
 						BaseApplication.userAccount = account;
 						BaseApplication.nickName = nickname;
 						BaseApplication.significance = significances;
+						nodifyObservers();
 					}
 					
 					btn_submit.setText(R.string.about_btn_modify_str);

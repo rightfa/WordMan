@@ -86,7 +86,7 @@ public class SplashActivity extends BaseActivity {
 						@Override
 						public void run() {
 							SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
-							if(spHelper.getFirstOpen())
+							if(spHelper.getFirstOpen() || BaseApplication.curBookId == 0)
 							{
 								Intent intent = new Intent(SplashActivity.this,SelCategoryActivity.class);
 								SplashActivity.this.startActivity(intent);

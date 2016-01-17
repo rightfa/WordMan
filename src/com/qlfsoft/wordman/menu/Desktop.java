@@ -3,6 +3,7 @@ package com.qlfsoft.wordman.menu;
 import java.io.File;
 
 import com.qlfsoft.wordman.BaseApplication;
+import com.qlfsoft.wordman.IUserInfoObserver;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.utils.PhotoUtil;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
@@ -24,7 +25,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class Desktop {
+public class Desktop implements IUserInfoObserver {
 
 	private Context mContext;
 	private Activity mActivity;
@@ -236,6 +237,13 @@ public class Desktop {
 			ImageView icon;
 			TextView name;
 		}
+		
+	}
+
+
+	@Override
+	public void userInfoUpdate() {
+		init();
 		
 	}
 	

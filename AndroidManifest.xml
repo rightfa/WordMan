@@ -38,6 +38,8 @@
         </activity>
         <activity android:name=".ui.LoginActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.RegisterActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.WordActivity"></activity>
+        <activity android:name=".ui.WordInfoActivity"></activity>
     </application>
 
 </manifest>

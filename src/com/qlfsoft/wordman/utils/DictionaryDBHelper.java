@@ -11,6 +11,7 @@ import java.util.Random;
 import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.model.BookBook;
 import com.qlfsoft.wordman.model.BookCategory;
+import com.qlfsoft.wordman.model.UserWords;
 import com.qlfsoft.wordman.model.WordModel;
 
 import android.content.Context;
@@ -266,9 +267,11 @@ public class DictionaryDBHelper {
 			results.add(description);
 		}
 		
+		LogUtils.Logv("size =" + results.size());
 		for(int i = 0; i < 10; i++)
 		{
 			int intFlag = random.nextInt(4);
+			LogUtils.Logv("intFlag = " + intFlag);
 			String temp = results.get(intFlag);
 			results.set(intFlag, results.get(0));
 			results.set(0,temp);

@@ -32,7 +32,8 @@ import android.widget.TextView;
 
 import com.meetme.android.horizontallistview.HorizontalListView;
 import com.qlfsoft.wordman.BaseApplication;
-import com.qlfsoft.wordman.IPlanChange;
+import com.qlfsoft.wordman.IPlanObserver;
+import com.qlfsoft.wordman.PlanSubject;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.BookBook;
 import com.qlfsoft.wordman.model.UserBooks;
@@ -45,7 +46,7 @@ import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.utils.ToastUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 
-public class MyPlan {
+public class MyPlan extends PlanSubject{
 
 	private Context mContext;
 	private Activity mActivity;
@@ -66,7 +67,7 @@ public class MyPlan {
 	private boolean w_d1 = false;//标记每日单词量是否在滚动
 	private boolean w_d2=false;//标记计划学习天数是否在滚动
 	private boolean b_shake = false;//是否正在编辑状态
-	private IPlanChange mHomeView;
+	private IPlanObserver mHomeView;
 	
 	public MyPlan(Context ctx,Activity act)
 	{
@@ -198,7 +199,7 @@ public class MyPlan {
 				BaseApplication.curBookId = selBookId;
 				BookBook bookInfo = dbHelper.getBookById(selBookId);
 				int bookwords = bookInfo.getBookCount();
-				BaseApplication.curBookId = bookwords;
+				BaseApplication.wordSize = bookwords;
 				List<UserBooks> tmpBooks = DataSupport.where("account=? and bookId=?",account,String.valueOf(selBookId)).find(UserBooks.class);
 				if(tmpBooks.size() > 0)
 				{
@@ -321,7 +322,7 @@ public class MyPlan {
 		mOnOpenListener = onOpenListener;
 	}
 	
-	public void setPlanChange(IPlanChange iPlanChange)
+	public void setPlanChange(IPlanObserver iPlanChange)
 	{
 		this.mHomeView = iPlanChange;
 	}
@@ -338,8 +339,7 @@ public class MyPlan {
 		{
 			btn_addbook.setVisibility(View.VISIBLE);
 		}
-		if(null != mHomeView)
-			mHomeView.dataChange();
+		notifyObservers();
 	}
 	
 	class HLVAdapter extends BaseAdapter{
