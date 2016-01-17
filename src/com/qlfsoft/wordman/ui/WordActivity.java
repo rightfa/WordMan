@@ -14,6 +14,9 @@ import com.qlfsoft.wordman.model.UserWords;
 import com.qlfsoft.wordman.model.WordModel;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +38,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+@SuppressLint("NewApi")
 public class WordActivity extends BaseActivity {
 
 	private ImageButton ib_menu;
@@ -57,34 +61,38 @@ public class WordActivity extends BaseActivity {
 	private List<String> selectors;//选项
 	private int select_index = -1;//默认listview没有选中
 	private TextToSpeech tts;
-	private int todaySize;//今日已经学习的单词数
-	private int beforeSize;//前面已经学习的单词数
-	private int reviewSize;//今日需要复习的单词数
-	private int reviewedSize;//今日已经复习的单词数
 	private int orderNo;//排序数
 	private WordModel wordModel;
+	private Animator animFadeOut = null;
+	private Animator animFadeIn = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_word);
+		animFadeOut = AnimatorInflater.loadAnimator(this, R.animator.objectfadeout);
+		animFadeIn = AnimatorInflater.loadAnimator(this, R.animator.objectfadein);
 		initView();
 		initData();
 		setListener();
 	}
 
+	@SuppressLint("SimpleDateFormat")
 	private void initData() {
+		animFadeIn.setTarget(tv_word);
+		animFadeIn.start();
+		lv_selectors.setClickable(true);
+		select_index = -1;
 		final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		final String today = dateformat.format(new Date());
 		List<UserWords> todayWords = DataSupport.where("account=? and bookId=? and date=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
-		todaySize = todayWords.size();//今日已经学习的单词数
 		List<UserWords> beforeWords = DataSupport.where("account=? and bookId=? and date<>? and repeat<=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,"4").order("upateDate asc").order("repeat desc").find(UserWords.class);
 		final int beforeSize = beforeWords.size();//前面还未学习完全的单词数
 		final int reviewSize = beforeSize / 3 * 2;//今日需要复习的单词数
 		List<UserWords> reviewedWords = DataSupport.where("account=? and bookId=? and upateDate=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
 		final int reviewedSize = reviewedWords.size();//今日已经复习的单词数
-		String strLog = String.format("今日需新学%d/%d  今日需复习%d/%d",BaseApplication.dailyWord - todaySize,BaseApplication.dailyWord,reviewedSize,reviewSize);
+		String strLog = String.format("今日需新学%d/%d  今日需复习%d/%d",BaseApplication.dailyWord - todayWords.size(),BaseApplication.dailyWord,reviewedSize,reviewSize);
 		tv_log.setText(strLog);
 		DictionaryDBHelper db = DictionaryDBHelper.getInstance();
 		int wordId = 0;
@@ -114,7 +122,7 @@ public class WordActivity extends BaseActivity {
 
 			final UserWords userWord = beforeWords.get(0);
 			wordId = userWord.getWordId();
-			selectors = db.get4Selectors(wordId);
+			selectors = db.get4Selectors(wordId,0);
 			final DescriptionsAdapter adapter = new DescriptionsAdapter();
 			lv_selectors.setAdapter(adapter);
 			lv_selectors.setOnItemClickListener(new OnItemClickListener(){
@@ -122,6 +130,7 @@ public class WordActivity extends BaseActivity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
+					lv_selectors.setClickable(false);
 					try {
 						userWord.setUpateDate(dateformat.parse(today));
 					} catch (ParseException e) {
@@ -139,7 +148,10 @@ public class WordActivity extends BaseActivity {
 						{
 							type = 2;
 						}
+						FadeOut();
 						initData();
+						
+						
 					}else
 					{
 						select_index = position;
@@ -201,8 +213,9 @@ public class WordActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				type = 1;
-				initData();
 				
+				FadeOut();
+				initData();
 			}
 			
 		});
@@ -211,8 +224,9 @@ public class WordActivity extends BaseActivity {
 			@Override
 			public void onClick(View v) {
 				type = 2;
-				initData();
 				
+				FadeOut();
+				initData();
 			}
 			
 		});
@@ -287,6 +301,12 @@ public class WordActivity extends BaseActivity {
 		lv_selectors = (ListView) findViewById(R.id.word_lv_selectors);
 		btn_next2 = (Button) findViewById(R.id.word_btn_next2);
 
+	}
+	
+	private void FadeOut()
+	{
+		animFadeOut.setTarget(tv_word);
+		animFadeOut.start();
 	}
 	
 	class DescriptionsAdapter extends BaseAdapter

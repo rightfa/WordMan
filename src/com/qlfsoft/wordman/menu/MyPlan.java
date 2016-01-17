@@ -67,7 +67,6 @@ public class MyPlan extends PlanSubject{
 	private boolean w_d1 = false;//标记每日单词量是否在滚动
 	private boolean w_d2=false;//标记计划学习天数是否在滚动
 	private boolean b_shake = false;//是否正在编辑状态
-	private IPlanObserver mHomeView;
 	
 	public MyPlan(Context ctx,Activity act)
 	{
@@ -131,13 +130,14 @@ public class MyPlan extends PlanSubject{
 
 			@Override
 			public void onClick(View v) {
-				SharePreferenceUtils spu = SharePreferenceUtils.getInstnace();
 				int tmp_dailyword = wheel_dailyword.getCurrentItem() + 10;
 				int tmp_needDay = wheel_needDay.getCurrentItem() + 1;
-				BaseApplication.remainDay = (int)Math.ceil((float)((BaseApplication.wordSize-BaseApplication.haveStudy)/tmp_dailyword));
+				BaseApplication.remainDay = (int)Math.ceil(((float)(BaseApplication.wordSize-BaseApplication.haveStudy))/tmp_dailyword);
+				LogUtils.Logv("remainDay=" + BaseApplication.remainDay);
 				BaseApplication.totalDay = tmp_needDay;
 				BaseApplication.dailyWord = tmp_dailyword;
 				ToastUtils.showShort("修改计划成功！");
+				notifyObservers();
 			}
 			
 		});
@@ -145,7 +145,6 @@ public class MyPlan extends PlanSubject{
 
 	private void init() {
 		int selBookId = BaseApplication.curBookId;
-		int curBookSize = BaseApplication.wordSize;//当前选中的单词本词汇量
 		String account = BaseApplication.userAccount;
 		if(!("".equals(account)))
 		{
@@ -320,11 +319,6 @@ public class MyPlan extends PlanSubject{
 
 	public void setOnOpenListener(OnOpenListener onOpenListener) {
 		mOnOpenListener = onOpenListener;
-	}
-	
-	public void setPlanChange(IPlanObserver iPlanChange)
-	{
-		this.mHomeView = iPlanChange;
 	}
 	
 	private void resetWheels()

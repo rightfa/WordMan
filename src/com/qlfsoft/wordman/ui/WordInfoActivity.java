@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
+import android.text.Html;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -78,7 +79,7 @@ public class WordInfoActivity extends BaseActivity {
 		tv_word.setText(wordModel.getWord());
 		tv_phonetic.setText(wordModel.getPhonetic());
 		tv_description.setText(wordModel.getDescription());
-		tv_sentence.setText(wordModel.getSentence());
+		tv_sentence.setText(Html.fromHtml(wordModel.getSentence()));
 		tts = new TextToSpeech(WordInfoActivity.this,new OnInitListener(){
 
 			@Override

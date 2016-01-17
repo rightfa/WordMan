@@ -245,11 +245,11 @@ public class DictionaryDBHelper {
 	 * @param wordId
 	 * @return
 	 */
-	public List<String> get4Selectors(int wordId)
+	public List<String> get4Selectors(int wordId,int cycle)
 	{
 		List<String> results = new ArrayList<String>();
 		SQLiteDatabase db = getdicDB();
-		Random random = new Random(System.currentTimeMillis());
+		Random random = new Random(System.currentTimeMillis() + cycle);
 		int word1 =  random.nextInt(ConstantsUtil.MAXWORDID);
 		while(word1 == wordId)
 			word1 = random.nextInt(ConstantsUtil.MAXWORDID);
@@ -260,6 +260,7 @@ public class DictionaryDBHelper {
 		while(word3 == word2 || word3== word1 || word3 == wordId)
 			word3 =random.nextInt(ConstantsUtil.MAXWORDID);
 		String sql = "select Description from tbWord where WordID in(" + wordId+ "," + word1 + "," + word2 + "," + word3 + ")";
+		LogUtils.Logv("sql=" + sql);
 		Cursor cursor = db.rawQuery(sql, null);
 		while(cursor.moveToNext())
 		{
@@ -267,8 +268,11 @@ public class DictionaryDBHelper {
 			results.add(description);
 		}
 		
+		if(results.size() < 4)
+			results = get4Selectors(wordId,cycle + 1);
+		
 		LogUtils.Logv("size =" + results.size());
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < 4; i++)
 		{
 			int intFlag = random.nextInt(4);
 			LogUtils.Logv("intFlag = " + intFlag);
