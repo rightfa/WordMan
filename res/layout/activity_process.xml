@@ -147,15 +147,108 @@
              android:text="20" />
 
 		<Button
-		    android:id="@+id/process_today_dialog"
+		    android:id="@+id/process_today_diagram"
 		    android:layout_width="@dimen/x60"
 		    android:layout_height="@dimen/x40"
 		    android:layout_alignParentRight="true"
-		    android:textColor="@android:color/white"
 		    android:layout_alignParentTop="true"
-		    android:textSize="16sp"
+		    android:layout_marginLeft="@dimen/x5"
 		    android:background="@drawable/green_rect_button_bg"
-		    android:text="图解" />
+		    android:text="图解"
+		    android:textColor="@android:color/white"
+		    android:textSize="16sp" />
 
     </RelativeLayout>
+        <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="总进度"
+        android:layout_marginLeft="@dimen/x5"
+	    android:layout_marginTop="@dimen/x10"
+	    android:layout_marginRight="@dimen/x5"
+        android:textColor="@color/app_color"
+        android:textSize="18sp" />
+    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="@dimen/x5"
+	        android:layout_marginBottom="@dimen/x5"
+	        android:layout_marginRight="@dimen/x5"
+	        android:padding="@dimen/x5"
+	      	android:background="#ffffff"
+	        android:orientation="vertical" >
+
+         <TextView
+             android:id="@+id/textView7"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="词汇量" />
+         
+		<TextView
+             android:id="@+id/textView8"
+             android:layout_toRightOf="@id/textView7"
+             android:layout_marginLeft="@dimen/x15"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="已学习" />
+		<TextView
+             android:id="@+id/textView9"
+             android:layout_toRightOf="@id/textView8"
+             android:layout_marginLeft="@dimen/x15"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="已掌握" />
+		<TextView
+             android:id="@+id/process_tv_wordSize"
+             android:layout_margin="@dimen/x3"
+             android:layout_alignLeft="@id/textView7"
+             android:layout_below="@id/textView7"
+             android:gravity="center"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="1000" />
+		<TextView
+             android:id="@+id/process_tv_wordStudy"
+             android:layout_margin="@dimen/x3"
+             android:layout_alignLeft="@id/textView8"
+             android:layout_below="@id/textView8"
+             android:gravity="center"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="10" />
+		<TextView
+             android:id="@+id/process_tv_wordControl"
+             android:layout_margin="@dimen/x3"
+             android:layout_alignLeft="@id/textView9"
+             android:layout_below="@id/textView9"
+             android:gravity="center"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="60" />
+		<Button
+		    android:id="@+id/process_total_diagram"
+		    android:layout_width="@dimen/x60"
+		    android:layout_height="@dimen/x40"
+		    android:layout_alignParentRight="true"
+		    android:layout_alignParentTop="true"
+		    android:layout_marginLeft="@dimen/x5"
+		    android:background="@drawable/green_rect_button_bg"
+		    android:text="图解"
+		    android:textColor="@android:color/white"
+		    android:textSize="16sp" />
+    </RelativeLayout>
+    
 </LinearLayout>
