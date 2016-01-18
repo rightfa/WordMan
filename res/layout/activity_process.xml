@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/wordman_background"
+    android:orientation="vertical" >
+    
+    <LinearLayout
+        android:id="@+id/process_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:background="@drawable/global_top_background"
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/x4"
+        android:paddingLeft="@dimen/x4"
+        android:paddingRight="@dimen/x2"
+        android:paddingTop="@dimen/x3" >
+
+        <ImageButton
+            android:id="@+id/process_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x4"
+            android:background="@drawable/title_text_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/activity_word_homemenu_bk" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+	        android:textSize="@dimen/main_activity_toptitle_size" 
+	        android:gravity="center"
+            android:text="学习进度" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x4"
+            android:background="@drawable/title_text_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/global_home"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="今日进度"
+        android:layout_marginLeft="@dimen/x5"
+	    android:layout_marginTop="@dimen/x5"
+	    android:layout_marginRight="@dimen/x5"
+        android:textColor="@color/app_color"
+        android:textSize="18sp" />
+    
+     <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="@dimen/x5"
+	        android:layout_marginBottom="@dimen/x5"
+	        android:layout_marginRight="@dimen/x5"
+	        android:padding="@dimen/x5"
+	      	android:background="#ffffff"
+	        android:orientation="vertical" >
+
+         <TextView
+             android:id="@+id/textView3"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="需学习" />
+         
+		<TextView
+             android:id="@+id/textView4"
+             android:layout_toRightOf="@id/textView3"
+             android:layout_marginLeft="@dimen/x15"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="已学习" />
+		<TextView
+             android:id="@+id/textView5"
+             android:layout_toRightOf="@id/textView4"
+             android:layout_marginLeft="@dimen/x15"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="需复习" />
+		<TextView
+             android:id="@+id/textView6"
+             android:layout_toRightOf="@id/textView5"
+             android:layout_marginLeft="@dimen/x15"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="已复习" />
+		<TextView
+             android:id="@+id/process_tv_needStudy"
+             android:layout_margin="@dimen/x3"
+             android:layout_alignLeft="@id/textView3"
+             android:layout_below="@id/textView3"
+             android:gravity="center"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="100" />
+		<TextView
+             android:id="@+id/process_tv_haveStudy"
+             android:layout_margin="@dimen/x3"
+             android:layout_alignLeft="@id/textView4"
+             android:layout_below="@id/textView4"
+             android:gravity="center"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="10" />
+		<TextView
+             android:id="@+id/process_tv_needReview"
+             android:layout_margin="@dimen/x3"
+             android:layout_alignLeft="@id/textView5"
+             android:layout_below="@id/textView5"
+             android:gravity="center"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="60" />
+		<TextView
+             android:id="@+id/process_tv_haveReview"
+             android:layout_margin="@dimen/x3"
+             android:layout_alignLeft="@id/textView6"
+             android:layout_below="@id/textView6"
+             android:gravity="center"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textColor="@android:color/black"
+             android:textSize="16sp"
+             android:text="20" />
+
+		<Button
+		    android:id="@+id/process_today_dialog"
+		    android:layout_width="@dimen/x60"
+		    android:layout_height="@dimen/x40"
+		    android:layout_alignParentRight="true"
+		    android:textColor="@android:color/white"
+		    android:layout_alignParentTop="true"
+		    android:textSize="16sp"
+		    android:background="@drawable/green_rect_button_bg"
+		    android:text="图解" />
+
+    </RelativeLayout>
+</LinearLayout>
