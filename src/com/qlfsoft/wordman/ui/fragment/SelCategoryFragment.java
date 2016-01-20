@@ -110,11 +110,11 @@ public class SelCategoryFragment extends Fragment {
 						
 					}else{
 						BaseApplication.dailyWord = 50;
-						BaseApplication.haveStudy = 0;
 						BaseApplication.remainDay = (int) Math.ceil((float)bookwords / 50);
 						BaseApplication.totalDay = (int)Math.ceil((float)bookwords / 50);
 						BaseApplication.curBookId = selBookId;
 						BaseApplication.wordSize = bookwords;
+						BaseApplication.haveStudy = 0;
 						adapter.notifyDataSetChanged();
 						SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
 						spHelper.setFirstOpen();

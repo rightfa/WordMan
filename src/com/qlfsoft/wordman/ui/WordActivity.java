@@ -252,6 +252,7 @@ public class WordActivity extends BaseActivity {
 				userWord.setRepeat(1);
 				userWord.setWordId(wordModel.getWordId());
 				userWord.save();
+				BaseApplication.haveStudy = BaseApplication.haveStudy + 1;
 				btn_know.setVisibility(View.INVISIBLE);
 				btn_unknow.setVisibility(View.INVISIBLE);
 			}
@@ -277,6 +278,7 @@ public class WordActivity extends BaseActivity {
 				userWord.setRepeat(0);
 				userWord.setWordId(wordModel.getWordId());
 				userWord.save();
+				BaseApplication.haveStudy = BaseApplication.haveStudy + 1;
 				Intent intent = new Intent(WordActivity.this,WordInfoActivity.class);
 				intent.putExtra("WORDMODEL", wordModel);
 				startActivity(intent);

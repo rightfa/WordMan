@@ -13,15 +13,42 @@ public class BaseApplication extends LitePalApplication {
 	public static String dictionary_db_Path;
 	public static int screenWidth;
 	public static int screenHeight;
-	public static int curBookId;//当前选择的单词本的序号
-	public static String userAccount;//用户账号
-	public static String nickName;//昵称
-	public static String significance;//签名
-	public static int haveStudy;//已经学习的单词数
-	public static int wordSize;//单词本词汇量
-	public static int totalDay;////计划学习的天数
-	public static int remainDay;//剩余学习的天数
-	public static int dailyWord;//每日需要学习的单词量
+	/**
+	 * 当前选择的单词本的序号
+	 */
+	public static int curBookId;
+	/**
+	 * 用户账号
+	 */
+	public static String userAccount;
+	/**
+	 * 昵称
+	 */
+	public static String nickName;
+	/**
+	 * 签名
+	 */
+	public static String significance;
+	/**
+	 * 已学习的单词数
+	 */
+	public static int haveStudy;
+	/**
+	 * 单词本词汇量
+	 */
+	public static int wordSize;
+	/**
+	 * 计划学习的天数
+	 */
+	public static int totalDay;
+	/**
+	 * 剩余学习的天数
+	 */
+	public static int remainDay;
+	/**
+	 * 每日需要学习的单词量
+	 */
+	public static int dailyWord;
 	
 	/* 头像名称 */
 	public static final String FACEIMAGE_FILE_NAME = "faceImage.jpg";

@@ -64,13 +64,13 @@ public class SplashActivity extends BaseActivity {
 					UserModel user = users.get(0);
 					BaseApplication.curBookId = user.getSelBook();
 					BaseApplication.dailyWord = user.getDailyword();
-					BaseApplication.haveStudy = user.getHaveStudy();
 					BaseApplication.remainDay = user.getRemainDay();
 					BaseApplication.nickName = user.getNickname();
 					BaseApplication.significance = user.getSignificances();
 					BaseApplication.totalDay = user.getTotalDay();
 					BaseApplication.userAccount = user.getAccount();
 					BaseApplication.wordSize = user.getWordSize();
+					BaseApplication.haveStudy = user.getHaveStudy();
 				}
 				return null;
 			}

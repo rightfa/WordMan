@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">单词君</string>
@@ -16,5 +15,11 @@
     <string name="about_btn_modify_str">修改</string>
     <string name="about_btn_complete_str">完成</string>
     <string name="about_btn_logout_str">退出账号</string>
+    <string-array name="XdailyDiagram">
+        <item >需学习</item>
+        <item >已学习</item>
+        <item >需复习</item>
+        <item >已复习</item>
+    </string-array>
 
 </resources>
