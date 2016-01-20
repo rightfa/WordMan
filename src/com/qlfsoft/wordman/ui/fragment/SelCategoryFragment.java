@@ -117,8 +117,7 @@ public class SelCategoryFragment extends Fragment {
 						BaseApplication.haveStudy = 0;
 						adapter.notifyDataSetChanged();
 						SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
-						spHelper.setFirstOpen();
-						if(!userAccount.equals(""))
+						if(!userAccount.equals("") || spHelper.getFirstOpen())
 						{
 							UserBooks userBook = new UserBooks();
 							userBook.setAccount(userAccount);
@@ -130,6 +129,7 @@ public class SelCategoryFragment extends Fragment {
 							userBook.setBookId(selBookId);
 							userBook.save();
 						}
+						spHelper.setFirstOpen();
 						Intent intent = new Intent(getActivity(),MainActivity.class);
 						startActivity(intent);
 						getActivity().finish();

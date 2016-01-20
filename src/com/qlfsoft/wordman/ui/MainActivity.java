@@ -8,6 +8,7 @@ import com.qlfsoft.wordman.menu.Desktop;
 import com.qlfsoft.wordman.menu.Desktop.onChangeViewListener;
 import com.qlfsoft.wordman.menu.Home;
 import com.qlfsoft.wordman.menu.MyPlan;
+import com.qlfsoft.wordman.menu.MyProcess;
 import com.qlfsoft.wordman.menu.UserInfo;
 import com.qlfsoft.wordman.utils.ActivityForResultUtil;
 import com.qlfsoft.wordman.utils.ViewUtil;
@@ -34,6 +35,7 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 	private Home mHome;
 	private UserInfo mUserInfo;
 	private MyPlan mPlan;
+	private MyProcess mProcess;
 	/*
 	 * 当前显示的View的编号
 	 */
@@ -92,6 +94,10 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 				case ViewUtil.MYPLAN:
 					initMyPlan();
 					break;
+				case ViewUtil.PROCESS:
+					initMyProcess();
+					mRoot.close(mProcess.getView());
+					break;
 				default:
 						break;
 				}
@@ -109,11 +115,17 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 			mHome = new Home(MainActivity.this,MainActivity.this);
 			mHome.setOnOpenListener(MainActivity.this);
 		}
+		if(mProcess == null)
+		{
+			mProcess = new MyProcess(MainActivity.this,MainActivity.this);
+			mProcess.setOnOpenListener(MainActivity.this);
+		}
 		if(mPlan == null)
 		{
 			mPlan = new MyPlan(MainActivity.this,MainActivity.this);
 			mPlan.setOnOpenListener(MainActivity.this);
 			mPlan.attach(mHome);
+			mPlan.attach(mProcess);
 		}
 		mRoot.close(mPlan.getView());
 	}
@@ -135,6 +147,15 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 			mUserInfo.setOnOpenListener(MainActivity.this);
 			mUserInfo.attach(mHome);
 			mUserInfo.attach(mDesktop);
+		}
+	}
+	
+	private void initMyProcess()
+	{
+		if(mProcess == null)
+		{
+			mProcess = new MyProcess(MainActivity.this,MainActivity.this);
+			mProcess.setOnOpenListener(MainActivity.this);
 		}
 	}
 	
@@ -183,6 +204,11 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 			break;
 		case ActivityForResultUtil.REQUESTCODE_MYPLAN_ADD:
 			initMyPlan();
+			break;
+		case ActivityForResultUtil.REQUESTCODE_DAILYDIAGRAM:
+		case ActivityForResultUtil.REQUESTCODE_TOTALDIAGRAM:
+			initMyProcess();
+			mRoot.close(mProcess.getView());
 			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);

@@ -71,7 +71,10 @@ public class ProcessDailyDiagram extends BaseActivity {
 		leftAxis.setSpaceTop(15f);
 		barchart.getAxisRight().setEnabled(false);
 		
-		ArrayList<String> xVals = (ArrayList<String>) Arrays.asList(getResources().getStringArray(R.array.XdailyDiagram));
+		String[] ays = getResources().getStringArray(R.array.XdailyDiagram);
+		ArrayList<String> xVals = new ArrayList<String>();
+		for(int i = 0 ;i< ays.length; i++)
+			xVals.add(ays[i]);
 		ArrayList<BarEntry> yVals = new ArrayList<BarEntry>();
 		yVals.add(new BarEntry(needStudy,0));
 		yVals.add(new BarEntry(haveStudy,1));

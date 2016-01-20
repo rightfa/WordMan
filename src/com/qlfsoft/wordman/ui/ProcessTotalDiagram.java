@@ -15,6 +15,8 @@ import com.qlfsoft.wordman.R;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 
 public class ProcessTotalDiagram extends BaseActivity {
@@ -33,6 +35,18 @@ public class ProcessTotalDiagram extends BaseActivity {
 		chart2 = (PieChart) findViewById(R.id.prgtotal_chart2);
 		
 		setData();
+		setListener();
+	}
+	private void setListener() {
+		btn_reply.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				finish();
+				
+			}
+			
+		});
 		
 	}
 	private void setData() {
@@ -46,7 +60,7 @@ public class ProcessTotalDiagram extends BaseActivity {
 		chart1.setExtraOffsets(5, 10, 5, 5);
 		chart1.setDragDecelerationFrictionCoef(0.95f);
 		chart1.setDrawHoleEnabled(false);
-		chart1.setTransparentCircleColor(Color.WHITE);
+		chart1.setTransparentCircleColor(Color.BLACK);
 		chart1.setTransparentCircleAlpha(110);
 		chart1.setHighlightPerTapEnabled(true);
 		Legend l1 = chart1.getLegend();
@@ -75,7 +89,7 @@ public class ProcessTotalDiagram extends BaseActivity {
 		PieData data1 = new PieData(xVals1,dataset1);
 		data1.setValueFormatter(new PercentFormatter());
 		data1.setValueTextSize(13f);
-		data1.setValueTextColor(Color.WHITE);
+		data1.setValueTextColor(Color.BLACK);
 		chart1.setData(data1);
 		chart1.highlightValue(null);
 		chart1.invalidate();

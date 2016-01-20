@@ -188,12 +188,13 @@
                 <EditText
                     android:id="@+id/about_tv_significances"
                     android:layout_width="fill_parent"
-                    android:layout_height="@dimen/x30"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
                     android:gravity="center_vertical"
                     android:paddingLeft="8dip"
                     android:textColor="#333333"
-                    android:enabled="false"
                     android:textSize="14sp" />
+
             </LinearLayout>
 
             <LinearLayout

@@ -46,7 +46,7 @@ public class WordActivity extends BaseActivity {
 	private Button btn_sound;
 	private TextView tv_word;
 	private TextView tv_phonetic;
-	private RelativeLayout rl_new;
+	private LinearLayout rl_new;
 	private TextView tv_description;
 	private Button btn_next1;
 	private Button btn_know;
@@ -294,7 +294,7 @@ public class WordActivity extends BaseActivity {
 		btn_sound = (Button) findViewById(R.id.word_btn_sound);
 		tv_word = (TextView) findViewById(R.id.word_tv_word);
 		tv_phonetic = (TextView) findViewById(R.id.word_tv_phonetic);
-		rl_new = (RelativeLayout) findViewById(R.id.word_rl_new);
+		rl_new = (LinearLayout) findViewById(R.id.word_rl_new);
 		tv_description = (TextView) findViewById(R.id.word_tv_description);
 		btn_next1 = (Button) findViewById(R.id.word_btn_next1);
 		btn_know = (Button) findViewById(R.id.word_btn_konw);

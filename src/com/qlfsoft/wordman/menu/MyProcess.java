@@ -25,10 +25,14 @@ import com.qlfsoft.wordman.IPlanObserver;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserWords;
 import com.qlfsoft.wordman.ui.BaseActivity;
+import com.qlfsoft.wordman.ui.ProcessDailyDiagram;
+import com.qlfsoft.wordman.ui.ProcessTotalDiagram;
+import com.qlfsoft.wordman.utils.ActivityForResultUtil;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,7 +42,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class Process implements IPlanObserver {
+public class MyProcess implements IPlanObserver {
 
 	private LinearLayout ll_top;
 	private ImageButton ib_menu;
@@ -57,7 +61,7 @@ public class Process implements IPlanObserver {
 	private Activity mActivity;
 	private View mProcess;
 	private OnOpenListener mOnOpenListener;
-	public Process(Context context, Activity activity) {
+	public MyProcess(Context context, Activity activity) {
 
 		mContext = context;
 		mActivity = activity;
@@ -74,7 +78,7 @@ public class Process implements IPlanObserver {
 		tv_haveStudy = (TextView) mProcess.findViewById(R.id.process_tv_haveStudy);
 		tv_needReview = (TextView) mProcess.findViewById(R.id.process_tv_needReview);
 		tv_haveReview = (TextView) mProcess.findViewById(R.id.process_tv_haveReview);
-		btn_todayDiagram = (Button) mProcess.findViewById(R.id.process_total_diagram);
+		btn_todayDiagram = (Button) mProcess.findViewById(R.id.process_today_diagram);
 		tv_wordSize = (TextView) mProcess.findViewById(R.id.process_tv_wordSize);
 		tv_wordStudy = (TextView) mProcess.findViewById(R.id.process_tv_wordStudy);
 		tv_wordControl = (TextView) mProcess.findViewById(R.id.process_tv_wordControl);
@@ -85,18 +89,18 @@ public class Process implements IPlanObserver {
 	private void initData() {
 		final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		final String today = dateformat.format(new Date());
-		List<UserWords> todayWords = DataSupport.where("account=? and bookId=? and date=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
+		final List<UserWords> todayWords = DataSupport.where("account=? and bookId=? and date=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
 		List<UserWords> beforeWords = DataSupport.where("account=? and bookId=? and date<>? and repeat<=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,"4").order("upateDate asc").order("repeat desc").find(UserWords.class);
 		final int beforeSize = beforeWords.size();//前面还未学习完全的单词数
 		final int reviewSize = beforeSize / 3 * 2;//今日需要复习的单词数
-		List<UserWords> reviewedWords = DataSupport.where("account=? and bookId=? and upateDate=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
+		final List<UserWords> reviewedWords = DataSupport.where("account=? and bookId=? and upateDate=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
 		tv_needStudy.setText(String.valueOf(BaseApplication.dailyWord));
 		tv_haveStudy.setText(String.valueOf(todayWords.size()));
 		tv_needReview.setText(String.valueOf(reviewSize));
 		tv_haveReview.setText(String.valueOf(reviewedWords.size()));
 		tv_wordSize.setText(String.valueOf(BaseApplication.wordSize));
 		tv_wordStudy.setText(String.valueOf(BaseApplication.haveStudy));
-		List<UserWords> controlWords = DataSupport.where("account=? and bookId=? and repeat=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),"4").find(UserWords.class);
+		final List<UserWords> controlWords = DataSupport.where("account=? and bookId=? and repeat=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),"4").find(UserWords.class);
 		tv_wordControl.setText(String.valueOf(controlWords.size()));
 		
 		bc_barChart.setDrawBarShadow(false);
@@ -127,7 +131,28 @@ public class Process implements IPlanObserver {
 	
 		setChartData();
 		
+		btn_todayDiagram.setOnClickListener(new OnClickListener(){
+			public void onClick(View view)
+			{
+				Intent intent = new Intent(mContext,ProcessDailyDiagram.class);
+				intent.putExtra("HAVESTUDY", todayWords.size());
+				intent.putExtra("NEEDSTUDY", BaseApplication.dailyWord);
+				intent.putExtra("NEEDREVIEW", reviewSize);
+				intent.putExtra("HAVEREVIEW", reviewedWords.size());
+				mActivity.startActivityForResult(intent, ActivityForResultUtil.REQUESTCODE_DAILYDIAGRAM);
+			}
+		});
 		
+		btn_totalDiagram.setOnClickListener(new OnClickListener(){
+			public void onClick(View view)
+			{
+				Intent intent = new Intent(mContext,ProcessTotalDiagram.class);
+				intent.putExtra("WORDSIZE", BaseApplication.wordSize);
+				intent.putExtra("WORDSTUDY", BaseApplication.haveStudy);
+				intent.putExtra("WORDCONTROL", controlWords.size());
+				mActivity.startActivityForResult(intent, ActivityForResultUtil.REQUESTCODE_TOTALDIAGRAM);
+			}
+		});
 	}
 
 	private void setChartData() {

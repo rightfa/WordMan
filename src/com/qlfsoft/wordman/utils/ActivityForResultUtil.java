@@ -9,4 +9,6 @@ public class ActivityForResultUtil {
 	public static final int REQUESTCODE_USERINFO_CAMERA = 1;
 	public static final int REQUESTCODE_USERINFO_RESULT = 2;
 	public static final int REQUESTCODE_MYPLAN_ADD = 3;
+	public static final int REQUESTCODE_DAILYDIAGRAM = 4;
+	public static final int REQUESTCODE_TOTALDIAGRAM = 5;
 }
