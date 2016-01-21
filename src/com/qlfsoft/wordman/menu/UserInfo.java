@@ -13,8 +13,10 @@ import org.litepal.crud.DataSupport;
 import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.UserInfoSubject;
+import com.qlfsoft.wordman.model.SignModel;
 import com.qlfsoft.wordman.model.UserBooks;
 import com.qlfsoft.wordman.model.UserModel;
+import com.qlfsoft.wordman.model.UserWords;
 import com.qlfsoft.wordman.ui.LoginActivity;
 import com.qlfsoft.wordman.utils.ActivityForResultUtil;
 import com.qlfsoft.wordman.utils.FileUtils;
@@ -98,6 +100,8 @@ public class UserInfo extends UserInfoSubject {
 			Bitmap bmp = BitmapFactory.decodeFile(file.getAbsolutePath());
 			ib_avatar.setImageBitmap(bmp);	
 		}
+		if(!BaseApplication.userAccount.equals(""))
+			tv_account.setEnabled(false);
 	}
 
 	private void setListener() {
@@ -163,18 +167,14 @@ public class UserInfo extends UserInfoSubject {
 					myUser.setNickname(nickname);
 					myUser.setPassword(newPwd);
 					myUser.setSignificances(significances);
+					myUser.setLoginState(1);
 					boolean updateFlag = false;
 					
-					UserBooks myBook = new UserBooks();
-					myBook.setAccount(account);
-					myBook.setBookId(BaseApplication.curBookId);
-					myBook.setDailyword(BaseApplication.dailyWord);
-					myBook.setHaveStudy(BaseApplication.haveStudy);
-					myBook.setRemainDay(BaseApplication.remainDay);
-					myBook.setTotalDay(BaseApplication.totalDay);
+					ContentValues contentValues = new ContentValues();
+					contentValues.put("account", account);
 					
 					List<UserModel> list = DataSupport.where("account=?",account).find(UserModel.class);
-					if(list.size() > 0)
+					if(!("".equals(BaseApplication.userAccount)))
 					{
 						if(list.get(0).getPassword().equals(orginPwd))
 						{
@@ -188,7 +188,10 @@ public class UserInfo extends UserInfoSubject {
 					}else
 					{
 						myUser.updateAll("account=?",BaseApplication.userAccount);
-						myBook.save();
+						tv_account.setEnabled(false);
+						DataSupport.updateAll(UserBooks.class, contentValues, "account=?","");
+						DataSupport.updateAll(SignModel.class, contentValues, "account=?","");
+						DataSupport.updateAll(UserWords.class, contentValues,"account=?","");
 						updateFlag = true;
 					}
 					

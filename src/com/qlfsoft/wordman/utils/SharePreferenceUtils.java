@@ -9,7 +9,6 @@ public class SharePreferenceUtils {
 
 	private Context mContext;
 	private SharedPreferences sp;
-	private String firstopen = "FIRSTOPEN";//第一次打开应用
 	private String defaultImage = "DEFAULTIMAGE";//是否默认头像
 	
 	private String temp_nickname = "TEMP_NICKNAME";
@@ -32,19 +31,6 @@ public class SharePreferenceUtils {
 		if(null == sharedPreferenceUtil)
 			sharedPreferenceUtil = new SharePreferenceUtils();
 		return sharedPreferenceUtil;
-	}
-	
-	public boolean getFirstOpen()
-	{
-		boolean flag = sp.getBoolean(firstopen, true);
-		return flag;
-	}
-	
-	public void setFirstOpen()
-	{
-		SharedPreferences.Editor ed = sp.edit();
-		ed.putBoolean(firstopen, false);
-		ed.commit();
 	}
 	
 	/**

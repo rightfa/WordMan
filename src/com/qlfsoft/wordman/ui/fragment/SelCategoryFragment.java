@@ -36,7 +36,6 @@ public class SelCategoryFragment extends Fragment {
 	int mNum;
 	private List<BookBook> books;
 	private SharePreferenceUtils sp;
-	int type;
 	public static SelCategoryFragment newInstance(int num,int _type)
 	{
 		SelCategoryFragment fragment = new SelCategoryFragment();
@@ -55,7 +54,6 @@ public class SelCategoryFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mNum = getArguments() != null ?  getArguments().getInt("num") : 1;
-		type = getArguments() != null ? getArguments().getInt("type"): 0;
 		books = new ArrayList<BookBook>();
 		DictionaryDBHelper dbHelper = DictionaryDBHelper.getInstance();
 		books = dbHelper.getBooksByCateId(mNum);
@@ -74,9 +72,6 @@ public class SelCategoryFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				switch(type)
-				{
-				case 0:
 					//Ñ¡Ôñµ¥´Ê±¾
 					BookBook bookInfo = books.get(position);
 					int selBookId = bookInfo.getBookId();
@@ -116,29 +111,19 @@ public class SelCategoryFragment extends Fragment {
 						BaseApplication.wordSize = bookwords;
 						BaseApplication.haveStudy = 0;
 						adapter.notifyDataSetChanged();
-						SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
-						if(!userAccount.equals("") || spHelper.getFirstOpen())
-						{
-							UserBooks userBook = new UserBooks();
-							userBook.setAccount(userAccount);
-							userBook.setDailyword(50);
-							userBook.setHaveStudy(0);
-							userBook.setInUser(true);
-							userBook.setRemainDay((int) Math.ceil((float)bookwords / 50));
-							userBook.setTotalDay((int)Math.ceil((float)bookwords / 50));
-							userBook.setBookId(selBookId);
-							userBook.save();
-						}
-						spHelper.setFirstOpen();
+						UserBooks userBook = new UserBooks();
+						userBook.setAccount(userAccount);
+						userBook.setDailyword(50);
+						userBook.setHaveStudy(0);
+						userBook.setInUser(true);
+						userBook.setRemainDay((int) Math.ceil((float)bookwords / 50));
+						userBook.setTotalDay((int)Math.ceil((float)bookwords / 50));
+						userBook.setBookId(selBookId);
+						userBook.save();
 						Intent intent = new Intent(getActivity(),MainActivity.class);
 						startActivity(intent);
 						getActivity().finish();
 					}
-					break;
-				case 1:
-					
-					break;
-				}	
 			}
 			
 		});

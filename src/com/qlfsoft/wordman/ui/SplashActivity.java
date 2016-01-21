@@ -34,7 +34,10 @@ public class SplashActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_splash);
 		splash_tv_firstLoading = (TextView) findViewById(R.id.splash_tv_firstLoading);
-		if(SharePreferenceUtils.getInstnace().getFirstOpen())
+		//获取数据
+		final List<UserModel> users = DataSupport.where("loginState=?",String.valueOf(1)).find(UserModel.class);
+		final List<UserModel> existUsers = DataSupport.findAll(UserModel.class);
+		if(existUsers.size()<=0)//第一次打开程序
 			splash_tv_firstLoading.setVisibility(View.VISIBLE);
 		TaskUtils.executeAsyncTask(new AsyncTask<Object,Object,Object>(){
 
@@ -43,9 +46,7 @@ public class SplashActivity extends BaseActivity {
 			protected Object doInBackground(Object... params) {
 				DictionaryDBHelper dbHelper = DictionaryDBHelper.getInstance();
 				dbExist = dbHelper.CopyDataBase();
-				//获取数据
-				List<UserModel> users = DataSupport.where("loginState=?",String.valueOf(1)).find(UserModel.class);
-				if(users.size() <= 0)
+				if(existUsers.size() <= 0)
 				{
 					UserModel user = new UserModel();
 					user.setAccount("");
@@ -54,12 +55,13 @@ public class SplashActivity extends BaseActivity {
 					user.setSignificances("你有多努力无需多谈重要的是你完成了多少计划之中的事");
 					user.setLoginState(1);
 					user.setSelBook(0);
+					user.setLoginState(1);
 					user.save();
 					BaseApplication.nickName="单词君";
 					BaseApplication.significance = user.getSignificances();
 					BaseApplication.userAccount = user.getAccount();
 					BaseApplication.curBookId = 0;
-				}else
+				}else if(users.size() > 0)
 				{
 					UserModel user = users.get(0);
 					BaseApplication.curBookId = user.getSelBook();
@@ -86,16 +88,16 @@ public class SplashActivity extends BaseActivity {
 						@Override
 						public void run() {
 							SharePreferenceUtils spHelper = SharePreferenceUtils.getInstnace();
-							if(spHelper.getFirstOpen() || BaseApplication.curBookId == 0)
-							{
-								Intent intent = new Intent(SplashActivity.this,SelCategoryActivity.class);
-								SplashActivity.this.startActivity(intent);
-
-							}else if(DataSupport.where("loginState=?",String.valueOf(1)).find(UserModel.class).size()<=0)
+							if(existUsers.size()>0 && users.size() <=0)
 							{
 								//转入登录界面
 								Intent intent = new Intent(SplashActivity.this,LoginActivity.class);
 								startActivity(intent);
+							}else if(BaseApplication.curBookId == 0)
+							{
+								Intent intent = new Intent(SplashActivity.this,SelCategoryActivity.class);
+								SplashActivity.this.startActivity(intent);
+
 							}else
 							{
 								Intent intent = new Intent(SplashActivity.this,MainActivity.class);
