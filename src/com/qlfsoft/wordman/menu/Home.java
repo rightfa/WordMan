@@ -69,12 +69,12 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 		
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		String today = dateformat.format(new Date());
-		List<UserWords> todayWords = DataSupport.where("account=? and bookId=? and date=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
+		List<UserWords> todayWords = DataSupport.where("account=? and bookId=? and date([date])=date(?)",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
 		int todaySize = todayWords.size();//今日已经学习的单词数
-		List<UserWords> beforeWords = DataSupport.where("account=? and bookId=? and date<>? and repeat<=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,"4").order("upateDate asc").order("repeat desc").find(UserWords.class);
+		List<UserWords> beforeWords = DataSupport.where("account=? and bookId=? and date([date])<>date(?) and repeat<=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,"4").order("upateDate asc").order("repeat desc").find(UserWords.class);
 		int beforeSize = beforeWords.size();//前面还未学习完全的单词数
 		final int reviewSize = beforeSize / 3 * 2;//今日需要复习的单词数
-		List<UserWords> reviewedWords = DataSupport.where("account=? and bookId=? and upateDate=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
+		List<UserWords> reviewedWords = DataSupport.where("account=? and bookId=? and date(upateDate)=date(?) and date([date])<>date(?)",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,today).find(UserWords.class);
 		final int reviewedSize = reviewedWords.size();//今日已经复习的单词数
 		String strLog = String.format("今日需新学%d/%d  今日需复习%d/%d",BaseApplication.dailyWord - todaySize,BaseApplication.dailyWord,reviewedSize,reviewSize);
 		tv_needStudy.setText(strLog);

@@ -121,6 +121,12 @@ public class MyPlan extends PlanSubject{
 					ToastUtils.showShort("请先去设置账号！");
 					return;
 				}
+				int existBookSize = DataSupport.where("account=?",BaseApplication.userAccount).count(UserBooks.class);
+				if(existBookSize >=3)
+				{
+					ToastUtils.showShort("您拥有的单词本数量不能超过3本！");
+					return;
+				}
 				Intent intent = new Intent(mContext,SelCategoryActivity.class);
 				mActivity.startActivityForResult(intent, ActivityForResultUtil.REQUESTCODE_MYPLAN_ADD);
 			}

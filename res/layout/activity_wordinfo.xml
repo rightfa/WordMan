@@ -129,14 +129,14 @@
 
     <Button
         android:id="@+id/wordinfo_btn_next"
-        android:layout_width="@dimen/x150"
+        android:layout_width="@dimen/x100"
         android:layout_height="@dimen/x45"
         android:layout_gravity="center"
         android:layout_margin="@dimen/x8"
         android:layout_weight="0"
         android:textSize="20sp"
+        android:background="@drawable/red_rect_button_bg"
         android:textColor="@android:color/white"
-        android:background="#ee374e"
         android:text="下一个" />
 
 </LinearLayout>

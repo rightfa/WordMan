@@ -79,14 +79,17 @@ public class WordInfoActivity extends BaseActivity {
 		tv_word.setText(wordModel.getWord());
 		tv_phonetic.setText(wordModel.getPhonetic());
 		tv_description.setText(wordModel.getDescription());
-		tv_sentence.setText(Html.fromHtml(wordModel.getSentence()));
+		String sentence = wordModel.getSentence();
+		if(null == sentence)
+			sentence = "";
+		tv_sentence.setText(Html.fromHtml(sentence));
 		tts = new TextToSpeech(WordInfoActivity.this,new OnInitListener(){
 
 			@Override
 			public void onInit(int status) {
 				if(status == TextToSpeech.SUCCESS)
 				{
-					int result = tts.setLanguage(Locale.US);
+					int result = tts.setLanguage(Locale.UK);
 				}
 			}
 			

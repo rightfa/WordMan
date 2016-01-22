@@ -79,21 +79,27 @@ public class ProcessTotalDiagram extends BaseActivity {
 		PieDataSet dataset1 = new PieDataSet(yVals1,"学习情况");
 		dataset1.setSliceSpace(2f);
 		dataset1.setSelectionShift(5f);
-		ArrayList<Integer> colors = new ArrayList<Integer>();
-		for(int c:ColorTemplate.VORDIPLOM_COLORS)
-			colors.add(c);
+		ArrayList<Integer> colors1 = new ArrayList<Integer>();
+		for(int c:ColorTemplate.JOYFUL_COLORS)
+			colors1.add(c);
 		for(int c:ColorTemplate.COLORFUL_COLORS)
-			colors.add(c);
-		colors.add(ColorTemplate.getHoloBlue());
-		dataset1.setColors(colors);
+			colors1.add(c);
+		colors1.add(ColorTemplate.getHoloBlue());
+		dataset1.setColors(colors1);
 		PieData data1 = new PieData(xVals1,dataset1);
 		data1.setValueFormatter(new PercentFormatter());
-		data1.setValueTextSize(13f);
+		data1.setValueTextSize(20f);
 		data1.setValueTextColor(Color.BLACK);
 		chart1.setData(data1);
 		chart1.highlightValue(null);
 		chart1.invalidate();
 		
+		ArrayList<Integer> colors2 = new ArrayList<Integer>();
+		for(int c:ColorTemplate.VORDIPLOM_COLORS)
+			colors2.add(c);
+		for(int c:ColorTemplate.COLORFUL_COLORS)
+			colors2.add(c);
+		colors2.add(ColorTemplate.getHoloBlue());
 		chart2.setUsePercentValues(true);
 		chart2.setDescription("");
 		chart2.setExtraOffsets(5, 10, 5, 5);
@@ -118,11 +124,11 @@ public class ProcessTotalDiagram extends BaseActivity {
 		PieDataSet dataset2 = new PieDataSet(yVals2,"掌握情况");
 		dataset2.setSliceSpace(2f);
 		dataset2.setSelectionShift(5f);
-		dataset2.setColors(colors);
+		dataset2.setColors(colors2);
 		PieData data2 = new PieData(xVals2,dataset2);
 		data2.setValueFormatter(new PercentFormatter());
-		data2.setValueTextSize(13f);
-		data2.setValueTextColor(Color.WHITE);
+		data2.setValueTextSize(20f);
+		data2.setValueTextColor(Color.BLACK);
 		chart2.setData(data2);
 		chart2.highlightValue(null);
 		chart2.invalidate();	

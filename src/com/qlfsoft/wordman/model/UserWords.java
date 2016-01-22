@@ -13,9 +13,9 @@ public class UserWords extends DataSupport{
 	private int wordId;//单词序号
 	private int orderNo;//单词排序
 	private String account;//账号
-	private Date date;//首次学习日期
+	private String date;//首次学习日期
 	private int repeat;//重复次数
-	private Date upateDate;//更新日期
+	private String upateDate;//更新日期
 	
 	public String getAccount() {
 		return account;
@@ -23,12 +23,7 @@ public class UserWords extends DataSupport{
 	public void setAccount(String account) {
 		this.account = account;
 	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+
 	public int getRepeat() {
 		return repeat;
 	}
@@ -53,12 +48,19 @@ public class UserWords extends DataSupport{
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
-	public Date getUpateDate() {
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getUpateDate() {
 		return upateDate;
 	}
-	public void setUpateDate(Date upateDate) {
+	public void setUpateDate(String upateDate) {
 		this.upateDate = upateDate;
 	}
+
 	
 	
 }

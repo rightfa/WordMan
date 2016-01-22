@@ -12,17 +12,17 @@ import org.litepal.crud.DataSupport;
 public class SignModel extends DataSupport {
 
 	private String account;
-	private Date day;
+	private String day;
 	public String getAccount() {
 		return account;
 	}
 	public void setAccount(String account) {
 		this.account = account;
 	}
-	public Date getDay() {
+	public String getDay() {
 		return day;
 	}
-	public void setDay(Date day) {
+	public void setDay(String day) {
 		this.day = day;
 	}	
 }

@@ -10,11 +10,13 @@ import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.BookBook;
 import com.qlfsoft.wordman.model.UserBooks;
+import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.ui.MainActivity;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
 import com.qlfsoft.wordman.utils.LogUtils;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -84,42 +86,14 @@ public class SelCategoryFragment extends Fragment {
 					{
 						if(curBookId != selBookId)
 						{
-							BaseApplication.dailyWord = 50;
-							BaseApplication.haveStudy = 0;
-							BaseApplication.remainDay = (int) Math.ceil((float)bookwords / 50);
-							BaseApplication.totalDay = (int)Math.ceil((float)bookwords / 50);
-							BaseApplication.curBookId = selBookId;
-							BaseApplication.wordSize = bookwords;
-							UserBooks userBook = new UserBooks();
-							userBook.setAccount(userAccount);
-							userBook.setDailyword(50);
-							userBook.setHaveStudy(0);
-							userBook.setInUser(true);
-							userBook.setRemainDay((int) Math.ceil((float)bookwords / 50));
-							userBook.setTotalDay((int)Math.ceil((float)bookwords / 50));
-							userBook.setBookId(selBookId);
-							userBook.save();
+							saveInfo( bookwords, selBookId, userAccount);
 							adapter.notifyDataSetChanged();
 						}
 						getActivity().finish();
 						
 					}else{
-						BaseApplication.dailyWord = 50;
-						BaseApplication.remainDay = (int) Math.ceil((float)bookwords / 50);
-						BaseApplication.totalDay = (int)Math.ceil((float)bookwords / 50);
-						BaseApplication.curBookId = selBookId;
-						BaseApplication.wordSize = bookwords;
-						BaseApplication.haveStudy = 0;
+						saveInfo( bookwords, selBookId, userAccount);
 						adapter.notifyDataSetChanged();
-						UserBooks userBook = new UserBooks();
-						userBook.setAccount(userAccount);
-						userBook.setDailyword(50);
-						userBook.setHaveStudy(0);
-						userBook.setInUser(true);
-						userBook.setRemainDay((int) Math.ceil((float)bookwords / 50));
-						userBook.setTotalDay((int)Math.ceil((float)bookwords / 50));
-						userBook.setBookId(selBookId);
-						userBook.save();
 						Intent intent = new Intent(getActivity(),MainActivity.class);
 						startActivity(intent);
 						getActivity().finish();
@@ -129,6 +103,34 @@ public class SelCategoryFragment extends Fragment {
 		});
 		return view;
 	}
+	
+	private void saveInfo(int bookwords,int selBookId,String userAccount)
+	{
+		BaseApplication.dailyWord = 50;
+		BaseApplication.haveStudy = 0;
+		BaseApplication.remainDay = (int) Math.ceil((float)bookwords / 50);
+		BaseApplication.totalDay = (int)Math.ceil((float)bookwords / 50);
+		BaseApplication.curBookId = selBookId;
+		BaseApplication.wordSize = bookwords;
+		UserBooks userBook = new UserBooks();
+		userBook.setAccount(userAccount);
+		userBook.setDailyword(50);
+		userBook.setHaveStudy(0);
+		userBook.setInUser(true);
+		userBook.setRemainDay((int) Math.ceil((float)bookwords / 50));
+		userBook.setTotalDay((int)Math.ceil((float)bookwords / 50));
+		userBook.setBookId(selBookId);
+		userBook.save();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put("selBook", selBookId);
+		contentValues.put("haveStudy", BaseApplication.haveStudy);
+		contentValues.put("totalDay", BaseApplication.totalDay);
+		contentValues.put("remainDay", BaseApplication.remainDay);
+		contentValues.put("dailyword", BaseApplication.dailyWord);
+		contentValues.put("wordSize", BaseApplication.wordSize);
+		DataSupport.updateAll(UserModel.class, contentValues, "account=?",BaseApplication.userAccount);
+	}
+	
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub

@@ -10,6 +10,7 @@ import org.litepal.crud.DataSupport;
 
 import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
+import com.qlfsoft.wordman.model.UserModel;
 import com.qlfsoft.wordman.model.UserWords;
 import com.qlfsoft.wordman.model.WordModel;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
@@ -18,6 +19,7 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -63,16 +65,20 @@ public class WordActivity extends BaseActivity {
 	private TextToSpeech tts;
 	private int orderNo;//排序数
 	private WordModel wordModel;
-	private Animator animFadeOut = null;
-	private Animator animFadeIn = null;
+	private Animator animFadeOut1 = null;
+	private Animator animFadeIn1 = null;
+	private Animator animFadeOut2 = null;
+	private Animator animFadeIn2 = null;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_word);
-		animFadeOut = AnimatorInflater.loadAnimator(this, R.animator.objectfadeout);
-		animFadeIn = AnimatorInflater.loadAnimator(this, R.animator.objectfadein);
+		animFadeOut1 = AnimatorInflater.loadAnimator(this, R.animator.objectfadeout);
+		animFadeIn1 = AnimatorInflater.loadAnimator(this, R.animator.objectfadein);
+		animFadeOut2 = AnimatorInflater.loadAnimator(this, R.animator.objectfadeout);
+		animFadeIn2 = AnimatorInflater.loadAnimator(this, R.animator.objectfadein);
 		initView();
 		initData();
 		setListener();
@@ -80,17 +86,22 @@ public class WordActivity extends BaseActivity {
 
 	@SuppressLint("SimpleDateFormat")
 	private void initData() {
-		animFadeIn.setTarget(tv_word);
-		animFadeIn.start();
+		animFadeIn1.setTarget(tv_word);
+		animFadeIn1.start();
+		animFadeIn2.setTarget(tv_phonetic);
+		animFadeIn2.start();
 		lv_selectors.setClickable(true);
 		select_index = -1;
 		final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		final String today = dateformat.format(new Date());
-		List<UserWords> todayWords = DataSupport.where("account=? and bookId=? and date=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
-		List<UserWords> beforeWords = DataSupport.where("account=? and bookId=? and date<>? and repeat<=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,"4").order("upateDate asc").order("repeat desc").find(UserWords.class);
+		
+		List<UserWords> tmpWord = DataSupport.findAll(UserWords.class);
+		
+		List<UserWords> todayWords = DataSupport.where("account=? and bookId=? and date([date])=date(?)",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
+		List<UserWords> beforeWords = DataSupport.where("account=? and bookId=? and date([date])<>date(?) and repeat<=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,"4").order("upateDate asc").order("repeat desc").find(UserWords.class);
 		final int beforeSize = beforeWords.size();//前面还未学习完全的单词数
 		final int reviewSize = beforeSize / 3 * 2;//今日需要复习的单词数
-		List<UserWords> reviewedWords = DataSupport.where("account=? and bookId=? and upateDate=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
+		List<UserWords> reviewedWords = DataSupport.where("account=? and bookId=? and date(upateDate)=date(?) and date([date])<>date(?) ",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,today).find(UserWords.class);
 		final int reviewedSize = reviewedWords.size();//今日已经复习的单词数
 		String strLog = String.format("今日需新学%d/%d  今日需复习%d/%d",BaseApplication.dailyWord - todayWords.size(),BaseApplication.dailyWord,reviewedSize,reviewSize);
 		tv_log.setText(strLog);
@@ -131,12 +142,7 @@ public class WordActivity extends BaseActivity {
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
 					lv_selectors.setClickable(false);
-					try {
-						userWord.setUpateDate(dateformat.parse(today));
-					} catch (ParseException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					userWord.setUpateDate(today);
 					if(selectors.get(position).equals(description))
 					{
 						userWord.setRepeat(userWord.getRepeat() + 1);
@@ -193,7 +199,7 @@ public class WordActivity extends BaseActivity {
 			public void onInit(int status) {
 				if(status == TextToSpeech.SUCCESS)
 				{
-					int result = tts.setLanguage(Locale.US);
+					int result = tts.setLanguage(Locale.UK);
 				}
 				
 			}
@@ -241,18 +247,16 @@ public class WordActivity extends BaseActivity {
 				userWord.setBookId(BaseApplication.curBookId);
 				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 				String today = dateformat.format(new Date());
-				try {
-					userWord.setDate(dateformat.parse(today));
-					userWord.setUpateDate(dateformat.parse(today));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				userWord.setDate(today);
+				userWord.setUpateDate(today);
 				userWord.setOrderNo(orderNo);
 				userWord.setRepeat(1);
 				userWord.setWordId(wordModel.getWordId());
 				userWord.save();
 				BaseApplication.haveStudy = BaseApplication.haveStudy + 1;
+				ContentValues values = new ContentValues();
+				values.put("haveStudy", BaseApplication.haveStudy);
+				DataSupport.updateAll(UserModel.class, values, "account=? and selBook=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId));
 				btn_know.setVisibility(View.INVISIBLE);
 				btn_unknow.setVisibility(View.INVISIBLE);
 			}
@@ -267,18 +271,16 @@ public class WordActivity extends BaseActivity {
 				userWord.setBookId(BaseApplication.curBookId);
 				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 				String today = dateformat.format(new Date());
-				try {
-					userWord.setDate(dateformat.parse(today));
-					userWord.setUpateDate(dateformat.parse(today));
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				userWord.setDate(today);
+				userWord.setUpateDate(today);
 				userWord.setOrderNo(orderNo);
 				userWord.setRepeat(0);
 				userWord.setWordId(wordModel.getWordId());
 				userWord.save();
 				BaseApplication.haveStudy = BaseApplication.haveStudy + 1;
+				ContentValues values = new ContentValues();
+				values.put("haveStudy", BaseApplication.haveStudy);
+				DataSupport.updateAll(UserModel.class, values, "account=? and selBook=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId));
 				Intent intent = new Intent(WordActivity.this,WordInfoActivity.class);
 				intent.putExtra("WORDMODEL", wordModel);
 				startActivity(intent);
@@ -307,8 +309,10 @@ public class WordActivity extends BaseActivity {
 	
 	private void FadeOut()
 	{
-		animFadeOut.setTarget(tv_word);
-		animFadeOut.start();
+		animFadeOut1.setTarget(tv_word);
+		animFadeOut1.start();
+		animFadeOut2.setTarget(tv_phonetic);
+		animFadeOut2.start();
 	}
 	
 	class DescriptionsAdapter extends BaseAdapter

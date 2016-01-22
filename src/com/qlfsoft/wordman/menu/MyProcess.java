@@ -89,11 +89,11 @@ public class MyProcess implements IPlanObserver {
 	private void initData() {
 		final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		final String today = dateformat.format(new Date());
-		final List<UserWords> todayWords = DataSupport.where("account=? and bookId=? and date=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
-		List<UserWords> beforeWords = DataSupport.where("account=? and bookId=? and date<>? and repeat<=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,"4").order("upateDate asc").order("repeat desc").find(UserWords.class);
+		final List<UserWords> todayWords = DataSupport.where("account=? and bookId=? and date([date])=date(?)",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
+		List<UserWords> beforeWords = DataSupport.where("account=? and bookId=? and date([date])<>date(?) and repeat<=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,"4").order("upateDate asc").order("repeat desc").find(UserWords.class);
 		final int beforeSize = beforeWords.size();//前面还未学习完全的单词数
 		final int reviewSize = beforeSize / 3 * 2;//今日需要复习的单词数
-		final List<UserWords> reviewedWords = DataSupport.where("account=? and bookId=? and upateDate=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
+		final List<UserWords> reviewedWords = DataSupport.where("account=? and bookId=? and date(upateDate)=date(?) and date([date])<>date(?)",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,today).find(UserWords.class);
 		tv_needStudy.setText(String.valueOf(BaseApplication.dailyWord));
 		tv_haveStudy.setText(String.valueOf(todayWords.size()));
 		tv_needReview.setText(String.valueOf(reviewSize));
@@ -114,11 +114,13 @@ public class MyProcess implements IPlanObserver {
 		xAxis.setPosition(XAxisPosition.BOTTOM);
 		xAxis.setDrawGridLines(false);
 		xAxis.setSpaceBetweenLabels(2);
+		xAxis.setTextSize(16);
 		
 		YAxis leftAxis = bc_barChart.getAxisLeft();
 		leftAxis.setLabelCount(8, false);
 		leftAxis.setPosition(YAxisLabelPosition.OUTSIDE_CHART);
 		leftAxis.setSpaceTop(15f);
+		leftAxis.setTextSize(16);
 		YAxis rightAxis = bc_barChart.getAxisRight();
 		rightAxis.setEnabled(false);
 		

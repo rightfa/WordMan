@@ -65,10 +65,12 @@ public class ProcessDailyDiagram extends BaseActivity {
 		xAxis.setPosition(XAxisPosition.BOTTOM);
 		xAxis.setDrawGridLines(false);
 		xAxis.setSpaceBetweenLabels(2);
+		xAxis.setTextSize(16);
 		
 		YAxis leftAxis = barchart.getAxisLeft();
 		leftAxis.setPosition(YAxisLabelPosition.OUTSIDE_CHART);
 		leftAxis.setSpaceTop(15f);
+		leftAxis.setTextSize(16);
 		barchart.getAxisRight().setEnabled(false);
 		
 		String[] ays = getResources().getStringArray(R.array.XdailyDiagram);
