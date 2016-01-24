@@ -69,6 +69,7 @@ public class WordActivity extends BaseActivity {
 	private Animator animFadeIn1 = null;
 	private Animator animFadeOut2 = null;
 	private Animator animFadeIn2 = null;
+	private String today= "";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,8 @@ public class WordActivity extends BaseActivity {
 		animFadeIn1 = AnimatorInflater.loadAnimator(this, R.animator.objectfadein);
 		animFadeOut2 = AnimatorInflater.loadAnimator(this, R.animator.objectfadeout);
 		animFadeIn2 = AnimatorInflater.loadAnimator(this, R.animator.objectfadein);
+		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+		today = dateformat.format(new Date());
 		initView();
 		initData();
 		setListener();
@@ -92,8 +95,6 @@ public class WordActivity extends BaseActivity {
 		animFadeIn2.start();
 		lv_selectors.setClickable(true);
 		select_index = -1;
-		final SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-		final String today = dateformat.format(new Date());
 		
 		List<UserWords> tmpWord = DataSupport.findAll(UserWords.class);
 		

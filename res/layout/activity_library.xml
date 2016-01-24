@@ -61,6 +61,13 @@
 	            android:src="@drawable/global_home"
 	            android:visibility="invisible" />
 	    </LinearLayout>
+
+		<ListView
+		    android:id="@+id/library_lv_words"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:padding="@dimen/x5" >
+		</ListView>
     
 	</LinearLayout>
 </LinearLayout>

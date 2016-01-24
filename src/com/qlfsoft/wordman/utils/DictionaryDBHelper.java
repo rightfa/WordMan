@@ -185,15 +185,13 @@ public class DictionaryDBHelper {
 		String sql = "select BookID,CateID,BookName,BookCount,BookOrder from tbBook where BookID=" + bookId;
 		SQLiteDatabase db = getbookDB();
 		Cursor cursor = db.rawQuery(sql, null);
-		while(cursor.moveToNext())
-		{
-			book = new BookBook();
-			book.setBookId(cursor.getInt(cursor.getColumnIndex("BookID")));
-			book.setCateId(cursor.getInt(cursor.getColumnIndex("CateID")));
-			book.setBookName(cursor.getString(cursor.getColumnIndex("BookName")));
-			book.setBookCount(cursor.getInt(cursor.getColumnIndex("BookCount")));
-			book.setBookOrder(cursor.getInt(cursor.getColumnIndex("BookOrder")));
-		}
+		cursor.moveToFirst();
+		book = new BookBook();
+		book.setBookId(cursor.getInt(cursor.getColumnIndex("BookID")));
+		book.setCateId(cursor.getInt(cursor.getColumnIndex("CateID")));
+		book.setBookName(cursor.getString(cursor.getColumnIndex("BookName")));
+		book.setBookCount(cursor.getInt(cursor.getColumnIndex("BookCount")));
+		book.setBookOrder(cursor.getInt(cursor.getColumnIndex("BookOrder")));
 		db.close();
 		return book;
 	}
@@ -209,15 +207,14 @@ public class DictionaryDBHelper {
 		String sql = "select WordID,Word,Description,Phonetic,Sentence from tbWord where WordID=" + wordId;
 		SQLiteDatabase db = getdicDB();
 		Cursor cursor = db.rawQuery(sql, null);
-		while(cursor.moveToNext())
-		{
-			wordModel = new WordModel();
-			wordModel.setWordId(cursor.getInt(cursor.getColumnIndex("WordID")));
-			wordModel.setWord(cursor.getString(cursor.getColumnIndex("Word")));
-			wordModel.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
-			wordModel.setPhonetic(cursor.getString(cursor.getColumnIndex("Phonetic")));
-			wordModel.setSentence(cursor.getString(cursor.getColumnIndex("Sentence")));
-		}
+		cursor.moveToFirst();
+		wordModel = new WordModel();
+		wordModel.setWordId(cursor.getInt(cursor.getColumnIndex("WordID")));
+		wordModel.setWord(cursor.getString(cursor.getColumnIndex("Word")));
+		wordModel.setDescription(cursor.getString(cursor.getColumnIndex("Description")));
+		wordModel.setPhonetic(cursor.getString(cursor.getColumnIndex("Phonetic")));
+		wordModel.setSentence(cursor.getString(cursor.getColumnIndex("Sentence")));
+		db.close();
 		return wordModel;
 	}
 	
@@ -233,10 +230,9 @@ public class DictionaryDBHelper {
 		String sql = "select WordID from tbData where BookID=" + selBook + " and OrderNo=" + orderNo;
 		SQLiteDatabase db = getbookDB();
 		Cursor cursor = db.rawQuery(sql, null);
-		while(cursor.moveToNext())
-		{
-			wordId = cursor.getInt(cursor.getColumnIndex("WordID"));
-		}
+		cursor.moveToFirst();
+		wordId = cursor.getInt(cursor.getColumnIndex("WordID"));
+		db.close();
 		return wordId;
 	}
 	
@@ -280,6 +276,40 @@ public class DictionaryDBHelper {
 			results.set(intFlag, results.get(0));
 			results.set(0,temp);
 		}
+		db.close();
 		return results;
+	}
+	
+	public List<WordModel> getWordsByBook(int BookId)
+	{
+		List<WordModel> words = new ArrayList<WordModel>();
+		SQLiteDatabase db = getbookDB();
+		String sql = "select WordID from tbData where BookID=" + BookId + " order by OrderNo";
+		Cursor cursor = db.rawQuery(sql, null);
+		while(cursor.moveToNext())
+		{
+			int wordId = cursor.getInt(cursor.getColumnIndex("WordID"));
+			WordModel model = getWordById(wordId);
+			words.add(model);
+		}
+		db.close();
+		return words;
+	}
+	
+	/**
+	 * 根据单词本排序获取单词序号
+	 * @param BookId
+	 * @param orderId
+	 * @return
+	 */
+	public int getWordIdByBookOrder(int BookId,int orderId)
+	{
+		SQLiteDatabase db = getbookDB();
+		String sql = "select WordID from tbData where BookID=? and OrderNo=?";
+		Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(BookId),String.valueOf(orderId)});
+		cursor.moveToFirst();
+		int wordId = cursor.getInt(cursor.getColumnIndex("WordID"));
+		db.close();
+		return wordId;
 	}
 }
