@@ -1,5 +1,7 @@
 package com.qlfsoft.wordman.ui;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.litepal.crud.DataSupport;
@@ -65,7 +67,6 @@ public class SplashActivity extends BaseActivity {
 				{
 					UserModel user = users.get(0);
 					BaseApplication.curBookId = user.getSelBook();
-					BaseApplication.dailyWord = user.getDailyword();
 					BaseApplication.remainDay = user.getRemainDay();
 					BaseApplication.nickName = user.getNickname();
 					BaseApplication.significance = user.getSignificances();
@@ -73,6 +74,19 @@ public class SplashActivity extends BaseActivity {
 					BaseApplication.userAccount = user.getAccount();
 					BaseApplication.wordSize = user.getWordSize();
 					BaseApplication.haveStudy = user.getHaveStudy();
+					SharePreferenceUtils sp = SharePreferenceUtils.getInstnace();
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					String date = format.format(new Date());
+					int repeat_size = sp.getRepeat_Size();
+					String repeat_date = sp.getRepeat_Date();
+					if(repeat_date.equals(date))
+					{
+						repeat_size = repeat_size;
+					}else
+					{
+						repeat_size = 1;
+					}
+					BaseApplication.dailyWord = user.getDailyword() * repeat_size;
 				}
 				return null;
 			}

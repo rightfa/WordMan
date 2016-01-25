@@ -42,6 +42,7 @@
         <activity android:name=".ui.WordInfoActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.ProcessDailyDiagram" android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.ProcessTotalDiagram" android:screenOrientation="portrait"></activity>
+        <activity android:name=".ui.DailyCompleteActivity" android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

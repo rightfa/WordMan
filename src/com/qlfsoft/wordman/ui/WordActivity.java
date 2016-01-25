@@ -57,9 +57,6 @@ public class WordActivity extends BaseActivity {
 	private ListView lv_selectors;
 	private Button btn_next2;
 	private int type;//1是新词，2是复习
-	private String word;//单词
-	private String phonetic;//音标
-	private String description;//解释
 	private List<String> selectors;//选项
 	private int select_index = -1;//默认listview没有选中
 	private TextToSpeech tts;
@@ -69,7 +66,8 @@ public class WordActivity extends BaseActivity {
 	private Animator animFadeIn1 = null;
 	private Animator animFadeOut2 = null;
 	private Animator animFadeIn2 = null;
-	private String today= "";
+	private String today= "";//今日的日期格式
+	private int todayWordsSize;//
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +85,6 @@ public class WordActivity extends BaseActivity {
 		setListener();
 	}
 
-	@SuppressLint("SimpleDateFormat")
 	private void initData() {
 		animFadeIn1.setTarget(tv_word);
 		animFadeIn1.start();
@@ -96,22 +93,29 @@ public class WordActivity extends BaseActivity {
 		lv_selectors.setClickable(true);
 		select_index = -1;
 		
-		List<UserWords> tmpWord = DataSupport.findAll(UserWords.class);
+		todayWordsSize = DataSupport.where("account=? and bookId=? and date([date])=date(?)",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).count(UserWords.class);
 		
-		List<UserWords> todayWords = DataSupport.where("account=? and bookId=? and date([date])=date(?)",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).find(UserWords.class);
+		if(todayWordsSize == BaseApplication.dailyWord)
+		{
+			Intent intent = new Intent(WordActivity.this,DailyCompleteActivity.class);
+			startActivity(intent);
+			finish();
+		}
+		
 		List<UserWords> beforeWords = DataSupport.where("account=? and bookId=? and date([date])<>date(?) and repeat<=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,"4").order("upateDate asc").order("repeat desc").find(UserWords.class);
+		final UserWords userWord = beforeWords.get(0);//前面第一个还未学习完全的单词
 		final int beforeSize = beforeWords.size();//前面还未学习完全的单词数
 		final int reviewSize = beforeSize / 3 * 2;//今日需要复习的单词数
-		List<UserWords> reviewedWords = DataSupport.where("account=? and bookId=? and date(upateDate)=date(?) and date([date])<>date(?) ",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,today).find(UserWords.class);
-		final int reviewedSize = reviewedWords.size();//今日已经复习的单词数
-		String strLog = String.format("今日需新学%d/%d  今日需复习%d/%d",BaseApplication.dailyWord - todayWords.size(),BaseApplication.dailyWord,reviewedSize,reviewSize);
+		final int reviewedSize =DataSupport.where("account=? and bookId=? and date(upateDate)=date(?) and date([date])<>date(?) ",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,today).count(UserWords.class);//今日已经复习的单词数
+		String strLog = String.format("今日需新学%d/%d  今日需复习%d/%d",BaseApplication.dailyWord - todayWordsSize,BaseApplication.dailyWord,reviewedSize,reviewSize);
 		tv_log.setText(strLog);
 		DictionaryDBHelper db = DictionaryDBHelper.getInstance();
 		int wordId = 0;
-		if(reviewedSize >= reviewSize)
+		if(reviewedSize >= reviewSize)//如果已经复习完成则显示新词否则还是复习旧单词
 			type = 1;
 		else
 			type = 2;
+		final DescriptionsAdapter adapter = new DescriptionsAdapter();
 		switch(type)
 		{
 		case 1://新词
@@ -131,54 +135,40 @@ public class WordActivity extends BaseActivity {
 			rl_new.setVisibility(View.INVISIBLE);
 			ll_review.setVisibility(View.VISIBLE);
 			btn_next2.setVisibility(View.INVISIBLE);
-
-			final UserWords userWord = beforeWords.get(0);
 			wordId = userWord.getWordId();
 			selectors = db.get4Selectors(wordId,0);
-			final DescriptionsAdapter adapter = new DescriptionsAdapter();
 			lv_selectors.setAdapter(adapter);
-			lv_selectors.setOnItemClickListener(new OnItemClickListener(){
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-					lv_selectors.setClickable(false);
-					userWord.setUpateDate(today);
-					if(selectors.get(position).equals(description))
-					{
-						userWord.setRepeat(userWord.getRepeat() + 1);
-						userWord.updateAll("account=? and bookId=? and wordId=?",userWord.getAccount(),String.valueOf(userWord.getBookId()),String.valueOf(userWord.getWordId()));
-						if((reviewedSize + 1) >=  reviewSize)
-						{
-							type = 1;
-						}else
-						{
-							type = 2;
-						}
-						FadeOut();
-						initData();
-						
-						
-					}else
-					{
-						select_index = position;
-						btn_next2.setVisibility(View.VISIBLE);						
-						userWord.updateAll("account=? and bookId=? and wordId=?",userWord.getAccount(),String.valueOf(userWord.getBookId()),String.valueOf(userWord.getWordId()));
-						adapter.notifyDataSetChanged();
-					}
-					
-				}
-				
-			});
 			break;
 		}
 		wordModel = db.getWordById(wordId);
-		word = wordModel.getWord();
-		phonetic = wordModel.getPhonetic();
-		description = wordModel.getDescription();
-		tv_word.setText(word);
-		tv_phonetic.setText((null == phonetic)?"": phonetic); 
-		tv_description.setText(description);
+		tv_word.setText(wordModel.getWord());
+		tv_phonetic.setText((null == wordModel.getPhonetic())?"": wordModel.getPhonetic()); 
+		tv_description.setText(wordModel.getDescription());
+		
+		lv_selectors.setOnItemClickListener(new OnItemClickListener(){
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				lv_selectors.setClickable(false);
+				userWord.setUpateDate(today);
+				if(selectors.get(position).equals(wordModel.getDescription()))
+				{
+					userWord.setRepeat(userWord.getRepeat() + 1);
+					userWord.updateAll("account=? and bookId=? and wordId=?",userWord.getAccount(),String.valueOf(userWord.getBookId()),String.valueOf(userWord.getWordId()));
+					FadeOut();
+					initData();
+				}else
+				{
+					select_index = position;
+					btn_next2.setVisibility(View.VISIBLE);						
+					userWord.updateAll("account=? and bookId=? and wordId=?",userWord.getAccount(),String.valueOf(userWord.getBookId()),String.valueOf(userWord.getWordId()));
+					adapter.notifyDataSetChanged();
+				}
+				
+			}
+			
+		});
 	}
 
 	private void setListener() {
@@ -210,7 +200,7 @@ public class WordActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				tts.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+				tts.speak(wordModel.getWord(), TextToSpeech.QUEUE_FLUSH, null);
 				
 			}
 			
@@ -219,8 +209,6 @@ public class WordActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				type = 1;
-				
 				FadeOut();
 				initData();
 			}
@@ -230,8 +218,6 @@ public class WordActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				type = 2;
-				
 				FadeOut();
 				initData();
 			}
@@ -259,7 +245,7 @@ public class WordActivity extends BaseActivity {
 				values.put("haveStudy", BaseApplication.haveStudy);
 				DataSupport.updateAll(UserModel.class, values, "account=? and selBook=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId));
 				btn_know.setVisibility(View.INVISIBLE);
-				btn_unknow.setVisibility(View.INVISIBLE);
+				btn_unknow.setVisibility(View.INVISIBLE);			
 			}
 			
 		});
@@ -354,7 +340,10 @@ public class WordActivity extends BaseActivity {
 			{
 				holder.tv_item.setBackgroundColor(Color.parseColor("#f8c3c9"));
 			}
-			
+			if(selectors.get(position).equals(wordModel.getDescription()))
+			{
+				holder.tv_item.setBackgroundResource(R.color.app_color);
+			}
 			return convertView;
 		}
 		

@@ -18,6 +18,8 @@ public class SharePreferenceUtils {
 	private String temp_newPwd = "TEMP_NEWPWD";
 	private String temp_rePwd = "TEMP_REPWD";
 	
+	private String repeat_date = "REPEAT_DATE"; //重复背诵日期
+	private String repeat_size = "REPEAT_SIZE";//重复背诵次数
 	private SharePreferenceUtils()
 	{
 		mContext = BaseApplication.sContext;
@@ -100,4 +102,28 @@ public class SharePreferenceUtils {
 		return sp.getString(temp_rePwd, "");
 	}
 	
+	
+	public String getRepeat_Date()
+	{
+		return sp.getString(repeat_date, "");
+	}
+	
+	public void setRepeat_Date(String value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putString(repeat_date, value);
+		ed.commit();
+	}
+	
+	public int getRepeat_Size()
+	{
+		return sp.getInt(repeat_size, 1);
+	}
+	
+	public void setRepeat_Size(int value)
+	{
+		SharedPreferences.Editor ed = sp.edit();
+		ed.putInt(repeat_size, value);
+		ed.commit();
+	}
 }
