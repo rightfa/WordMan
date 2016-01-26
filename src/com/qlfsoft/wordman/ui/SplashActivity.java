@@ -67,7 +67,6 @@ public class SplashActivity extends BaseActivity {
 				{
 					UserModel user = users.get(0);
 					BaseApplication.curBookId = user.getSelBook();
-					BaseApplication.remainDay = user.getRemainDay();
 					BaseApplication.nickName = user.getNickname();
 					BaseApplication.significance = user.getSignificances();
 					BaseApplication.totalDay = user.getTotalDay();
@@ -87,6 +86,7 @@ public class SplashActivity extends BaseActivity {
 						repeat_size = 1;
 					}
 					BaseApplication.dailyWord = user.getDailyword() * repeat_size;
+					BaseApplication.remainDay= (int)Math.ceil(((float)(BaseApplication.wordSize-BaseApplication.haveStudy))/user.getDailyword());
 				}
 				return null;
 			}

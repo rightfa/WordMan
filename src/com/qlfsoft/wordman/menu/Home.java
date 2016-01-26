@@ -10,6 +10,7 @@ import com.qlfsoft.wordman.IPlanObserver;
 import com.qlfsoft.wordman.IUserInfoObserver;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserWords;
+import com.qlfsoft.wordman.ui.BookCompleteActivity;
 import com.qlfsoft.wordman.ui.WordActivity;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
@@ -83,8 +84,14 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 
 			@Override
 			public void onClick(View arg0) {
-				Intent intent = new Intent(mContext,WordActivity.class);
-			
+				Intent intent = new Intent();
+				if(BaseApplication.wordSize <= BaseApplication.haveStudy)//如果已经学习完成
+				{
+					intent.setClass(mContext, BookCompleteActivity.class);
+				}else
+				{
+					intent.setClass(mContext, WordActivity.class);
+				}
 				mContext.startActivity(intent);
 				mActivity.finish();
 			}

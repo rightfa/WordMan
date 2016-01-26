@@ -191,7 +191,7 @@ public class MyPlan extends PlanSubject{
 				preBook.setAccount(account);
 				preBook.setDailyword(BaseApplication.dailyWord);
 				preBook.setHaveStudy(BaseApplication.haveStudy);
-				preBook.setRemainDay(BaseApplication.remainDay);
+				//preBook.setRemainDay(BaseApplication.remainDay);
 				preBook.setTotalDay(BaseApplication.totalDay);
 				if(DataSupport.where("account=? and bookId=?",account,String.valueOf(preBookId)).find(UserBooks.class).size() > 0)
 				{
@@ -210,7 +210,7 @@ public class MyPlan extends PlanSubject{
 				{
 					BaseApplication.dailyWord = tmpBooks.get(0).getDailyword();
 					BaseApplication.haveStudy = tmpBooks.get(0).getHaveStudy();
-					BaseApplication.remainDay = tmpBooks.get(0).getRemainDay();
+					BaseApplication.remainDay = (int)Math.ceil(((float)(BaseApplication.wordSize - BaseApplication.haveStudy)) / BaseApplication.dailyWord);
 					BaseApplication.totalDay = tmpBooks.get(0).getTotalDay();
 					
 				}else
@@ -433,7 +433,7 @@ public class MyPlan extends PlanSubject{
 					model.setBookId(book.getBookId());
 					model.setDailyword(50);
 					model.setHaveStudy(0);
-					model.setRemainDay((int)Math.ceil((float)book.getBookCount() / 50));
+					//model.setRemainDay((int)Math.ceil((float)book.getBookCount() / 50));
 					model.setTotalDay((int)Math.ceil((float)book.getBookCount() / 50));
 					model.setAccount(BaseApplication.userAccount);
 					model.updateAll("account=? and bookId=?",model.getAccount(),String.valueOf(model.getBookId()));

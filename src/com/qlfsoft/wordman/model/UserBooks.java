@@ -8,7 +8,7 @@ public class UserBooks extends DataSupport{
 	private boolean inUser;//是否在使用中
 	private int haveStudy;//已经学习的单词数
 	private int totalDay;//计划学习的天数
-	private int remainDay;//剩余学习的天数
+	//private int remainDay;//剩余学习的天数
 	private int dailyword;//每日学习单词数
 	public String getAccount() {
 		return account;
@@ -40,12 +40,12 @@ public class UserBooks extends DataSupport{
 	public void setTotalDay(int totalDay) {
 		this.totalDay = totalDay;
 	}
-	public int getRemainDay() {
-		return remainDay;
-	}
-	public void setRemainDay(int remainDay) {
-		this.remainDay = remainDay;
-	}
+//	public int getRemainDay() {
+//		return remainDay;
+//	}
+//	public void setRemainDay(int remainDay) {
+//		this.remainDay = remainDay;
+//	}
 	public int getDailyword() {
 		return dailyword;
 	}

@@ -117,7 +117,7 @@ public class SelCategoryFragment extends Fragment {
 		userBook.setDailyword(50);
 		userBook.setHaveStudy(0);
 		userBook.setInUser(true);
-		userBook.setRemainDay((int) Math.ceil((float)bookwords / 50));
+		//userBook.setRemainDay((int) Math.ceil((float)bookwords / 50));
 		userBook.setTotalDay((int)Math.ceil((float)bookwords / 50));
 		userBook.setBookId(selBookId);
 		userBook.save();
