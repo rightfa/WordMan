@@ -289,7 +289,8 @@
   		    android:gravity="right"
   		    android:text="TextView"
   		    android:textColor="@android:color/darker_gray"
-  		    android:textSize="15sp" />
+  		    android:textSize="15sp"
+  		    android:visibility="invisible" />
 
     </LinearLayout>
 </LinearLayout>

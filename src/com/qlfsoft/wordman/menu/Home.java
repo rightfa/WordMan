@@ -3,6 +3,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.litepal.crud.DataSupport;
 
 import com.qlfsoft.wordman.BaseApplication;
@@ -12,7 +14,10 @@ import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserWords;
 import com.qlfsoft.wordman.ui.BookCompleteActivity;
 import com.qlfsoft.wordman.ui.WordActivity;
+import com.qlfsoft.wordman.utils.ConstantsUtil;
+import com.qlfsoft.wordman.utils.NetUtils;
 import com.qlfsoft.wordman.utils.SharePreferenceUtils;
+import com.qlfsoft.wordman.utils.ToastUtils;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 
 import android.app.Activity;
@@ -58,6 +63,7 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 		findViewById();
 		setListener();
 		init();
+		setDailyEnglish();
 	}
 
 	private void init() {
@@ -176,5 +182,26 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 	@Override
 	public void planUpdate() {
 		init();
+	}
+	
+	public void setDailyEnglish()
+	{
+		if(!NetUtils.isNet(mContext))
+		{
+			ToastUtils.showShort("ÍøÂçÁ¬½Ó´íÎó£¡");
+		}else
+		{
+			String jsonStr = NetUtils.getHttpString(ConstantsUtil.dsapi);
+			try {
+				JSONArray array = new JSONArray(jsonStr);
+				String dailyword_cn = array.getJSONObject(0).getString("content");
+				String dailyword_en = array.getJSONObject(0).getString("note");
+				tv_dailyword_cn.setText(dailyword_cn);
+				tv_dailyword_en.setText(dailyword_en);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }

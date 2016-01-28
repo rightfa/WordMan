@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+      android:background="@drawable/wordman_background"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/test_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x40"
+        android:background="@drawable/global_top_background"
+        android:gravity="center_horizontal"
+        android:paddingBottom="@dimen/x4"
+        android:paddingLeft="@dimen/x4"
+        android:paddingRight="@dimen/x2"
+        android:paddingTop="@dimen/x3" >
+
+        <ImageButton
+            android:id="@+id/test_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x4"
+            android:background="@drawable/title_text_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/activity_word_homemenu_bk" />
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="单词量测试"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/main_activity_toptitle_size" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/x4"
+            android:background="@drawable/title_text_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/global_home"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <TextView 
+        android:id="@+id/test_tv_remainSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/x5"
+        android:gravity="center"
+        android:text="100"
+        android:layout_gravity="center"
+        android:textColor="@color/app_color"
+        android:textSize="25sp"/>
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView 
+            android:id="@+id/test_tv_correct"
+            android:layout_width="@dimen/x15"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_weight="0"
+            android:text="2"/>
+            <ProgressBar
+        android:id="@+id/test_pb_haveTest"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x10"
+        android:layout_gravity="center"
+        android:max="100"
+        android:progress="20"
+        android:layout_marginRight="@dimen/x3"
+        android:layout_marginLeft="@dimen/x3"
+        android:layout_weight="1"
+        android:progressDrawable="@drawable/home_bg_color" />
+               <TextView 
+            android:id="@+id/test_tv_wrong"
+            android:layout_width="@dimen/x15"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:layout_marginRight="@dimen/x5"
+            android:layout_weight="0"
+            android:text="2"/>
+    </LinearLayout>
+
+    
+  <Button
+        android:id="@+id/test_btn_sound"
+        android:layout_width="@dimen/x50"
+        android:layout_height="@dimen/x50"
+        android:layout_gravity="center"
+        android:background="@drawable/activity_word_sound_bk" />
+
+    <TextView
+        android:id="@+id/test_tv_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/x5"
+        android:layout_marginTop="@dimen/x3"
+        android:text="accounts payable"
+        android:layout_gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/test_tv_phonetic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="[ə&apos;kuːtə]"
+        android:layout_gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+   <ListView
+        android:id="@+id/test_lv_selectors"
+        android:layout_margin="@dimen/x10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+  </ListView>
+</LinearLayout>
