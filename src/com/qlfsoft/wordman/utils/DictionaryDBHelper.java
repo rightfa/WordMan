@@ -312,4 +312,27 @@ public class DictionaryDBHelper {
 		db.close();
 		return wordId;
 	}
+	
+	/**
+	 * 获取随机的4个单词
+	 * @return
+	 */
+	public List<WordModel> getRandom4Words()
+	{
+		List<WordModel> models = new ArrayList<WordModel>();
+		SQLiteDatabase db = getdicDB();
+		String sql = "select WordID,Word,Description,Phonetic from tbWord order by random() limit 4";
+		Cursor c = db.rawQuery(sql, null);
+		while(c.moveToNext())
+		{
+			WordModel model = new WordModel();
+			model.setWordId(c.getInt(c.getColumnIndex("WordID")));
+			model.setDescription(c.getString(c.getColumnIndex("Description")));
+			model.setPhonetic(c.getString(c.getColumnIndex("Phonetic")));
+			model.setWord(c.getString(c.getColumnIndex("Word")));
+			models.add(model);
+		}
+		db.close();
+		return models;
+	}
 }

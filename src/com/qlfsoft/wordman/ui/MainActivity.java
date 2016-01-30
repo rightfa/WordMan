@@ -10,6 +10,7 @@ import com.qlfsoft.wordman.menu.Home;
 import com.qlfsoft.wordman.menu.Library;
 import com.qlfsoft.wordman.menu.MyPlan;
 import com.qlfsoft.wordman.menu.MyProcess;
+import com.qlfsoft.wordman.menu.Test;
 import com.qlfsoft.wordman.menu.UserInfo;
 import com.qlfsoft.wordman.utils.ActivityForResultUtil;
 import com.qlfsoft.wordman.utils.ViewUtil;
@@ -38,6 +39,7 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 	private MyPlan mPlan;
 	private MyProcess mProcess;
 	private Library mLibrary;
+	private Test mTest;
 	/*
 	 * 当前显示的View的编号
 	 */
@@ -107,6 +109,15 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 						mLibrary.setOnOpenListener(MainActivity.this);
 					}
 					mRoot.close(mLibrary.getView());
+					break;
+				case ViewUtil.TEST:
+					if(null == mTest)
+					{
+						mTest = new Test(MainActivity.this,MainActivity.this);
+						mTest.setOnOpenListener(MainActivity.this);
+					}
+					mRoot.close(mTest.getView());
+					break;
 				default:
 						break;
 				}

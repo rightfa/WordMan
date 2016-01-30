@@ -75,12 +75,12 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/x10"
         android:layout_gravity="center"
-        android:max="100"
-        android:progress="20"
+        android:max="2"
+        android:progress="1"
         android:layout_marginRight="@dimen/x3"
         android:layout_marginLeft="@dimen/x3"
         android:layout_weight="1"
-        android:progressDrawable="@drawable/home_bg_color" />
+        android:progressDrawable="@drawable/test_pb_background" />
                <TextView 
             android:id="@+id/test_tv_wrong"
             android:layout_width="@dimen/x15"
