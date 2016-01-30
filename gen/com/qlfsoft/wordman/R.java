@@ -1326,7 +1326,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int about_tv_repwd=0x7f0b0013;
         public static final int about_tv_significances=0x7f0b000d;
         public static final int ac_splash_pb=0x7f0b004d;
-        public static final int action_settings=0x7f0b00a2;
+        public static final int action_settings=0x7f0b00a3;
         public static final int activity_sel_category_indicator=0x7f0b004a;
         public static final int activity_sel_category_pager=0x7f0b004b;
         public static final int bookcomplete_btn_back=0x7f0b001a;
@@ -1427,6 +1427,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int splash_tv_firstLoading=0x7f0b004e;
         public static final int test_btn_sound=0x7f0b0055;
         public static final int test_lv_selectors=0x7f0b0058;
+        public static final int test_lv_selectors_item_tv=0x7f0b00a1;
         public static final int test_menu=0x7f0b0050;
         public static final int test_pb_haveTest=0x7f0b0053;
         public static final int test_top_layout=0x7f0b004f;
@@ -1454,7 +1455,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int word_btn_unkonw=0x7f0b0063;
         public static final int word_ll_review=0x7f0b0064;
         public static final int word_lv_selectors=0x7f0b0065;
-        public static final int word_lv_selectors_item_tv=0x7f0b00a1;
+        public static final int word_lv_selectors_item_tv=0x7f0b00a2;
         public static final int word_menu=0x7f0b005a;
         public static final int word_rl_new=0x7f0b005f;
         public static final int word_top_layout=0x7f0b0059;
@@ -1506,8 +1507,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int progress_daily_diagram=0x7f030016;
         public static final int progress_total_diagram=0x7f030017;
         public static final int register_activity=0x7f030018;
-        public static final int title_bar_center_button_bg=0x7f030019;
-        public static final int word_lv_selectors_item=0x7f03001a;
+        public static final int test_lv_selectors_item=0x7f030019;
+        public static final int title_bar_center_button_bg=0x7f03001a;
+        public static final int word_lv_selectors_item=0x7f03001b;
     }
     public static final class menu {
         public static final int main=0x7f0e0000;
