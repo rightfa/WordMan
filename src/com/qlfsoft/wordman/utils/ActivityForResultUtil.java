@@ -11,4 +11,5 @@ public class ActivityForResultUtil {
 	public static final int REQUESTCODE_MYPLAN_ADD = 3;
 	public static final int REQUESTCODE_DAILYDIAGRAM = 4;
 	public static final int REQUESTCODE_TOTALDIAGRAM = 5;
+	public static final int REQUESTCODE_TESTCOMPLETE = 6;
 }

@@ -21,5 +21,14 @@
         <item >需复习</item>
         <item >已复习</item>
     </string-array>
+    <string-array name="test_estimate">
+        <item >我没看错吧，您不会是闭眼测的吧！</item>
+        <item >加油，及格就在眼前！</item>
+        <item >恭喜！您及格了！</item>
+        <item >太好了！您的进步真大！</item>
+        <item >再加把油，您马上就要超神了！</item>
+        <item >太厉害了，您是怎么做到的！</item>
+        <item >神啊，这是奇迹！</item>
+    </string-array>
 
 </resources>

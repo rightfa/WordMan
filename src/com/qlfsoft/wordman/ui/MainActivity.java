@@ -230,6 +230,17 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 			initMyProcess();
 			mRoot.close(mProcess.getView());
 			break;
+		case ActivityForResultUtil.REQUESTCODE_TESTCOMPLETE:
+			if(resultCode == 1)
+			{
+				if(null == mTest)
+				{
+					mTest = new Test(MainActivity.this,MainActivity.this);
+					mTest.setOnOpenListener(MainActivity.this);
+				}
+				mRoot.close(mTest.getView());
+			}
+			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 		

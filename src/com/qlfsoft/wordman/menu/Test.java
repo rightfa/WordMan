@@ -6,12 +6,15 @@ import java.util.Random;
 
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.WordModel;
+import com.qlfsoft.wordman.ui.TestComleteActivity;
+import com.qlfsoft.wordman.utils.ActivityForResultUtil;
 import com.qlfsoft.wordman.utils.ConstantsUtil;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.view.LayoutInflater;
@@ -76,6 +79,13 @@ public class Test {
 	}
 
 	private void initData() {
+		if((testCorrectSize + testWrongSize) >= testWordSize)
+		{
+			Intent intent = new Intent(mContext,TestComleteActivity.class);
+			intent.putExtra("SCORE", testCorrectSize);
+			mActivity.startActivityForResult(intent, ActivityForResultUtil.REQUESTCODE_TESTCOMPLETE);
+			mActivity.finish();
+		}
 		Random r = new Random(System.currentTimeMillis() + testCorrectSize + testWrongSize);
 		curIndex = r.nextInt(4);
 		words = DictionaryDBHelper.getInstance().getRandom4Words();
