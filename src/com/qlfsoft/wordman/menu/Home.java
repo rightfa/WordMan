@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import com.qlfsoft.wordman.BaseApplication;
@@ -23,6 +24,9 @@ import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -34,6 +38,7 @@ import android.widget.TextView;
 
 public class Home implements IPlanObserver,IUserInfoObserver{
 
+	protected static final int GETDSAPI = 0;
 	private Context mContext;
 	private Activity mActivity;
 	private View mHome;
@@ -184,6 +189,24 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 		init();
 	}
 	
+	private Handler myHandler = new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			switch(msg.what)
+			{
+			case GETDSAPI:
+				String dailyword_cn = msg.getData().getString("NOTE");
+				String dailyword_en = msg.getData().getString("CONTENT");
+				tv_dailyword_cn.setText(dailyword_cn);
+				tv_dailyword_en.setText(dailyword_en);
+				break;
+			}
+			super.handleMessage(msg);
+		}
+		
+	};
+	
 	public void setDailyEnglish()
 	{
 		if(!NetUtils.isNet(mContext))
@@ -191,17 +214,28 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 			ToastUtils.showShort("ÍøÂçÁ¬½Ó´íÎó£¡");
 		}else
 		{
-			String jsonStr = NetUtils.getHttpString(ConstantsUtil.dsapi);
-			try {
-				JSONArray array = new JSONArray(jsonStr);
-				String dailyword_cn = array.getJSONObject(0).getString("content");
-				String dailyword_en = array.getJSONObject(0).getString("note");
-				tv_dailyword_cn.setText(dailyword_cn);
-				tv_dailyword_en.setText(dailyword_en);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			new Thread(){
+				public void run(){
+					String jsonStr = NetUtils.getHttpString(ConstantsUtil.dsapi);
+					try {
+						JSONObject obj = new JSONObject(jsonStr);
+						String dailyword_cn = obj.getString("note");
+						String dailyword_en = obj.getString("content");
+						Bundle b = new Bundle();
+						b.putString("NOTE", dailyword_cn);
+						b.putString("CONTENT", dailyword_en);
+						Message msg = new Message();
+						msg.what = GETDSAPI;
+						msg.setData(b);
+						myHandler.sendMessage(msg);
+						
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}.start();
+			
 		}
 	}
 }

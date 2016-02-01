@@ -328,15 +328,16 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     public static final class color {
         public static final int app_color=0x7f060000;
         public static final int app_name_color=0x7f060004;
-        public static final int default_circle_indicator_fill_color=0x7f060012;
-        public static final int default_circle_indicator_page_color=0x7f060013;
-        public static final int default_circle_indicator_stroke_color=0x7f060014;
-        public static final int default_line_indicator_selected_color=0x7f060015;
-        public static final int default_line_indicator_unselected_color=0x7f060016;
-        public static final int default_title_indicator_footer_color=0x7f060017;
-        public static final int default_title_indicator_selected_color=0x7f060018;
-        public static final int default_title_indicator_text_color=0x7f060019;
-        public static final int default_underline_indicator_selected_color=0x7f06001a;
+        public static final int darker_gray=0x7f06000a;
+        public static final int default_circle_indicator_fill_color=0x7f060013;
+        public static final int default_circle_indicator_page_color=0x7f060014;
+        public static final int default_circle_indicator_stroke_color=0x7f060015;
+        public static final int default_line_indicator_selected_color=0x7f060016;
+        public static final int default_line_indicator_unselected_color=0x7f060017;
+        public static final int default_title_indicator_footer_color=0x7f060018;
+        public static final int default_title_indicator_selected_color=0x7f060019;
+        public static final int default_title_indicator_text_color=0x7f06001a;
+        public static final int default_underline_indicator_selected_color=0x7f06001b;
         /**  drop down list footer font color 
          */
         public static final int drop_down_list_footer_font_color=0x7f060003;
@@ -351,14 +352,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int red_color=0x7f060009;
         public static final int translucent_00=0x7f060007;
         public static final int translucent_20=0x7f060006;
-        public static final int vpi__background_holo_dark=0x7f06000a;
-        public static final int vpi__background_holo_light=0x7f06000b;
-        public static final int vpi__bright_foreground_disabled_holo_dark=0x7f06000e;
-        public static final int vpi__bright_foreground_disabled_holo_light=0x7f06000f;
-        public static final int vpi__bright_foreground_holo_dark=0x7f06000c;
-        public static final int vpi__bright_foreground_holo_light=0x7f06000d;
-        public static final int vpi__bright_foreground_inverse_holo_dark=0x7f060010;
-        public static final int vpi__bright_foreground_inverse_holo_light=0x7f060011;
+        public static final int vpi__background_holo_dark=0x7f06000b;
+        public static final int vpi__background_holo_light=0x7f06000c;
+        public static final int vpi__bright_foreground_disabled_holo_dark=0x7f06000f;
+        public static final int vpi__bright_foreground_disabled_holo_light=0x7f060010;
+        public static final int vpi__bright_foreground_holo_dark=0x7f06000d;
+        public static final int vpi__bright_foreground_holo_light=0x7f06000e;
+        public static final int vpi__bright_foreground_inverse_holo_dark=0x7f060011;
+        public static final int vpi__bright_foreground_inverse_holo_light=0x7f060012;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 

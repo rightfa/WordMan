@@ -125,7 +125,6 @@ public class SelCategoryFragment extends Fragment {
 		contentValues.put("selBook", selBookId);
 		contentValues.put("haveStudy", BaseApplication.haveStudy);
 		contentValues.put("totalDay", BaseApplication.totalDay);
-		contentValues.put("remainDay", BaseApplication.remainDay);
 		contentValues.put("dailyword", BaseApplication.dailyWord);
 		contentValues.put("wordSize", BaseApplication.wordSize);
 		DataSupport.updateAll(UserModel.class, contentValues, "account=?",BaseApplication.userAccount);

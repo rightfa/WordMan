@@ -25,7 +25,7 @@
 	            android:layout_marginLeft="@dimen/x4"
 	            android:background="@drawable/title_text_button"
 	            android:scaleType="centerInside"
-	            android:src="@drawable/activity_word_homemenu_bk" />
+	            android:src="@drawable/global_home" />
 	
 	        <LinearLayout
                 android:id="@+id/library_top_layout"

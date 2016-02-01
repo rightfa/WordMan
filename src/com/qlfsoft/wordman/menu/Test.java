@@ -54,6 +54,7 @@ public class Test {
 	private int testWrongSize = 0;//测试错误的单词数
 	private int curIndex = 0;//当前选择的4个单词中的一个
 	private TextToSpeech tts;
+	private ListViewAdapter adapter = null;
 	
 	public Test(Context context,Activity activity)
 	{
@@ -76,6 +77,8 @@ public class Test {
 		tv_word = (TextView) mTest.findViewById(R.id.test_tv_word);
 		tv_phonetic = (TextView) mTest.findViewById(R.id.test_tv_phonetic);
 		lv_selectors = (ListView) mTest.findViewById(R.id.test_lv_selectors);
+		adapter = new ListViewAdapter();
+		lv_selectors.setAdapter(adapter);
 	}
 
 	private void initData() {
@@ -97,6 +100,7 @@ public class Test {
 		pb_haveTest.setProgress(testWrongSize);
 		tv_word.setText(word.getWord());
 		tv_phonetic.setText(word.getPhonetic());
+		adapter.notifyDataSetChanged();
 	}
 
 	private void setListener() {

@@ -13,4 +13,5 @@
     <color name="translucent_00">#00000000</color>
     <color name="light_app_color">#ddf8f1</color>
     <color name="red_color">#f0394f</color>
+    <color name="darker_gray">#464646</color>
 </resources>
