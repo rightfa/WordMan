@@ -61,6 +61,7 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 	private TextView tv_dailyword_en;
 	private TextView tv_dailyword_cn;
 	private TextView tv_dailyword_from;
+	private LinearLayout ll_main;
 	
 	private OnOpenListener mOnOpenListener;
 	
@@ -169,7 +170,16 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 		tv_dailyword_en = (TextView) mHome.findViewById(R.id.home_tv_dailyword_en);
 		tv_dailyword_cn = (TextView) mHome.findViewById(R.id.home_tv_dailyword_ch);
 		tv_dailyword_from = (TextView) mHome.findViewById(R.id.home_tv_dailyword_from);
-		
+		ll_main = (LinearLayout) mHome.findViewById(R.id.home_ll_main);
+		ll_main.setOnTouchListener(new OnTouchListener(){
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+			
+		});
 	}
 	
 	public View getView() {
