@@ -14,6 +14,7 @@ import com.qlfsoft.wordman.IUserInfoObserver;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserWords;
 import com.qlfsoft.wordman.ui.BookCompleteActivity;
+import com.qlfsoft.wordman.ui.SearchActivity;
 import com.qlfsoft.wordman.ui.WordActivity;
 import com.qlfsoft.wordman.utils.ConstantsUtil;
 import com.qlfsoft.wordman.utils.NetUtils;
@@ -28,8 +29,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -125,8 +128,8 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				
+				Intent intent = new Intent(mContext,SearchActivity.class);
+				mContext.startActivity(intent);
 			}
 			
 		});
@@ -148,7 +151,6 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 			}
 			
 		});
-
 	}
 
 	private void findViewById() {

@@ -335,4 +335,25 @@ public class DictionaryDBHelper {
 		db.close();
 		return models;
 	}
+	
+	/**
+	 * 从字典里面查询英文单词的中文意思
+	 * @param word 英文单词
+	 * @return
+	 */
+	public WordModel searchWord(String word)
+	{
+		WordModel wordModel = null;
+		String sql = "select topic_word,mean_cn,accent from dictionary where topic_word=?";
+		SQLiteDatabase db = getdictionaryDB();
+		Cursor c = db.rawQuery(sql, new String[]{word});
+		if(c.moveToFirst())
+		{
+			wordModel = new WordModel();
+			wordModel.setWord(word);
+			wordModel.setDescription(c.getString(c.getColumnIndex("mean_cn")));
+			wordModel.setPhonetic(c.getString(c.getColumnIndex("accent")));
+		}
+		return wordModel;
+	}
 }

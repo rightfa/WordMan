@@ -45,14 +45,15 @@
             android:visibility="invisible" />
     </LinearLayout>
 
- 	<EditText
+ 	<com.qlfsoft.wordman.widget.ClearEditText
  	    android:id="@+id/search_et"
  	    android:layout_width="match_parent"
  	    android:layout_height="@dimen/x40"
  	    android:layout_margin="@dimen/x5"
  	    android:background="@drawable/search_normal_edit"
  	    android:hint="请输入英文单词"
- 	    android:drawableLeft="@drawable/gray_search"></EditText>
+ 	    android:drawableLeft="@drawable/gray_search"
+ 	    android:drawableRight="@drawable/edit_reset_bg"/>
     <ScrollView
         android:id="@+id/search_sv"
         android:layout_width="match_parent"
@@ -101,39 +102,6 @@
                 android:text="adv.正确的，紧缺的"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="@dimen/x10"
-                android:layout_marginRight="@dimen/x10"
-                android:background="@android:color/white" >
-
-                <TextView
-                    android:id="@+id/search_textView1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="@dimen/x3"
-                    android:layout_marginTop="@dimen/x3"
-                    android:text="例句"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/search_tv_sentence"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/search_textView1"
-                    android:layout_marginLeft="@dimen/x3"
-                    android:layout_marginRight="@dimen/x3"
-                    android:layout_marginTop="@dimen/x5"
-                    android:text="TextView"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp" />
-            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>
