@@ -13,8 +13,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
@@ -30,7 +32,9 @@ import com.qlfsoft.wordman.BaseApplication;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.model.UserWords;
 import com.qlfsoft.wordman.model.WordModel;
+import com.qlfsoft.wordman.ui.LibraryWordInfoActivity;
 import com.qlfsoft.wordman.ui.WordInfoActivity;
+import com.qlfsoft.wordman.utils.ActivityForResultUtil;
 import com.qlfsoft.wordman.utils.DictionaryDBHelper;
 import com.qlfsoft.wordman.widget.FlipperLayout.OnOpenListener;
 
@@ -41,6 +45,7 @@ public class Library {
 	private View mLibrary;
 	private View mPopView;
 	private ListView popup_lv;
+	private LinearLayout ll_main;
 	
 	private OnOpenListener mOnOpenListener;
 	private PopupWindow mPopupWindow;
@@ -74,6 +79,15 @@ public class Library {
 		lv_words = (ListView) mLibrary.findViewById(R.id.library_lv_words);
 		mPopView = LayoutInflater.from(mContext).inflate(R.layout.library_popupwindow, null);
 		popup_lv = (ListView) mPopView.findViewById(R.id.library_popupwindow_display);
+		ll_main = (LinearLayout) mLibrary.findViewById(R.id.library_ll_main);
+		ll_main.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+			
+		});
 	}
 
 
@@ -81,8 +95,7 @@ public class Library {
 	private void initData() {
 		PopupAdapter popupAdapter = new PopupAdapter();
 		popup_lv.setAdapter(popupAdapter);
-		mPopupWindow = new PopupWindow(mPopView,ll_top.getWidth(),LayoutParams.WRAP_CONTENT,true);
-		mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+		
 		SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 		today = dateformat.format(new Date());
 		wordsLength = DataSupport.where("account=? and bookId=? and date([date])=date(?)",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today).count(UserWords.class);
@@ -96,6 +109,11 @@ public class Library {
 		ll_top.setOnClickListener(new OnClickListener(){
 			public void onClick(View v)
 			{
+				if(null == mPopupWindow)
+				{
+					mPopupWindow = new PopupWindow(mPopView,ll_top.getWidth(),LayoutParams.WRAP_CONTENT,true);
+					mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+				}
 				if(mPopupWindow.isShowing())
 				{
 					mPopupWindow.dismiss();
@@ -161,9 +179,9 @@ public class Library {
 				}
 				
 				WordModel word = dbHelper.getWordById(wordId);
-				Intent intent = new Intent(mContext,WordInfoActivity.class);
+				Intent intent = new Intent(mContext,LibraryWordInfoActivity.class);
 				intent.putExtra("WORDMODEL", word);
-				mActivity.startActivity(intent);
+				mActivity.startActivityForResult(intent, ActivityForResultUtil.REQUESTCODE_LIBRARY);
 				
 			}
 		});
@@ -286,14 +304,14 @@ public class Library {
 			{
 				holder.item_bg.setBackgroundColor(mContext.getResources().getColor(R.color.app_color));
 				holder.tv_word.setTextColor(Color.parseColor("#ffffff"));
-				holder.tv_phonetic.setText(Color.parseColor("#ffffff"));
-				holder.tv_description.setText(Color.parseColor("#ffffff"));
+				holder.tv_phonetic.setTextColor(Color.parseColor("#ffffff"));
+				holder.tv_description.setTextColor(Color.parseColor("#ffffff"));
 			}else
 			{
 				holder.item_bg.setBackgroundColor(mContext.getResources().getColor(R.color.light_app_color));
 				holder.tv_word.setTextColor(Color.parseColor("#000000"));
-				holder.tv_phonetic.setText(Color.parseColor("#000000"));
-				holder.tv_description.setText(Color.parseColor("#000000"));
+				holder.tv_phonetic.setTextColor(Color.parseColor("#000000"));
+				holder.tv_description.setTextColor(Color.parseColor("#000000"));
 			}
 			return convertView;
 		}

@@ -18,8 +18,10 @@ import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.TextToSpeech.OnInitListener;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -38,6 +40,7 @@ public class Test {
 	private View mTest;
 	private OnOpenListener mOnOpenListener;
 	
+	private LinearLayout ll_main;
 	private LinearLayout ll_top;
 	private ImageButton ib_menu;
 	private TextView tv_remainSize;// £”‡≤‚ ‘µƒµ•¥ ¡ø
@@ -77,8 +80,13 @@ public class Test {
 		tv_word = (TextView) mTest.findViewById(R.id.test_tv_word);
 		tv_phonetic = (TextView) mTest.findViewById(R.id.test_tv_phonetic);
 		lv_selectors = (ListView) mTest.findViewById(R.id.test_lv_selectors);
-		adapter = new ListViewAdapter();
-		lv_selectors.setAdapter(adapter);
+		ll_main = (LinearLayout) mTest.findViewById(R.id.test_ll_main);
+		ll_main.setOnTouchListener(new OnTouchListener(){
+			public boolean onTouch(View v,MotionEvent t)
+			{
+				return true;
+			}
+		});
 	}
 
 	private void initData() {
@@ -97,10 +105,16 @@ public class Test {
 		tv_correct.setText(String.valueOf(testCorrectSize));
 		tv_wrong.setText(String.valueOf(testWrongSize));
 		pb_haveTest.setMax(testCorrectSize + testWrongSize);
-		pb_haveTest.setProgress(testWrongSize);
+		pb_haveTest.setProgress(testCorrectSize);
 		tv_word.setText(word.getWord());
 		tv_phonetic.setText(word.getPhonetic());
-		adapter.notifyDataSetChanged();
+		if(null == adapter)
+		{
+			adapter = new ListViewAdapter();
+			lv_selectors.setAdapter(adapter);
+		}else{
+			adapter.notifyDataSetChanged();
+		}
 	}
 
 	private void setListener() {
@@ -156,8 +170,8 @@ public class Test {
 
 		@Override
 		public int getCount() {
-			words.size();
-			return 0;
+			
+			return words.size();
 		}
 
 		@Override
@@ -185,7 +199,8 @@ public class Test {
 			{
 				holder = (ViewHolder) convertView.getTag();
 			}
-			holder.tv_item.setText(words.get(position).getWord());
+			holder.tv_item.setHeight((int)mContext.getResources().getDimension(R.dimen.x35));
+			holder.tv_item.setText(words.get(position).getDescription());
 			return convertView;
 		}
 		

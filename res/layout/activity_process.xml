@@ -4,10 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     <LinearLayout 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/wordman_background"
-    android:orientation="vertical" >
+        android:id="@+id/process_ll_main"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:background="@drawable/wordman_background"
+	    android:orientation="vertical" >
     <LinearLayout
         android:id="@+id/process_top_layout"
         android:layout_width="match_parent"

@@ -10,11 +10,14 @@ import kankan.wheel.widget.OnWheelScrollListener;
 import kankan.wheel.widget.WheelView;
 import kankan.wheel.widget.adapters.NumericWheelAdapter;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -60,6 +63,7 @@ public class MyPlan extends PlanSubject{
 	private TextView tv_submit_chgPlan;
 	private WheelView wheel_dailyword;
 	private WheelView wheel_needDay;
+	private LinearLayout ll_main;
 	
 	private OnOpenListener mOnOpenListener;
 	private List<UserBooks> myBooks;
@@ -142,6 +146,10 @@ public class MyPlan extends PlanSubject{
 				LogUtils.Logv("remainDay=" + BaseApplication.remainDay);
 				BaseApplication.totalDay = tmp_needDay;
 				BaseApplication.dailyWord = tmp_dailyword;
+				ContentValues cv = new ContentValues();
+				cv.put("totalDay", tmp_needDay);
+				cv.put("dailyword", tmp_dailyword);
+				DataSupport.updateAll(UserModel.class, cv, "account=? and selBook=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId));
 				ToastUtils.showShort("修改计划成功！");
 				notifyObservers();
 			}
@@ -317,6 +325,16 @@ public class MyPlan extends PlanSubject{
 		tv_submit_chgPlan = (TextView) mMyPlan.findViewById(R.id.plan_tv_submit_chgPlan);
 		wheel_dailyword = (WheelView) mMyPlan.findViewById(R.id.plan_wheel_dailyword);
 		wheel_needDay = (WheelView) mMyPlan.findViewById(R.id.plan_wheel_needDay);
+		ll_main = (LinearLayout) mMyPlan.findViewById(R.id.plan_ll_main);
+		ll_main.setOnTouchListener(new OnTouchListener(){
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+			
+		});
 	}
 	
 	public View getView() {

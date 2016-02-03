@@ -41,8 +41,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -72,6 +74,7 @@ public class UserInfo extends UserInfoSubject {
 	private EditText tv_newPwd;
 	private EditText tv_rePwd;
 	private Button btn_logout;
+	private LinearLayout ll_main;
 	private boolean modify_flag;
 	
 	private String[] items = new String[] { "—°‘Ò±æµÿÕº∆¨", "≈ƒ’’" };
@@ -268,6 +271,13 @@ public class UserInfo extends UserInfoSubject {
 		ll_rePwd = (LinearLayout) mUserInfo.findViewById(R.id.about_ll_repwd);
 		tv_rePwd = (EditText) mUserInfo.findViewById(R.id.about_tv_repwd);
 		btn_logout = (Button) mUserInfo.findViewById(R.id.about_btn_logout);
+		ll_main = (LinearLayout) mUserInfo.findViewById(R.id.about_ll_main);
+		ll_main.setOnTouchListener(new OnTouchListener(){
+			public boolean onTouch(View v,MotionEvent t)
+			{
+				return true;
+			}
+		});
 	}
 	
 	public View getView() {

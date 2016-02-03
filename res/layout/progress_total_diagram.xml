@@ -29,7 +29,7 @@
                 android:textSize="18sp" />
         </LinearLayout>
 
-        <Button
+        <ImageButton
             android:id="@+id/prgtotal_reply"
             android:layout_width="wrap_content"
             android:layout_height="fill_parent"
@@ -37,7 +37,8 @@
             android:layout_marginBottom="@dimen/x2"
             android:layout_marginLeft="@dimen/x4"
             android:layout_marginTop="@dimen/x2"
-            android:background="@drawable/title_text_button_left_arrow"
+                  android:background="@drawable/title_text_button"
+            android:src="@drawable/title_text_button_left_arrow"
             android:ellipsize="end"
             android:maxWidth="@dimen/x80"
             android:minWidth="@dimen/x40"

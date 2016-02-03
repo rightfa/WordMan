@@ -74,7 +74,7 @@ public class DailyCompleteActivity extends BaseActivity {
 				}
 				sp.setRepeat_Date(date);
 				sp.setRepeat_Size(repeat_size);
-				BaseApplication.dailyWord = BaseApplication.dailyWord * repeat_size;
+				BaseApplication.dailyWord = BaseApplication.dailyWord / (repeat_size - 1) * repeat_size;
 				Intent intent = new Intent(DailyCompleteActivity.this,WordActivity.class);
 				startActivity(intent);
 				finish();

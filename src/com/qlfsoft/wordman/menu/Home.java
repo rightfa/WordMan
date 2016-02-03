@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.litepal.crud.DataSupport;
 
 import com.qlfsoft.wordman.BaseApplication;
+import com.qlfsoft.wordman.IOpenPlanListener;
 import com.qlfsoft.wordman.IPlanObserver;
 import com.qlfsoft.wordman.IUserInfoObserver;
 import com.qlfsoft.wordman.R;
@@ -64,6 +65,7 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 	private LinearLayout ll_main;
 	
 	private OnOpenListener mOnOpenListener;
+	private IOpenPlanListener mOpenPlanListener;
 	
 	public Home(Context context, Activity activity) {
 		mContext = context;
@@ -147,7 +149,7 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 
 			@Override
 			public void onClick(View arg0) {
-				
+				mOpenPlanListener.openPlan();
 				
 			}
 			
@@ -188,6 +190,11 @@ public class Home implements IPlanObserver,IUserInfoObserver{
 
 	public void setOnOpenListener(OnOpenListener onOpenListener) {
 		mOnOpenListener = onOpenListener;
+	}
+	
+	public void setOpenPlanListener(IOpenPlanListener l)
+	{
+		mOpenPlanListener = l;
 	}
 
 	@Override

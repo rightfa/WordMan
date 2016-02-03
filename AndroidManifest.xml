@@ -49,6 +49,7 @@
         <activity android:name=".ui.BookCompleteActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.TestComleteActivity" android:screenOrientation="portrait"></activity>
         <activity android:name=".ui.SearchActivity" android:screenOrientation="portrait"></activity>
+        <activity android:screenOrientation="portrait" android:name=".ui.LibraryWordInfoActivity"></activity>
     </application>
 
 </manifest>

@@ -102,8 +102,8 @@ public class WordActivity extends BaseActivity {
 			finish();
 		}
 		
-		List<UserWords> beforeWords = DataSupport.where("account=? and bookId=? and date([date])<>date(?) and repeat<=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,"4").order("upateDate asc").order("repeat desc").find(UserWords.class);
-		final UserWords userWord = beforeWords.get(0);//前面第一个还未学习完全的单词
+		final List<UserWords> beforeWords = DataSupport.where("account=? and bookId=? and date([date])<>date(?) and repeat<=?",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,"4").order("upateDate asc").order("repeat desc").find(UserWords.class);
+		//final UserWords userWord = beforeWords.get(0);//前面第一个还未学习完全的单词
 		final int beforeSize = beforeWords.size();//前面还未学习完全的单词数
 		final int reviewSize = beforeSize / 3 * 2;//今日需要复习的单词数
 		final int reviewedSize =DataSupport.where("account=? and bookId=? and date(upateDate)=date(?) and date([date])<>date(?) ",BaseApplication.userAccount,String.valueOf(BaseApplication.curBookId),today,today).count(UserWords.class);//今日已经复习的单词数
@@ -135,7 +135,7 @@ public class WordActivity extends BaseActivity {
 			rl_new.setVisibility(View.INVISIBLE);
 			ll_review.setVisibility(View.VISIBLE);
 			btn_next2.setVisibility(View.INVISIBLE);
-			wordId = userWord.getWordId();
+			wordId = beforeWords.get(0).getWordId();
 			selectors = db.get4Selectors(wordId,0);
 			lv_selectors.setAdapter(adapter);
 			break;
@@ -151,6 +151,7 @@ public class WordActivity extends BaseActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				lv_selectors.setClickable(false);
+				UserWords userWord = beforeWords.get(0);//前面第一个还未学习完全的单词
 				userWord.setUpateDate(today);
 				if(selectors.get(position).equals(wordModel.getDescription()))
 				{
@@ -300,6 +301,12 @@ public class WordActivity extends BaseActivity {
 		animFadeOut1.start();
 		animFadeOut2.setTarget(tv_phonetic);
 		animFadeOut2.start();
+	}
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		tts.shutdown();
 	}
 	
 	class DescriptionsAdapter extends BaseAdapter

@@ -35,8 +35,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -56,6 +58,7 @@ public class MyProcess implements IPlanObserver {
 	private TextView tv_wordControl;
 	private Button btn_totalDiagram;
 	private BarChart bc_barChart;
+	private LinearLayout ll_main;
 	
 	private Context mContext;
 	private Activity mActivity;
@@ -84,6 +87,14 @@ public class MyProcess implements IPlanObserver {
 		tv_wordControl = (TextView) mProcess.findViewById(R.id.process_tv_wordControl);
 		btn_totalDiagram = (Button) mProcess.findViewById(R.id.process_total_diagram);
 		bc_barChart = (BarChart) mProcess.findViewById(R.id.process_lineChart);
+		ll_main = (LinearLayout) mProcess.findViewById(R.id.process_ll_main);
+		ll_main.setOnTouchListener(new OnTouchListener(){
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				// TODO Auto-generated method stub
+				return true;
+			}
+		});
 	}
 
 	private void initData() {

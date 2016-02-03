@@ -18,10 +18,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class ProcessTotalDiagram extends BaseActivity {
 
-	private Button btn_reply;
+	private ImageButton btn_reply;
 	private PieChart chart1;
 	private PieChart chart2;
 	@Override
@@ -30,7 +31,7 @@ public class ProcessTotalDiagram extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.progress_total_diagram);
-		btn_reply = (Button) findViewById(R.id.prgtotal_reply);
+		btn_reply = (ImageButton) findViewById(R.id.prgtotal_reply);
 		chart1 = (PieChart) findViewById(R.id.prgtotal_chart1);
 		chart2 = (PieChart) findViewById(R.id.prgtotal_chart2);
 		

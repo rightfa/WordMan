@@ -25,17 +25,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class ProcessDailyDiagram extends BaseActivity {
 
-	private Button btn_reply;
+	private ImageButton btn_reply;
 	private BarChart barchart;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.progress_daily_diagram);
-		btn_reply = (Button) this.findViewById(R.id.prgdaily_reply);
+		btn_reply = (ImageButton) this.findViewById(R.id.prgdaily_reply);
 		barchart = (BarChart) findViewById(R.id.prgdaily_barchart);
 		
 		initChart();

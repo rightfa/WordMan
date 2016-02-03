@@ -1,6 +1,8 @@
 package com.qlfsoft.wordman.ui;
 
 import java.io.File;
+
+import com.qlfsoft.wordman.IOpenPlanListener;
 import com.qlfsoft.wordman.R;
 import com.qlfsoft.wordman.R.layout;
 import com.qlfsoft.wordman.R.menu;
@@ -26,7 +28,7 @@ import android.view.Menu;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Toast;
 
-public class MainActivity extends BaseActivity implements OnOpenListener {
+public class MainActivity extends BaseActivity implements OnOpenListener,IOpenPlanListener{
 
 	/**
 	 * 当前显示内容的容器(继承于ViewGroup)
@@ -81,6 +83,7 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 	 */
 	private void setListener() {
 		mHome.setOnOpenListener(this);
+		mHome.setOpenPlanListener(this);
 		mDesktop.setOnChangeViewListener(new onChangeViewListener(){
 
 			@Override
@@ -103,12 +106,7 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 					mRoot.close(mProcess.getView());
 					break;
 				case ViewUtil.LIBRARY:
-					if(null == mLibrary)
-					{
-						mLibrary = new Library(MainActivity.this,MainActivity.this);
-						mLibrary.setOnOpenListener(MainActivity.this);
-					}
-					mRoot.close(mLibrary.getView());
+					initLibrary();
 					break;
 				case ViewUtil.TEST:
 					if(null == mTest)
@@ -128,6 +126,15 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 		}
 	
 	
+	protected void initLibrary() {
+		if(null == mLibrary)
+		{
+			mLibrary = new Library(MainActivity.this,MainActivity.this);
+			mLibrary.setOnOpenListener(MainActivity.this);
+		}
+		mRoot.close(mLibrary.getView());
+	}
+
 	private void initMyPlan()
 	{
 		if(mHome == null)
@@ -241,8 +248,17 @@ public class MainActivity extends BaseActivity implements OnOpenListener {
 				mRoot.close(mTest.getView());
 			}
 			break;
+		case ActivityForResultUtil.REQUESTCODE_LIBRARY:
+			initLibrary();
+			break;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
+		
+	}
+
+	@Override
+	public void openPlan() {
+		initMyPlan();
 		
 	}
 }

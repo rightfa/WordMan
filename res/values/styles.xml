@@ -95,4 +95,7 @@
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
     </style>
     
+    <style name="MyThreme" parent="@android:style/Theme.NoTitleBar">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>
